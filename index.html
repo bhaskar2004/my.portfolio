@@ -1064,6 +1064,14 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
             h1 {
                 font-size: 48px;
             }
@@ -1469,6 +1477,11 @@
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
+                // Close mobile menu after clicking
+                const navLinks = document.querySelector('.nav-links');
+                const menuToggle = document.querySelector('.menu-toggle');
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
             });
         });
 
