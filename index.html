@@ -101,6 +101,18 @@
             flex-direction: column;
             cursor: pointer;
             z-index: 1001;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 8px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(120, 80, 255, 0.3);
         }
 
         .menu-toggle span {
@@ -1151,6 +1163,11 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="logo">Bhaskar</div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -1456,10 +1473,18 @@
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-5px)';
             });
-            
+
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
             });
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
         });
     </script>
 </body>
