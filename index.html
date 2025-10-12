@@ -1268,6 +1268,9 @@ footer::before {
     
     .container {
         padding: 0 var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     /* Mobile Navigation */
@@ -1300,11 +1303,47 @@ footer::before {
         padding: var(--spacing-sm) 0;
     }
     
+    /* Hero Section Mobile Centering */
+    .hero .container {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .portfolio-label,
+    h1,
+    .subtitle {
+        width: 100%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .subtitle {
+        max-width: 100%;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .cta-buttons {
+        width: 100%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+    
+    .social-links {
+        width: 100%;
+        justify-content: center;
+    }
+    
     /* Grid layouts */
     .about-grid,
     .projects-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+        width: 100%;
     }
     
     /* Centered content on mobile */
@@ -1312,24 +1351,50 @@ footer::before {
     .projects h2,
     .contact h2 {
         text-align: center;
+        width: 100%;
     }
     
     .about-content {
         text-align: center;
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .education-section,
     .skills-section {
         padding: var(--spacing-md);
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
     }
     
     .project-card {
         padding: 25px var(--spacing-md);
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .project-title {
+        text-align: center;
+    }
+    
+    .project-description {
+        text-align: center;
+    }
+    
+    .view-project {
+        display: inline-block;
+        margin: 0 auto;
     }
     
     .contact-links {
         flex-direction: column;
         align-items: center;
+        width: 100%;
     }
     
     .contact-item {
@@ -1337,22 +1402,36 @@ footer::before {
         max-width: 400px;
         justify-content: center;
     }
-    
-    .cta-buttons {
-        width: 100%;
-        max-width: 400px;
-    }
 }
 
 /* Mobile devices */
 @media (max-width: 600px) {
+    .container {
+        padding: 0 var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero .container,
+    .about .container,
+    .projects .container,
+    .contact .container {
+        align-items: center;
+        text-align: center;
+    }
+    
     .subtitle {
         font-size: var(--font-size-sm);
-        padding: 0 var(--spacing-sm);
+        padding: 0 var(--spacing-md);
+        text-align: center;
+        width: 100%;
     }
     
     .social-links {
         gap: var(--spacing-md);
+        width: 100%;
+        justify-content: center;
     }
     
     .social-links a svg {
@@ -1363,6 +1442,22 @@ footer::before {
     .btn {
         font-size: 13px;
         padding: 12px 28px;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .about-grid {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .projects-grid {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -1370,6 +1465,13 @@ footer::before {
 @media (max-width: 480px) {
     :root {
         --font-size-2xl: 36px;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .footer-logo {
@@ -1384,18 +1486,25 @@ footer::before {
     
     h1 {
         font-size: clamp(32px, 10vw, 48px);
+        text-align: center;
+        width: 100%;
     }
     
     .about h2,
     .projects h2,
     .contact h2 {
         font-size: clamp(28px, 8vw, 36px);
+        text-align: center;
+        width: 100%;
     }
     
     .cta-buttons {
         flex-direction: column;
         width: 100%;
+        max-width: 300px;
         gap: 12px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .btn {
@@ -1406,34 +1515,73 @@ footer::before {
     
     .about-content {
         font-size: var(--font-size-sm);
+        text-align: center;
+        width: 100%;
     }
     
     .project-card {
         padding: var(--spacing-md);
+        text-align: center;
+        width: 100%;
     }
     
     .contact-links {
         max-width: 280px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .contact-description {
+        text-align: center;
+        width: 100%;
     }
     
     footer {
         padding: 30px 15px 20px;
     }
+    
+    .education-section,
+    .skills-section {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .degree {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .institution {
+        text-align: center;
+    }
 }
 
 /* Extra small devices */
 @media (max-width: 375px) {
+    .container {
+        padding: 0 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
     h1 {
         font-size: clamp(28px, 10vw, 36px);
+        text-align: center;
+        width: 100%;
     }
     
     .btn {
         padding: 11px 24px;
         font-size: 12px;
+        width: 100%;
+        max-width: 260px;
+        text-align: center;
     }
     
-    .container {
-        padding: 0 12px;
+    .cta-buttons {
+        width: 100%;
+        max-width: 260px;
     }
     
     footer {
@@ -1442,6 +1590,13 @@ footer::before {
     
     .footer-content {
         gap: 30px;
+    }
+    
+    .about h2,
+    .projects h2,
+    .contact h2 {
+        text-align: center;
+        width: 100%;
     }
 }
 
@@ -1760,69 +1915,360 @@ footer::before {
 
 
     <script>
-        // Smooth scrolling for navigation links
+        // ============================================
+// PORTFOLIO JAVASCRIPT - OPTIMIZED
+// ============================================
+
+(function() {
+    'use strict';
+
+    // ============================================
+    // CONFIGURATION & CONSTANTS
+    // ============================================
+    const CONFIG = {
+        navScrollThreshold: 50,
+        particleCount: 50,
+        debounceDelay: 150
+    };
+
+    // ============================================
+    // UTILITY FUNCTIONS
+    // ============================================
+    
+    // Debounce function for performance optimization
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Throttle function for scroll events
+    function throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    // ============================================
+    // SMOOTH SCROLLING FOR NAVIGATION LINKS
+    // ============================================
+    function initSmoothScroll() {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-                // Close mobile menu after clicking
-                const navLinks = document.querySelector('.nav-links');
-                const menuToggle = document.querySelector('.menu-toggle');
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('active');
-            });
-        });
-
-        // Active navigation link on scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const scrollY = window.pageYOffset;
-
-            sections.forEach(section => {
-                const sectionHeight = section.offsetHeight;
-                const sectionTop = section.offsetTop - 100;
-                const sectionId = section.getAttribute('id');
-                const navLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
                 
-                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                    document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-                    if (navLink) navLink.classList.add('active');
+                // Skip if href is just "#"
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                
+                if (target) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu after clicking
+                    closeMobileMenu();
                 }
             });
         });
+    }
 
-        // Parallax effect for geometric shapes
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const shapes = document.querySelectorAll('.shape');
-            
-            shapes.forEach((shape, index) => {
-                const speed = 0.5 + (index * 0.1);
-                shape.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Add subtle animation on project card hover
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Mobile menu toggle
+    // ============================================
+    // MOBILE MENU TOGGLE
+    // ============================================
+    function initMobileMenu() {
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        if (!menuToggle || !navLinks) return;
+
         menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
+            const isActive = menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            body.style.overflow = isActive ? 'hidden' : '';
         });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+    }
+
+    function closeMobileMenu() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        if (menuToggle && navLinks) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            body.style.overflow = '';
+        }
+    }
+
+    // ============================================
+    // ACTIVE NAVIGATION ON SCROLL
+    // ============================================
+    function updateActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollY = window.pageYOffset;
+        const navHeight = document.querySelector('nav')?.offsetHeight || 0;
+
+        sections.forEach(section => {
+            const sectionHeight = section.offsetHeight;
+            const sectionTop = section.offsetTop - navHeight - 100;
+            const sectionId = section.getAttribute('id');
+            const navLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+            
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                // Remove active class from all links
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                // Add active class to current link
+                if (navLink) {
+                    navLink.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    function handleNavbarScroll() {
+        const navbar = document.getElementById('navbar');
+        if (!navbar) return;
+
+        if (window.pageYOffset > CONFIG.navScrollThreshold) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }
+
+    // ============================================
+    // PARALLAX EFFECT FOR SHAPES
+    // ============================================
+    function handleParallax() {
+        const scrolled = window.pageYOffset;
+        const shapes = document.querySelectorAll('.shape');
+        
+        shapes.forEach((shape, index) => {
+            const speed = 0.5 + (index * 0.1);
+            // Use transform for better performance
+            shape.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    }
+
+    // ============================================
+    // PARTICLE SYSTEM GENERATION
+    // ============================================
+    function initParticles() {
+        const particlesContainer = document.getElementById('particles');
+        if (!particlesContainer) return;
+
+        // Clear existing particles
+        particlesContainer.innerHTML = '';
+
+        for (let i = 0; i < CONFIG.particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random positioning
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 20}s`;
+            particle.style.animationDuration = `${15 + Math.random() * 10}s`;
+            
+            // Random size variation
+            const size = 1 + Math.random() * 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // ============================================
+    // PROJECT CARD INTERACTIONS
+    // ============================================
+    function initProjectCards() {
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        projectCards.forEach(card => {
+            // Mouse enter
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            // Mouse leave
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+
+            // Add keyboard accessibility
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const link = this.querySelector('.view-project');
+                    if (link) {
+                        e.preventDefault();
+                        link.click();
+                    }
+                }
+            });
+        });
+    }
+
+    // ============================================
+    // INTERSECTION OBSERVER FOR ANIMATIONS
+    // ============================================
+    function initScrollAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Optionally unobserve after animation
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        const animatedElements = document.querySelectorAll(
+            '.project-card, .education-item, .skill-category, .glass-card'
+        );
+        
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    // ============================================
+    // SCROLL INDICATOR
+    // ============================================
+    function initScrollIndicator() {
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', () => {
+                const aboutSection = document.getElementById('about');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Hide scroll indicator after scrolling
+            window.addEventListener('scroll', throttle(() => {
+                if (window.pageYOffset > 200) {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.pointerEvents = 'none';
+                } else {
+                    scrollIndicator.style.opacity = '1';
+                    scrollIndicator.style.pointerEvents = 'auto';
+                }
+            }, 100));
+        }
+    }
+
+    // ============================================
+    // PERFORMANCE MONITORING (Optional)
+    // ============================================
+    function logPerformance() {
+        if (window.performance && window.performance.timing) {
+            window.addEventListener('load', () => {
+                const perfData = window.performance.timing;
+                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log(`Page Load Time: ${pageLoadTime}ms`);
+            });
+        }
+    }
+
+    // ============================================
+    // COMBINED SCROLL HANDLER
+    // ============================================
+    const handleScroll = throttle(() => {
+        handleNavbarScroll();
+        updateActiveNavLink();
+        handleParallax();
+    }, 16); // ~60fps
+
+    // ============================================
+    // INITIALIZE ALL FUNCTIONS
+    // ============================================
+    function init() {
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+            return;
+        }
+
+        // Initialize all features
+        initSmoothScroll();
+        initMobileMenu();
+        initParticles();
+        initProjectCards();
+        initScrollAnimations();
+        initScrollIndicator();
+        
+        // Attach scroll event listener
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Handle window resize
+        window.addEventListener('resize', debounce(() => {
+            // Close mobile menu on resize to desktop
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        }, CONFIG.debounceDelay));
+
+        // Optional: Performance logging (remove in production)
+        // logPerformance();
+
+        // Initial calls
+        handleNavbarScroll();
+        updateActiveNavLink();
+
+        console.log('Portfolio initialized successfully! 🚀');
+    }
+
+    // Start initialization
+    init();
+
+})();
     </script>
 </body>
 </html>
