@@ -1916,7 +1916,7 @@ footer::before {
 
     <script>
         // ============================================
-// PORTFOLIO JAVASCRIPT - OPTIMIZED
+// PORTFOLIO JAVASCRIPT - 120Hz OPTIMIZED
 // ============================================
 
 (function() {
@@ -1934,7 +1934,7 @@ footer::before {
     // ============================================
     // UTILITY FUNCTIONS
     // ============================================
-    
+
     // Debounce function for performance optimization
     function debounce(func, wait) {
         let timeout;
@@ -1948,7 +1948,7 @@ footer::before {
         };
     }
 
-    // Throttle function for scroll events
+    // Throttle function (for lightweight event control)
     function throttle(func, limit) {
         let inThrottle;
         return function(...args) {
@@ -1967,23 +1967,17 @@ footer::before {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                
-                // Skip if href is just "#"
                 if (href === '#') return;
-                
+
                 e.preventDefault();
                 const target = document.querySelector(href);
-                
                 if (target) {
                     const navHeight = document.querySelector('nav').offsetHeight;
                     const targetPosition = target.offsetTop - navHeight;
-                    
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu after clicking
                     closeMobileMenu();
                 }
             });
@@ -2003,19 +1997,15 @@ footer::before {
         menuToggle.addEventListener('click', () => {
             const isActive = menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
             body.style.overflow = isActive ? 'hidden' : '';
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
                 closeMobileMenu();
             }
         });
 
-        // Close menu on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeMobileMenu();
@@ -2048,16 +2038,10 @@ footer::before {
             const sectionTop = section.offsetTop - navHeight - 100;
             const sectionId = section.getAttribute('id');
             const navLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
-            
+
             if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                // Remove active class from all links
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.classList.remove('active');
-                });
-                // Add active class to current link
-                if (navLink) {
-                    navLink.classList.add('active');
-                }
+                document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+                if (navLink) navLink.classList.add('active');
             }
         });
     }
@@ -2068,7 +2052,6 @@ footer::before {
     function handleNavbarScroll() {
         const navbar = document.getElementById('navbar');
         if (!navbar) return;
-
         if (window.pageYOffset > CONFIG.navScrollThreshold) {
             navbar.classList.add('scrolled');
         } else {
@@ -2082,10 +2065,8 @@ footer::before {
     function handleParallax() {
         const scrolled = window.pageYOffset;
         const shapes = document.querySelectorAll('.shape');
-        
         shapes.forEach((shape, index) => {
             const speed = 0.5 + (index * 0.1);
-            // Use transform for better performance
             shape.style.transform = `translateY(${scrolled * speed}px)`;
         });
     }
@@ -2097,23 +2078,16 @@ footer::before {
         const particlesContainer = document.getElementById('particles');
         if (!particlesContainer) return;
 
-        // Clear existing particles
         particlesContainer.innerHTML = '';
-
         for (let i = 0; i < CONFIG.particleCount; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
-            
-            // Random positioning
             particle.style.left = `${Math.random() * 100}%`;
             particle.style.animationDelay = `${Math.random() * 20}s`;
             particle.style.animationDuration = `${15 + Math.random() * 10}s`;
-            
-            // Random size variation
             const size = 1 + Math.random() * 2;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
-            
             particlesContainer.appendChild(particle);
         }
     }
@@ -2123,19 +2097,13 @@ footer::before {
     // ============================================
     function initProjectCards() {
         const projectCards = document.querySelectorAll('.project-card');
-        
         projectCards.forEach(card => {
-            // Mouse enter
             card.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-10px) scale(1.02)';
             });
-
-            // Mouse leave
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
-
-            // Add keyboard accessibility
             card.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     const link = this.querySelector('.view-project');
@@ -2161,20 +2129,15 @@ footer::before {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animated');
-                    // Optionally unobserve after animation
-                    // observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observe elements for animation
         const animatedElements = document.querySelectorAll(
             '.project-card, .education-item, .skill-category, .glass-card'
         );
-        
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
+
+        animatedElements.forEach(el => observer.observe(el));
     }
 
     // ============================================
@@ -2182,7 +2145,6 @@ footer::before {
     // ============================================
     function initScrollIndicator() {
         const scrollIndicator = document.querySelector('.scroll-indicator');
-        
         if (scrollIndicator) {
             scrollIndicator.addEventListener('click', () => {
                 const aboutSection = document.getElementById('about');
@@ -2191,7 +2153,6 @@ footer::before {
                 }
             });
 
-            // Hide scroll indicator after scrolling
             window.addEventListener('scroll', throttle(() => {
                 if (window.pageYOffset > 200) {
                     scrollIndicator.style.opacity = '0';
@@ -2205,70 +2166,51 @@ footer::before {
     }
 
     // ============================================
-    // PERFORMANCE MONITORING (Optional)
+    // HIGH-FREQUENCY SCROLL LOOP (120Hz)
     // ============================================
-    function logPerformance() {
-        if (window.performance && window.performance.timing) {
-            window.addEventListener('load', () => {
-                const perfData = window.performance.timing;
-                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                console.log(`Page Load Time: ${pageLoadTime}ms`);
-            });
-        }
-    }
-
-    // ============================================
-    // COMBINED SCROLL HANDLER
-    // ============================================
-    const handleScroll = throttle(() => {
+    function animationLoop() {
         handleNavbarScroll();
         updateActiveNavLink();
         handleParallax();
-    }, 16); // ~60fps
+        requestAnimationFrame(animationLoop);
+    }
 
     // ============================================
     // INITIALIZE ALL FUNCTIONS
     // ============================================
     function init() {
-        // Wait for DOM to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
             return;
         }
 
-        // Initialize all features
         initSmoothScroll();
         initMobileMenu();
         initParticles();
         initProjectCards();
         initScrollAnimations();
         initScrollIndicator();
-        
-        // Attach scroll event listener
-        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Replace scroll listener with 120Hz animation loop
+        animationLoop();
 
         // Handle window resize
         window.addEventListener('resize', debounce(() => {
-            // Close mobile menu on resize to desktop
             if (window.innerWidth > 768) {
                 closeMobileMenu();
             }
         }, CONFIG.debounceDelay));
 
-        // Optional: Performance logging (remove in production)
-        // logPerformance();
-
-        // Initial calls
         handleNavbarScroll();
         updateActiveNavLink();
 
-        console.log('Portfolio initialized successfully! 🚀');
+        console.log('Portfolio initialized at 120Hz! ⚡');
     }
 
-    // Start initialization
     init();
 
 })();
+
     </script>
 </body>
 </html>
