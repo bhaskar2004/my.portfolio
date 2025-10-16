@@ -727,6 +727,11 @@ h1 {
 .about {
     padding: var(--spacing-2xl) 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .about h2 {
@@ -736,6 +741,7 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-align: center;
 }
 
 .about-content {
@@ -744,6 +750,7 @@ h1 {
     color: var(--color-text-light);
     margin-bottom: var(--spacing-xl);
     font-size: var(--font-size-lg);
+    text-align: center;
 }
 
 .about-grid {
@@ -848,6 +855,11 @@ h1 {
 .projects {
     padding: var(--spacing-2xl) 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .projects h2 {
@@ -857,6 +869,7 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-align: center;
 }
 
 .projects-grid {
@@ -974,6 +987,11 @@ h1 {
     padding: var(--spacing-2xl) 0;
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .contact h2 {
@@ -1035,6 +1053,11 @@ footer {
     padding: var(--spacing-xl) var(--spacing-lg) 30px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 footer::before {
@@ -1050,7 +1073,7 @@ footer::before {
 
 .footer-content {
     max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: 50px;
@@ -1213,7 +1236,7 @@ footer::before {
 
 .footer-bottom {
     max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
