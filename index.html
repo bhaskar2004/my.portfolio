@@ -76,7 +76,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'Fira Code', 'Source Code Pro', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Courier New', monospace;
     background: var(--color-bg);
     color: var(--color-text);
     overflow-x: hidden;
@@ -122,7 +122,7 @@ body {
 /* ============================================
    ANIMATED GRADIENT BACKGROUND
    ============================================ */
-body::before {
+/* body::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -133,7 +133,7 @@ body::before {
     animation: gradientShift 15s ease-in-out infinite;
     z-index: var(--z-background);
     will-change: transform;
-}
+} */
 
 @keyframes gradientShift {
     0%, 100% { transform: scale(1) rotate(0deg); }
@@ -512,6 +512,63 @@ h1 {
 @keyframes gradientText {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitchBefore {
+    0% { clip: rect(42px, 9999px, 44px, 0); }
+    5% { clip: rect(12px, 9999px, 59px, 0); }
+    10% { clip: rect(48px, 9999px, 29px, 0); }
+    15% { clip: rect(42px, 9999px, 73px, 0); }
+    20% { clip: rect(63px, 9999px, 27px, 0); }
+    25% { clip: rect(34px, 9999px, 55px, 0); }
+    30% { clip: rect(86px, 9999px, 73px, 0); }
+    35% { clip: rect(20px, 9999px, 20px, 0); }
+    40% { clip: rect(26px, 9999px, 60px, 0); }
+    45% { clip: rect(69px, 9999px, 28px, 0); }
+    50% { clip: rect(34px, 9999px, 55px, 0); }
+    55% { clip: rect(14px, 9999px, 35px, 0); }
+    60% { clip: rect(67px, 9999px, 62px, 0); }
+    65% { clip: rect(37px, 9999px, 52px, 0); }
+    70% { clip: rect(42px, 9999px, 14px, 0); }
+    75% { clip: rect(22px, 9999px, 63px, 0); }
+    80% { clip: rect(69px, 9999px, 94px, 0); }
+    85% { clip: rect(20px, 9999px, 20px, 0); }
+    90% { clip: rect(60px, 9999px, 60px, 0); }
+    95% { clip: rect(12px, 9999px, 44px, 0); }
+    100% { clip: rect(5px, 9999px, 5px, 0); }
+}
+
+@keyframes glitchAfter {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    5% { clip: rect(52px, 9999px, 74px, 0); }
+    10% { clip: rect(79px, 9999px, 85px, 0); }
+    15% { clip: rect(24px, 9999px, 48px, 0); }
+    20% { clip: rect(55px, 9999px, 20px, 0); }
+    25% { clip: rect(33px, 9999px, 12px, 0); }
+    30% { clip: rect(10px, 9999px, 10px, 0); }
+    35% { clip: rect(10px, 9999px, 10px, 0); }
+    40% { clip: rect(84px, 9999px, 91px, 0); }
+    45% { clip: rect(28px, 9999px, 32px, 0); }
+    50% { clip: rect(71px, 9999px, 80px, 0); }
+    55% { clip: rect(42px, 9999px, 76px, 0); }
+    60% { clip: rect(5px, 9999px, 5px, 0); }
+    65% { clip: rect(30px, 9999px, 30px, 0); }
+    70% { clip: rect(80px, 9999px, 84px, 0); }
+    75% { clip: rect(45px, 9999px, 45px, 0); }
+    80% { clip: rect(13px, 9999px, 13px, 0); }
+    85% { clip: rect(35px, 9999px, 35px, 0); }
+    90% { clip: rect(50px, 9999px, 50px, 0); }
+    95% { clip: rect(20px, 9999px, 20px, 0); }
+    100% { clip: rect(40px, 9999px, 40px, 0); }
 }
 
 .subtitle {
@@ -1682,6 +1739,7 @@ footer::before {
         max-width: 100%;
     }
 }
+
     </style>
 </head>
 <body>
@@ -1750,11 +1808,11 @@ footer::before {
 </div> -->
 
             <div class="portfolio-label">PORTFOLIO</div>
-            <h1>< Bhaskar T></h1>
+            <h1>< Bhaskar T ></h1>
             <p class="subtitle">Front-End Dev & Problem Solver</p>
             <div class="cta-buttons">
-                <a href="#contact" class="btn">Contact Me</a>
-                <a href="#projects" class="btn">View Projects</a>
+                <a href="#contact" class="btn"> < Contact Me ></a>
+                <a href="#projects" class="btn"> < View Projects ></a>
             </div>
             <div class="social-links">
                 <a href="https://github.com/bhaskar2004" target="_blank">
@@ -1847,25 +1905,25 @@ footer::before {
                 <div class="project-card">
                     <h3 class="project-title">Vehicle Registration Management System</h3>
                     <p class="project-description">Java desktop app with CRUD using JDBC + MySQL, featuring GUI for vehicle data management.</p>
-                    <a href="https://github.com/bhaskar2004/vehicle-registration-management-system" class="view-project">View Project</a>
+                    <a href="https://github.com/bhaskar2004/vehicle-registration-management-system" class="view-project"> < View Project ></a>
                 </div>
                 
                 <div class="project-card">
                     <h3 class="project-title">Smart Navigation System for the Visually Impaired</h3>
                     <p class="project-description">Assistive solution using real-time object detection with audio feedback and proximity alerts.</p>
-                    <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind" class="view-project">View Project</a>
+                    <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind" class="view-project"> < View Project ></a>
                 </div>
                 
                 <div class="project-card">
                     <h3 class="project-title">Weather Forecast Bot</h3>
                     <p class="project-description">BotPress chatbot integrating OpenWeatherMap API for multi-city, formatted forecasts.</p>
-                    <a href="https://github.com/bhaskar2004/weather-bot" class="view-project">View Project</a>
+                    <a href="https://github.com/bhaskar2004/weather-bot" class="view-project"> < View Project ></a>
                 </div>
                 
                 <div class="project-card">
                     <h3 class="project-title">Better Trips — Tourism Web App</h3>
                     <p class="project-description">Responsive web app showing nearby attractions via Geoapify with filters, sort, and routing.</p>
-                    <a href="https://github.com/bhaskar2004/better-trips" class="view-project">View Project</a>
+                    <a href="https://github.com/bhaskar2004/better-trips" class="view-project"> < View Project ></a>
                 </div>
             </div>
         </div>
