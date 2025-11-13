@@ -193,6 +193,11 @@ nav.scrolled {
 .logo:hover {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
+.logo-img {
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}         
 
 /* Mobile Menu Toggle */
 .menu-toggle {
@@ -1788,18 +1793,24 @@ footer::before {
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="logo"> Bhaskar </div>
-        <div class="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <div class="logo">
+        <img src="logo.png" alt="Logo" class="logo-img">
+        <span>Bhaskar</span>
+    </div>
+
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
 
      <!-- Hero Section -->
     <section class="hero">
