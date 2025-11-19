@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bhaskar T - Front-End Developer & Problem Solver. Computer Science student passionate about building clean, accessible web experiences.">
-    <meta name="keywords" content="Bhaskar T, Front-End Developer, Web Developer, Computer Science, Portfolio">
-    <meta name="author" content="Bhaskar T">
-    <meta name="theme-color" content="#6366f1">
-    <link rel="icon" type="image/png" href="logo.png">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Bhaskar T - Front-End Developer">
-    <!-- <meta property="og:description" content="Front-End Dev & Problem Solver">
-    <meta property="og:image" content="/og-image.jpg"> -->
-    
-    <title>Bhaskar's Portfolio</title>
+<meta name="description" content="Bhaskar - Front-End Developer and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz.">
+<meta name="keywords" content="Bhaskar, Bhaskar T, Bhaskar portfolio, Bhaskar developer, Bhaskar XYZ, Front-End Developer, Web Developer, HTML CSS JS, Computer Science Student, SJCIT">
+<meta name="author" content="Bhaskar">
+
+<!-- Allow indexing -->
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://bhaskar.xyz">
+
+<!-- Theme color -->
+<meta name="theme-color" content="#6366f1">
+<link rel="icon" type="image/png" href="logo.png">
+
+<!-- Open Graph (social media preview) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bhaskar - Front-End Developer Portfolio">
+<meta property="og:description" content="Explore Bhaskar's web development projects, skills, and journey at bhaskar.xyz.">
+<meta property="og:image" content="https://bhaskar.xyz/og-image.jpg">
+<meta property="og:url" content="https://bhaskar.xyz">
+
+<title>bhaskar's protfolio</title>
+
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -958,6 +966,20 @@ h1 {
     backdrop-filter: blur(4px);
 }
 
+/* Action group for project links */
+.project-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap; /* allow wrapping on narrow cards */
+}
+
+@media (min-width: 900px) {
+    .project-actions {
+        flex-wrap: nowrap; /* keep side-by-side on laptop/desktop */
+    }
+}
+
 /* Animated metallic shine */
 .view-project::before {
     content: "";
@@ -1800,6 +1822,32 @@ footer::before {
     }
 }
 
+/* Desktop / Laptop: ensure project action links appear side-by-side */
+@media (min-width: 900px) {
+    .project-card {
+        /* allow actions to be visible and not clipped */
+        overflow: visible;
+    }
+
+    /* Keep action links inline and add a small gap; allow wrapping if card is too narrow */
+    .project-card .view-project {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin: 0 8px 8px 0;
+        vertical-align: middle;
+    }
+
+    .project-card .view-project:last-of-type {
+        margin-right: 0;
+    }
+
+    /* Slightly increase card minimum on wide screens so two buttons fit better */
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1873,7 +1921,7 @@ footer::before {
     <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
-            <h2>About</h2>
+            <h2>About Me</h2>
             <p class="about-content">
                 I'm an average Computer Science student who's learning to build exceptional things. I turn ideas into impactful, user-friendly solutions by staying committed to continuous learning and focusing on clean, accessible, and performant web experiences.
             </p>
@@ -1940,14 +1988,18 @@ footer::before {
             <div class="projects-grid">
                 <div class="project-card">
                     <h3 class="project-title">Vehicle Registration Management System</h3>
-                    <p class="project-description">Java desktop app with CRUD using JDBC + MySQL, featuring GUI for vehicle data management.</p>
-                    <a href="https://github.com/bhaskar2004/vehicle-registration-management-system" class="view-project"> < View Project ></a>
+                    <div class="project-actions">
+                        <a href="https://github.com/bhaskar2004/feedx" class="view-project">&lt; View Project &gt;</a>
+                        <!-- <a href="https://feedx.bhaskar.xyz/" class="view-project visit-site">Visit site</a> -->
+                    </div>
                 </div>
                 
                 <div class="project-card">
                     <h3 class="project-title">Smart Navigation System for the Visually Impaired</h3>
-                    <p class="project-description">Assistive solution using real-time object detection with audio feedback and proximity alerts.</p>
-                    <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind" class="view-project"> < View Project ></a>
+                    <div class="project-actions">
+                        <a href="https://github.com/bhaskar2004/code-preview" class="view-project">&lt; View Project &gt;</a>
+                        <!-- <a href="https://preview.bhaskar.xyz/" class="view-project visit-site">Visit site</a> -->
+                    </div>
                 </div>
                 
                 <div class="project-card">
@@ -1971,13 +2023,13 @@ footer::before {
                     <h3 class="project-title">Feedx </h3>
                     <p class="proiect-description">FeedX is a clean and simple news aggregator that brings you the latest headlines from various sources.</p>
                     <a href="https://github.com/bhaskar2004/feedx" class="view-project"> < View Project ></a>
-                    <a href="https://feedx.bhaskar.xyz/" class="view-project">< vist site></a>     
+                    <a href="https://feedx.bhaskar.xyz/" class="view-project">< visit site></a>     
                 </div> 
                  <div class="project-card">
                     <h3 class="project-title">CodePreview </h3>
                     <p class="proiect-description">This project is a simple web-based application designed for previewing code.</p>
                     <a href="https://github.com/bhaskar2004/code-preview" class="view-project"> < View Project ></a>
-                    <a href="https://preview.bhaskar.xyz/" class="view-project">< vist site></a>     
+                    <a href="https://preview.bhaskar.xyz/" class="view-project">< visit site></a>     
                 </div> 
                     
                     
