@@ -177,6 +177,23 @@ nav.scrolled {
     margin-right: 10px;
 }         
 
+/* Resume link in nav */
+.nav-resume {
+    display: inline-block;
+    padding: 6px 10px;
+    background: linear-gradient(90deg, #7c4dff 0%, #4f7bff 100%);
+    color: #fff;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.nav-resume:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
 /* Mobile Menu Toggle */
 .menu-toggle {
     display: none;
