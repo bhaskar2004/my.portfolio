@@ -1,217 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Workshops  Bhaskar</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Workshops — Bhaskar T</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     :root {
       --bg: #000;
       --text: #fff;
-      --text-secondary: rgba(255, 255, 255, 0.7);
       --accent: #7c4dff;
+      --text-dim: rgba(255, 255, 255, 0.7);
       --border: rgba(255, 255, 255, 0.1);
       --card-bg: rgba(255, 255, 255, 0.03);
     }
-
+    
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Courier New', monospace;
-      line-height: 1.6;
+      font-family: monospace;
+      margin: 0;
       padding: 20px;
+      line-height: 1.6;
     }
-
+    
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+    
+    a:hover {
+      opacity: 0.8;
+    }
+    
     .container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 20px;
     }
-
-    h1 {
-      font-size: clamp(24px, 5vw, 32px);
-      margin-bottom: 30px;
-      font-weight: 600;
+    
+    .page-header {
+      margin-bottom: 50px;
+    }
+    
+    .page-title {
+      font-size: clamp(28px, 6vw, 40px);
+      margin: 0 0 10px 0;
+      font-weight: 700;
       letter-spacing: -0.5px;
     }
-
-    h2 {
-      font-size: clamp(18px, 4vw, 22px);
-      margin: 40px 0 20px;
-      color: var(--accent);
-      font-weight: 600;
+    
+    .page-subtitle {
+      color: var(--text-dim);
+      font-size: 16px;
+      margin: 0;
     }
-
-    .meta {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 40px;
-      padding: 20px;
+    
+    .workshop-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
     }
-
-    .meta-item {
-      display: flex;
-      gap: 10px;
+    
+    .workshop-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(124, 77, 255, 0.3);
+      transform: translateY(-2px);
     }
-
-    .meta-label {
+    
+    .workshop-title {
+      font-size: clamp(20px, 4vw, 26px);
+      margin: 0 0 20px 0;
+      font-weight: 700;
       color: var(--accent);
-      min-width: 80px;
+    }
+    
+    .workshop-meta {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 25px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .workshop-meta p {
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    h2 {
+      font-size: 18px;
+      margin: 30px 0 12px 0;
+      color: var(--text);
       font-weight: 600;
     }
-
-    .meta-value {
-      color: var(--text-secondary);
+    
+    .workshop-card h2:first-of-type {
+      margin-top: 0;
     }
-
-    section {
-      margin-bottom: 40px;
-    }
-
+    
     p {
-      color: var(--text-secondary);
-      margin-bottom: 16px;
+      margin: 12px 0;
+      color: var(--text-dim);
+      font-size: 14px;
     }
-
+    
+    strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    
     ul {
-      list-style: none;
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+    
+    li {
+      margin: 6px 0;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+    
+    section {
       margin: 20px 0;
     }
-
-    li {
-      padding: 12px 0 12px 24px;
-      position: relative;
-      color: var(--text-secondary);
-      border-left: 2px solid var(--border);
-      margin-bottom: 8px;
-      transition: all 0.2s ease;
-    }
-
-    li:hover {
-      border-left-color: var(--accent);
-      padding-left: 28px;
-    }
-
-    li::before {
-      content: '→';
-      position: absolute;
-      left: 8px;
-      color: var(--accent);
-      font-weight: bold;
-    }
-
+    
     .back {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       margin-top: 40px;
       padding: 12px 20px;
+      border-radius: 8px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      font-size: 14px;
+      transition: all 0.2s ease;
     }
-
+    
     .back:hover {
-      background: rgba(124, 77, 255, 0.1);
-      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
       transform: translateX(-4px);
     }
-
-    .highlight {
-      background: linear-gradient(90deg, transparent, rgba(124, 77, 255, 0.1), transparent);
-      padding: 20px;
-      border-radius: 8px;
-      margin: 30px 0;
-    }
-
+    
     @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      
       .container {
-        padding: 20px 10px;
+        padding: 10px;
       }
-
-      .meta-item {
-        flex-direction: column;
-        gap: 4px;
+      
+      .workshop-card {
+        padding: 20px;
       }
-
-      .meta-label {
-        min-width: auto;
+      
+      .workshop-meta {
+        padding: 12px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>SUI Move 101 — Workshop Contribution</h1>
-    
-    <div class="meta">
-      <div class="meta-item">
-        <span class="meta-label">Event:</span>
-        <span class="meta-value">Build on Sui Move 101 — 3-day workshop</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Location:</span>
-        <span class="meta-value">SJC Institute of Technology (SJCIT)</span>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Dates:</span>
-        <span class="meta-value">November 10–12, 2025</span>
-      </div>
+    <div class="page-header">
+      <h1 class="page-title">Workshops</h1>
+      <p class="page-subtitle">Events I've contributed to and organized</p>
     </div>
 
-    <section>
-      <h2>My Contributions</h2>
-      <ul>
-        <li>Designed the official promotional poster for the workshop</li>
-        <li>Created Google Forms for registrations</li>
-        <li>Captured event photos and videos across all three days for documentation</li>
-        <li>Assisted the organizing team to ensure smooth workflow during the sessions</li>
-      </ul>
-    </section>
+    <!-- Workshop 1 -->
+    <div class="workshop-card">
+      <h1 class="workshop-title">SUI Move 101 — Workshop Contribution</h1>
 
-    <section>
-      <h2>About the Workshop</h2>
-      <p>The event introduced students to the following topics and practical workflows:</p>
-      <ul>
-        <li>Blockchain fundamentals</li>
-        <li>Sui architecture</li>
-        <li>Move programming</li>
-        <li>Smart contract development</li>
-        <li>Hands-on deployment using Sui tools and CLI</li>
-      </ul>
-      <div class="highlight">
-        <p style="margin: 0;"><strong>The workshop saw 38+ student participants</strong> and received positive feedback for its technical depth and practical sessions.</p>
+      <div class="workshop-meta">
+        <p><strong>Event:</strong> Build on Sui Move 101 — 3-day workshop</p>
+        <p><strong>Location:</strong> SJC Institute of Technology (SJCIT)</p>
+        <p><strong>Dates:</strong> November 10–12, 2025</p>
       </div>
-    </section>
 
-    <section>
-      <h2>Impact</h2>
-      <p>This workshop strengthened my experience in:</p>
-      <ul>
-        <li>Technical event coordination</li>
-        <li>Creative design for academic events</li>
-        <li>Working closely with speakers, faculty, and student teams</li>
-        <li>Documenting events professionally</li>
-      </ul>
-    </section>
+      <section>
+        <h2>My Contributions</h2>
+        <ul>
+          <li>Designed the official promotional poster for the workshop</li>
+          <li>Created Google Forms for registrations</li>
+          <li>Captured event photos and videos across all three days for documentation</li>
+          <li>Assisted the organizing team to ensure smooth workflow during the sessions</li>
+        </ul>
+      </section>
 
-    <a class="back" href="index.html">
-      <span>←</span>
-      <span>Back to Home</span>
-    </a>
+      <section>
+        <h2>About the Workshop</h2>
+        <p>The event introduced students to the following topics and practical workflows:</p>
+        <ul>
+          <li>Blockchain fundamentals</li>
+          <li>Sui architecture</li>
+          <li>Move programming</li>
+          <li>Smart contract development</li>
+          <li>Hands-on deployment using Sui tools and CLI</li>
+        </ul>
+        <p>The workshop saw 38+ student participants and received positive feedback for its technical depth and practical sessions.</p>
+      </section>
+
+      <section>
+        <h2>Impact</h2>
+        <p>This workshop strengthened my experience in:</p>
+        <ul>
+          <li>Technical event coordination</li>
+          <li>Creative design for academic events</li>
+          <li>Working closely with speakers, faculty, and student teams</li>
+          <li>Documenting events professionally</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Add more workshop cards here in the future with the same structure -->
+    
+    <a class="back" href="index.html">← Back to Home</a>
   </div>
 </body>
 </html>
