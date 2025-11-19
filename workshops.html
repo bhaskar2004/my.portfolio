@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Workshops — Bhaskar T</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --accent: #7c4dff;
+      --border: rgba(255, 255, 255, 0.1);
+      --card-bg: rgba(255, 255, 255, 0.03);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: clamp(24px, 5vw, 32px);
+      margin-bottom: 30px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-size: clamp(18px, 4vw, 22px);
+      margin: 40px 0 20px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .meta {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .meta-item {
+      display: flex;
+      gap: 10px;
+    }
+
+    .meta-label {
+      color: var(--accent);
+      min-width: 80px;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      color: var(--text-secondary);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    li {
+      padding: 12px 0 12px 24px;
+      position: relative;
+      color: var(--text-secondary);
+      border-left: 2px solid var(--border);
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+    }
+
+    li:hover {
+      border-left-color: var(--accent);
+      padding-left: 28px;
+    }
+
+    li::before {
+      content: '→';
+      position: absolute;
+      left: 8px;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 40px;
+      padding: 12px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back:hover {
+      background: rgba(124, 77, 255, 0.1);
+      border-color: var(--accent);
+      transform: translateX(-4px);
+    }
+
+    .highlight {
+      background: linear-gradient(90deg, transparent, rgba(124, 77, 255, 0.1), transparent);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 10px;
+      }
+
+      .meta-item {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .meta-label {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SUI Move 101 — Workshop Contribution</h1>
+    
+    <div class="meta">
+      <div class="meta-item">
+        <span class="meta-label">Event:</span>
+        <span class="meta-value">Build on Sui Move 101 — 3-day workshop</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Location:</span>
+        <span class="meta-value">SJC Institute of Technology (SJCIT)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Dates:</span>
+        <span class="meta-value">November 10–12, 2025</span>
+      </div>
+    </div>
+
+    <section>
+      <h2>My Contributions</h2>
+      <ul>
+        <li>Designed the official promotional poster for the workshop</li>
+        <li>Created Google Forms for registrations</li>
+        <li>Captured event photos and videos across all three days for documentation</li>
+        <li>Assisted the organizing team to ensure smooth workflow during the sessions</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>About the Workshop</h2>
+      <p>The event introduced students to the following topics and practical workflows:</p>
+      <ul>
+        <li>Blockchain fundamentals</li>
+        <li>Sui architecture</li>
+        <li>Move programming</li>
+        <li>Smart contract development</li>
+        <li>Hands-on deployment using Sui tools and CLI</li>
+      </ul>
+      <div class="highlight">
+        <p style="margin: 0;"><strong>The workshop saw 38+ student participants</strong> and received positive feedback for its technical depth and practical sessions.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Impact</h2>
+      <p>This workshop strengthened my experience in:</p>
+      <ul>
+        <li>Technical event coordination</li>
+        <li>Creative design for academic events</li>
+        <li>Working closely with speakers, faculty, and student teams</li>
+        <li>Documenting events professionally</li>
+      </ul>
+    </section>
+
+    <a class="back" href="index.html">
+      <span>←</span>
+      <span>Back to Home</span>
+    </a>
+  </div>
+</body>
+</html>
