@@ -941,57 +941,81 @@ h1 {
     margin-bottom: 30px;
 }
 
+/* Base button */
 .view-project {
     position: relative;
     display: inline-block;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: var(--font-size-sm);
-    color: white;
+    color: #fff;
     text-decoration: none;
-    border: 1px solid #666;
-    border-radius: var(--radius-sm);
+    border: 1px solid #777;
+    border-radius: var(--radius-md);
     overflow: hidden;
-    transition: color 0.25s ease, transform 0.25s ease;
-    will-change: transform, color;
-    z-index: 1; /* ensure text stays above the background */
+    transition: color 0.3s ease, transform 0.28s ease, box-shadow 0.35s ease;
+    will-change: transform, color, box-shadow;
+    z-index: 1;
+    backdrop-filter: blur(4px);
 }
 
+/* Animated metallic shine */
 .view-project::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    left: -100%;
+    left: -120%;
     background: linear-gradient(90deg,
-        #666 0%,
+        #555 0%,
         #999 50%,
-        #666 100%);
-    transition: left 0.35s ease-out;
-    z-index: -1; /* put background behind text */
-    will-change: left;
-    opacity: 0.9;
+        #555 100%
+    );
+    opacity: 0.95;
+    transition: left 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: -1;
 }
 
+/* Gloss layer */
+.view-project::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.15),
+        rgba(255,255,255,0)
+    );
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Hover effect */
 .view-project:hover::before {
     left: 0;
 }
 
 .view-project:hover {
-    color: var(--color-text); /* text becomes visible */
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 0 14px rgba(100, 100, 100, 0.6);
-    animation: glowPulse 1.5s ease-in-out infinite;
+    color: #fff;
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 6px 20px rgba(150, 150, 150, 0.45);
+    animation: metallicPulse 1.7s ease-in-out infinite;
 }
 
+/* Focus state */
 .view-project:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 3px solid rgba(150,150,150,0.6);
     outline-offset: 4px;
 }
 
-/* Smooth glow animation */
-@keyframes glowPulse {
-    0%, 100% { box-shadow: 0 0 8px rgba(100, 100, 100, 0.4); }
-    50% { box-shadow: 0 0 16px rgba(100, 100, 100, 0.7); }
+/* Metallic glow pulse */
+@keyframes metallicPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(160,160,160,0.35);
+    }
+    50% {
+        box-shadow: 0 0 22px rgba(180,180,180,0.7);
+    }
 }
+
 
 
 /* ============================================
