@@ -230,11 +230,6 @@
         height: 45px;
         width: auto;
         transition: all var(--transition-base);
-        filter: brightness(1);
-    }
-
-    :root[data-theme="light"] .logo-img {
-        filter: brightness(0);
     }
 
     /* Resume link in nav */
@@ -499,54 +494,6 @@
     }
 
 
-
-    /* ============================================
-       THEME TOGGLE
-       ============================================ */
-    .theme-toggle {
-        background: transparent;
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-full);
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all var(--transition-base);
-        position: relative;
-        padding: 0;
-    }
-
-    .theme-toggle:hover {
-        border-color: var(--color-text);
-        background: var(--color-surface-glass);
-    }
-
-    .theme-toggle svg {
-        position: absolute;
-        transition: all 0.3s ease;
-    }
-
-    .theme-toggle .sun-icon {
-        opacity: 0;
-        transform: rotate(-90deg) scale(0);
-    }
-
-    .theme-toggle .moon-icon {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-    }
-
-    :root[data-theme="light"] .theme-toggle .sun-icon {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-    }
-
-    :root[data-theme="light"] .theme-toggle .moon-icon {
-        opacity: 0;
-        transform: rotate(90deg) scale(0);
-    }
 
     .particle {
         position: absolute;

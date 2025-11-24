@@ -346,33 +346,9 @@ const initTypewriter = () => {
 };
 
 /**
- * Theme Toggle
- */
-const initThemeToggle = () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    if (!themeToggle) return;
-
-    // Check for saved theme preference or default to 'dark'
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-
-    themeToggle.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme');
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
-};
-
-
-
-/**
  * Initialize Application
  */
 const init = () => {
-    // Initialize theme first
-    initThemeToggle();
 
     new ParticleSystem();
     initMobileMenu();
