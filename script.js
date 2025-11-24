@@ -1,427 +1,401 @@
-// ============================================
-// PORTFOLIO JAVASCRIPT - OPTIMIZED
-// ============================================
+/**
+ * Portfolio JavaScript
+ * Optimized for performance and readability
+ */
 
-(function() {
-    'use strict';
+'use strict';
 
-    // ============================================
-    // CONFIGURATION & CONSTANTS
-    // ============================================
-    const CONFIG = {
-        navScrollThreshold: 50,
-        particleCount: 50,
-        debounceDelay: 150,
-        throttleDelay: 16, // ~60fps
-        observerThreshold: 0.1,
-        observerRootMargin: '0px 0px -50px 0px'
+// Configuration
+const CONFIG = {
+    scrollThreshold: 50,
+    throttleDelay: 16, // ~60fps
+    debounceDelay: 150,
+    typewriterSpeed: 100,
+    typewriterDelay: 2000
+};
+
+// DOM Elements Cache
+const DOM = {
+    navbar: document.getElementById('navbar'),
+    menuToggle: document.querySelector('.menu-toggle'),
+    navLinks: document.querySelector('.nav-links'),
+    sections: document.querySelectorAll('section[id]'),
+    scrollIndicator: document.querySelector('.scroll-indicator'),
+    subtitle: document.querySelector('.subtitle')
+};
+
+/**
+ * Utility: Throttle function
+ * @param {Function} func - Function to throttle
+ * @param {number} limit - Time limit in ms
+ */
+const throttle = (func, limit) => {
+    let inThrottle;
+    return (...args) => {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
     };
+};
 
-    // Cache DOM elements for better performance
-    const DOM = {
-        navbar: null,
-        menuToggle: null,
-        navLinks: null,
-        particlesContainer: null,
-        scrollIndicator: null,
-        body: document.body,
-        sections: null,
-        shapes: null
+/**
+ * Utility: Debounce function
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Wait time in ms
+ */
+const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
+};
 
-    // ============================================
-    // UTILITY FUNCTIONS
-    // ============================================
+/**
+ * Navbar Scroll Effect
+ * Toggles 'scrolled' class based on scroll position
+ */
+const handleNavbarScroll = () => {
+    if (!DOM.navbar) return;
+    const isScrolled = window.scrollY > CONFIG.scrollThreshold;
+    DOM.navbar.classList.toggle('scrolled', isScrolled);
+};
 
-    // Debounce function for performance optimization
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
+/**
+ * Active Navigation Link
+ * Highlights the current section in the navbar
+ */
+const updateActiveNavLink = () => {
+    if (!DOM.sections.length) return;
 
-    // Throttle function with requestAnimationFrame fallback
-    function throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
+    const scrollY = window.scrollY;
+    const navHeight = DOM.navbar ? DOM.navbar.offsetHeight : 0;
+    const viewportMiddle = scrollY + (window.innerHeight / 3);
 
-    // Cache DOM elements on init
-    function cacheDOMElements() {
-        DOM.navbar = document.getElementById('navbar');
-        DOM.menuToggle = document.querySelector('.menu-toggle');
-        DOM.navLinks = document.querySelector('.nav-links');
-        DOM.particlesContainer = document.getElementById('particles');
-        DOM.scrollIndicator = document.querySelector('.scroll-indicator');
-        DOM.sections = document.querySelectorAll('section[id]');
-        DOM.shapes = document.querySelectorAll('.shape');
-    }
+    let currentSectionId = '';
 
-    // ============================================
-    // SMOOTH SCROLLING FOR NAVIGATION LINKS
-    // ============================================
-    function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href === '#') return;
+    DOM.sections.forEach(section => {
+        const sectionTop = section.offsetTop - navHeight - 100;
+        const sectionBottom = sectionTop + section.offsetHeight;
 
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    const navHeight = DOM.navbar?.offsetHeight || 0;
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    closeMobileMenu();
-                }
-            });
-        });
-    }
-
-    // ============================================
-    // MOBILE MENU TOGGLE
-    // ============================================
-    function initMobileMenu() {
-        if (!DOM.menuToggle || !DOM.navLinks) return;
-
-        // Toggle menu
-        DOM.menuToggle.addEventListener('click', toggleMobileMenu);
-
-        // Close on outside click
-        document.addEventListener('click', (e) => {
-            if (!DOM.menuToggle.contains(e.target) && !DOM.navLinks.contains(e.target)) {
-                closeMobileMenu();
-            }
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeMobileMenu();
-        });
-
-        // Close menu when clicking nav links
-        DOM.navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-    }
-
-    function toggleMobileMenu() {
-        const isActive = DOM.menuToggle.classList.toggle('active');
-        DOM.navLinks.classList.toggle('active');
-        DOM.body.style.overflow = isActive ? 'hidden' : '';
-        
-        // Update ARIA attributes for accessibility
-        DOM.menuToggle.setAttribute('aria-expanded', isActive);
-        DOM.navLinks.setAttribute('aria-hidden', !isActive);
-    }
-
-    function closeMobileMenu() {
-        if (DOM.menuToggle && DOM.navLinks) {
-            DOM.menuToggle.classList.remove('active');
-            DOM.navLinks.classList.remove('active');
-            DOM.body.style.overflow = '';
-            DOM.menuToggle.setAttribute('aria-expanded', 'false');
-            DOM.navLinks.setAttribute('aria-hidden', 'true');
+        if (viewportMiddle >= sectionTop && viewportMiddle < sectionBottom) {
+            currentSectionId = section.getAttribute('id');
         }
+    });
+
+    if (currentSectionId) {
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
+        });
+    }
+};
+
+/**
+ * Mobile Menu Toggle
+ */
+
+function closeMobileMenu() {
+    if (!DOM.menuToggle || !DOM.navLinks) return;
+    DOM.menuToggle.classList.remove('active');
+    DOM.navLinks.classList.remove('active');
+    document.body.style.overflow = '';
+    DOM.menuToggle.setAttribute('aria-expanded', 'false');
+}
+
+function toggleMobileMenu() {
+    console.log('Toggling mobile menu');
+    if (!DOM.menuToggle || !DOM.navLinks) return;
+    const isExpanded = DOM.menuToggle.getAttribute('aria-expanded') === 'true';
+    DOM.menuToggle.setAttribute('aria-expanded', !isExpanded);
+    DOM.menuToggle.classList.toggle('active');
+    DOM.navLinks.classList.toggle('active');
+    document.body.style.overflow = !isExpanded ? 'hidden' : '';
+}
+
+function initMobileMenu() {
+    if (!DOM.menuToggle || !DOM.navLinks) {
+        console.error('Mobile menu elements not found', { toggle: DOM.menuToggle, links: DOM.navLinks });
+        return;
     }
 
-    // ============================================
-    // ACTIVE NAVIGATION ON SCROLL
-    // ============================================
-    let currentActiveSection = null;
+    console.log('Initializing mobile menu');
+    DOM.menuToggle.addEventListener('click', toggleMobileMenu);
 
-    function updateActiveNavLink() {
-        if (!DOM.sections || DOM.sections.length === 0) return;
+    document.addEventListener('click', (e) => {
+        if (!DOM.menuToggle.contains(e.target) && !DOM.navLinks.contains(e.target)) {
+            closeMobileMenu();
+        }
+    });
 
-        const scrollY = window.pageYOffset;
-        const navHeight = DOM.navbar?.offsetHeight || 0;
-        const viewportMiddle = scrollY + (window.innerHeight / 3);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMobileMenu();
+    });
 
-        let activeSection = null;
+    DOM.navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+}
 
-        // Find the section closest to viewport middle
-        DOM.sections.forEach(section => {
-            const sectionTop = section.offsetTop - navHeight - 100;
-            const sectionBottom = sectionTop + section.offsetHeight;
+/**
+ * Smooth Scroll
+ */
+const initSmoothScroll = () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
 
-            if (viewportMiddle >= sectionTop && viewportMiddle < sectionBottom) {
-                activeSection = section.getAttribute('id');
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const navHeight = DOM.navbar ? DOM.navbar.offsetHeight : 0;
+                const targetPosition = target.offsetTop - navHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
             }
         });
+    });
+};
 
-        // Only update DOM if active section changed
-        if (activeSection && activeSection !== currentActiveSection) {
-            currentActiveSection = activeSection;
-            const navLinks = DOM.navLinks?.querySelectorAll('a') || [];
-            
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href === `#${activeSection}`) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-    }
+// ============================================
+// INTERACTIVE PARTICLE SYSTEM (CANVAS)
+// ============================================
+class ParticleSystem {
+    constructor() {
+        this.canvas = document.getElementById('particle-canvas');
+        if (!this.canvas) return;
 
-    // ============================================
-    // NAVBAR SCROLL EFFECT
-    // ============================================
-    let isNavbarScrolled = false;
-
-    function handleNavbarScroll() {
-        if (!DOM.navbar) return;
-
-        const shouldBeScrolled = window.pageYOffset > CONFIG.navScrollThreshold;
-        
-        // Only update DOM if state changed
-        if (shouldBeScrolled !== isNavbarScrolled) {
-            isNavbarScrolled = shouldBeScrolled;
-            DOM.navbar.classList.toggle('scrolled', shouldBeScrolled);
-        }
-    }
-
-    // ============================================
-    // PARALLAX EFFECT FOR SHAPES
-    // ============================================
-    function handleParallax() {
-        if (!DOM.shapes || DOM.shapes.length === 0) return;
-
-        const scrolled = window.pageYOffset;
-        
-        // Use transform for better performance
-        DOM.shapes.forEach((shape, index) => {
-            const speed = 0.5 + (index * 0.1);
-            const translateY = scrolled * speed;
-            shape.style.transform = `translate3d(0, ${translateY}px, 0)`;
-        });
-    }
-
-    // ============================================
-    // PARTICLE SYSTEM GENERATION
-    // ============================================
-    function initParticles() {
-        if (!DOM.particlesContainer) return;
-
-        // Use DocumentFragment for better performance
-        const fragment = document.createDocumentFragment();
-        
-        for (let i = 0; i < CONFIG.particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Set all styles at once
-            const size = 1 + Math.random() * 2;
-            const left = Math.random() * 100;
-            const delay = Math.random() * 20;
-            const duration = 15 + Math.random() * 10;
-            
-            particle.style.cssText = `
-                left: ${left}%;
-                animation-delay: ${delay}s;
-                animation-duration: ${duration}s;
-                width: ${size}px;
-                height: ${size}px;
-            `;
-            
-            fragment.appendChild(particle);
-        }
-        
-        DOM.particlesContainer.innerHTML = '';
-        DOM.particlesContainer.appendChild(fragment);
-    }
-
-    // ============================================
-    // PROJECT CARD INTERACTIONS
-    // ============================================
-    function initProjectCards() {
-        const projectCards = document.querySelectorAll('.project-card');
-        
-        projectCards.forEach(card => {
-            // Use CSS classes instead of inline styles when possible
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-            
-            // Keyboard accessibility
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    const link = this.querySelector('.view-project');
-                    if (link) link.click();
-                }
-            });
-
-            // Add focus indicator
-            card.setAttribute('tabindex', '0');
-        });
-    }
-
-    // ============================================
-    // INTERSECTION OBSERVER FOR ANIMATIONS
-    // ============================================
-    function initScrollAnimations() {
-        // Check if IntersectionObserver is supported
-        if (!('IntersectionObserver' in window)) {
-            // Fallback: add animated class to all elements immediately
-            document.querySelectorAll('.project-card, .education-item, .skill-category, .glass-card')
-                .forEach(el => el.classList.add('animated'));
-            return;
-        }
-
-        const observerOptions = {
-            threshold: CONFIG.observerThreshold,
-            rootMargin: CONFIG.observerRootMargin
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.mouse = { x: null, y: null };
+        this.config = {
+            particleCount: window.innerWidth < 768 ? 35 : 70,
+            connectionDistance: 160,
+            mouseDistance: 220,
+            baseSpeed: 0.4,
+            pulseSpeed: 0.02
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    // Optionally unobserve after animation to save resources
-                    observer.unobserve(entry.target);
-                }
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        this.createParticles();
+        this.addEventListeners();
+        this.animate();
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    createParticles() {
+        this.particles = [];
+        for (let i = 0; i < this.config.particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * this.config.baseSpeed,
+                vy: (Math.random() - 0.5) * this.config.baseSpeed,
+                size: Math.random() * 2 + 1,
+                baseSize: Math.random() * 2 + 1,
+                pulse: Math.random() * Math.PI * 2
             });
-        }, observerOptions);
-
-        const animatedElements = document.querySelectorAll(
-            '.project-card, .education-item, .skill-category, .glass-card'
-        );
-
-        animatedElements.forEach(el => observer.observe(el));
-    }
-
-    // ============================================
-    // SCROLL INDICATOR
-    // ============================================
-    let isScrollIndicatorVisible = true;
-
-    function initScrollIndicator() {
-        if (!DOM.scrollIndicator) return;
-
-        DOM.scrollIndicator.addEventListener('click', () => {
-            const aboutSection = document.getElementById('about');
-            if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        // Throttled scroll handler for indicator
-        const handleIndicatorScroll = throttle(() => {
-            const shouldBeVisible = window.pageYOffset <= 200;
-            
-            if (shouldBeVisible !== isScrollIndicatorVisible) {
-                isScrollIndicatorVisible = shouldBeVisible;
-                DOM.scrollIndicator.style.opacity = shouldBeVisible ? '1' : '0';
-                DOM.scrollIndicator.style.pointerEvents = shouldBeVisible ? 'auto' : 'none';
-            }
-        }, CONFIG.throttleDelay);
-
-        window.addEventListener('scroll', handleIndicatorScroll, { passive: true });
-    }
-
-    // ============================================
-    // OPTIMIZED SCROLL LOOP
-    // ============================================
-    let rafId = null;
-    let lastScrollY = window.pageYOffset;
-
-    function animationLoop() {
-        const currentScrollY = window.pageYOffset;
-        
-        // Only run updates if scroll position changed
-        if (currentScrollY !== lastScrollY) {
-            handleNavbarScroll();
-            updateActiveNavLink();
-            handleParallax();
-            lastScrollY = currentScrollY;
-        }
-        
-        rafId = requestAnimationFrame(animationLoop);
-    }
-
-    // ============================================
-    // PERFORMANCE MONITORING (Optional)
-    // ============================================
-    function logPerformanceMetrics() {
-        if (window.performance && window.performance.timing) {
-            const perfData = window.performance.timing;
-            const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-            console.log(`✨ Page loaded in ${pageLoadTime}ms`);
         }
     }
 
-    // ============================================
-    // CLEANUP ON PAGE UNLOAD
-    // ============================================
-    function cleanup() {
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-        }
-    }
-
-    // ============================================
-    // INITIALIZE ALL FUNCTIONS
-    // ============================================
-    function init() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-            return;
-        }
-
-        // Cache DOM elements first
-        cacheDOMElements();
-
-        // Initialize all features
-        initSmoothScroll();
-        initMobileMenu();
-        initParticles();
-        initProjectCards();
-        initScrollAnimations();
-        initScrollIndicator();
-
-        // Start animation loop
-        animationLoop();
-
-        // Handle window resize with debouncing
+    addEventListeners() {
         window.addEventListener('resize', debounce(() => {
-            if (window.innerWidth > 768) {
-                closeMobileMenu();
-            }
-            // Re-cache elements that might have changed
-            cacheDOMElements();
-        }, CONFIG.debounceDelay), { passive: true });
+            this.resize();
+            this.createParticles();
+        }, 200));
 
-        // Initial calls
+        window.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.x;
+            this.mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            this.mouse.x = null;
+            this.mouse.y = null;
+        });
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // Update and draw particles
+        this.particles.forEach(p => {
+            // Pulse effect
+            p.pulse += this.config.pulseSpeed;
+            p.size = p.baseSize + Math.sin(p.pulse) * 0.5;
+
+            // Move
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Bounce off edges
+            if (p.x < 0 || p.x > this.canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > this.canvas.height) p.vy *= -1;
+
+            // Mouse interaction
+            if (this.mouse.x != null) {
+                const dx = this.mouse.x - p.x;
+                const dy = this.mouse.y - p.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < this.config.mouseDistance) {
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const force = (this.config.mouseDistance - distance) / this.config.mouseDistance;
+
+                    // Gentle attraction
+                    const directionX = forceDirectionX * force * this.config.baseSpeed * 2;
+                    const directionY = forceDirectionY * force * this.config.baseSpeed * 2;
+
+                    p.x += directionX;
+                    p.y += directionY;
+                }
+            }
+
+            // Draw particle
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + Math.sin(p.pulse) * 0.2})`;
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, Math.max(0, p.size), 0, Math.PI * 2);
+            this.ctx.fill();
+        });
+
+        // Draw connections
+        this.connectParticles();
+
+        requestAnimationFrame(() => this.animate());
+    }
+
+    connectParticles() {
+        for (let i = 0; i < this.particles.length; i++) {
+            for (let j = i; j < this.particles.length; j++) {
+                const dx = this.particles[i].x - this.particles[j].x;
+                const dy = this.particles[i].y - this.particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < this.config.connectionDistance) {
+                    const opacity = 1 - (distance / this.config.connectionDistance);
+                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                    this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                    this.ctx.stroke();
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Intersection Observer for Animations
+ */
+const initScrollAnimations = () => {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const elementsToAnimate = document.querySelectorAll(
+        '.project-card, .education-item, .skill-category, .glass-card, .timeline-item'
+    );
+
+    elementsToAnimate.forEach(el => observer.observe(el));
+};
+
+/**
+ * Typewriter Effect for Subtitle
+ */
+const initTypewriter = () => {
+    if (!DOM.subtitle) return;
+
+    const text = DOM.subtitle.textContent;
+    DOM.subtitle.textContent = '';
+
+    let i = 0;
+    const type = () => {
+        if (i < text.length) {
+            DOM.subtitle.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, CONFIG.typewriterSpeed);
+        }
+    };
+
+    setTimeout(type, CONFIG.typewriterDelay);
+};
+
+/**
+ * Theme Toggle
+ */
+const initThemeToggle = () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    // Check for saved theme preference or default to 'dark'
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+};
+
+
+
+/**
+ * Initialize Application
+ */
+const init = () => {
+    // Initialize theme first
+    initThemeToggle();
+
+    new ParticleSystem();
+    initMobileMenu();
+    initSmoothScroll();
+    initScrollAnimations();
+    initTypewriter();
+
+    // Scroll Event Listeners (Throttled)
+    window.addEventListener('scroll', throttle(() => {
         handleNavbarScroll();
         updateActiveNavLink();
+    }, CONFIG.throttleDelay));
 
-        // Cleanup on unload
-        window.addEventListener('beforeunload', cleanup);
+    // Initial check
+    handleNavbarScroll();
+    updateActiveNavLink();
 
-        // Optional performance logging
-        window.addEventListener('load', logPerformanceMetrics);
+    console.log('🚀 Portfolio initialized');
+};
 
-        console.log('⚡ Portfolio initialized with optimizations!');
-    }
-
-    // Start initialization
+// Run when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
     init();
-
-})();
+}
