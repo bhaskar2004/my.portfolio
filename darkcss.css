@@ -13,6 +13,7 @@
         --color-border-hover: rgba(255, 255, 255, 0.3);
         --color-primary: #ffffff;
         --color-accent: #ffffff;
+        --color-particle-rgb: 255, 255, 255;
 
         /* Spacing */
         --spacing-xs: 4px;

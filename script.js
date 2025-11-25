@@ -261,6 +261,10 @@ class ParticleSystem {
     animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Get particle color from CSS variable
+        const style = getComputedStyle(document.body);
+        const particleColor = style.getPropertyValue('--color-particle-rgb').trim() || '255, 255, 255';
+
         // Update and draw particles
         this.particles.forEach(p => {
             // Pulse effect
@@ -296,19 +300,19 @@ class ParticleSystem {
             }
 
             // Draw particle
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + Math.sin(p.pulse) * 0.2})`;
+            this.ctx.fillStyle = `rgba(${particleColor}, ${0.3 + Math.sin(p.pulse) * 0.2})`;
             this.ctx.beginPath();
             this.ctx.arc(p.x, p.y, Math.max(0, p.size), 0, Math.PI * 2);
             this.ctx.fill();
         });
 
         // Draw connections
-        this.connectParticles();
+        this.connectParticles(particleColor);
 
         requestAnimationFrame(() => this.animate());
     }
 
-    connectParticles() {
+    connectParticles(color) {
         for (let i = 0; i < this.particles.length; i++) {
             for (let j = i; j < this.particles.length; j++) {
                 const dx = this.particles[i].x - this.particles[j].x;
@@ -317,7 +321,7 @@ class ParticleSystem {
 
                 if (distance < this.config.connectionDistance) {
                     const opacity = 1 - (distance / this.config.connectionDistance);
-                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.2})`;
+                    this.ctx.strokeStyle = `rgba(${color}, ${opacity * 0.2})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.beginPath();
                     this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
