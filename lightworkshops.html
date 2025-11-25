@@ -8,9 +8,28 @@
   <meta name="description"
     content="Workshops and events organized and contributed to by Bhaskar T, including SUI Move 101 workshop at SJCIT.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+  rel="stylesheet">
+
+  <meta name="keywords" content="Bhaskar T, Workshops, Events, SUI Move, Blockchain, Web Development, SJCIT">
+  <meta name="author" content="Bhaskar T">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f5f3ed">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Workshops & Events | Bhaskar T">
+  <meta property="og:description"
+    content="Workshops and events organized and contributed to by Bhaskar T, including SUI Move 101 workshop at SJCIT.">
+  <meta property="og:url" content="https://bhaskar.xyz/lightworkshops.html">
+  <meta property="og:image" content="https://bhaskar.xyz/logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Workshops & Events | Bhaskar T">
+  <meta name="twitter:description"
+    content="Workshops and events organized and contributed to by Bhaskar T, including SUI Move 101 workshop at SJCIT.">
+  <meta name="twitter:image" content="https://bhaskar.xyz/logo.png">
   <link rel="stylesheet" href="lightcss.css" id="theme-stylesheet">
 
   <style>
@@ -519,11 +538,31 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin-left: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Circular moving element */
+    .theme-toggle::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--text-primary);
+      transition: transform 0.3s ease;
+      transform: translateX(-10px);
+      /* Default to light position */
     }
 
     .theme-toggle:hover {
       transform: scale(1.1);
       background: var(--border);
+    }
+
+    /* Hide the SVG icons */
+    .theme-toggle svg {
+      display: none;
     }
 
     .nav-links a::after {

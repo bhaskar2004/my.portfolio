@@ -263,11 +263,31 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin-left: var(--spacing-md);
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Circular moving element */
+    .theme-toggle::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--color-text);
+        transition: transform 0.3s ease;
+        transform: translateX(10px);
+        /* Default to dark position */
     }
 
     .theme-toggle:hover {
         transform: scale(1.1);
         background: var(--color-border);
+    }
+
+    /* Hide the SVG icons */
+    .theme-toggle svg {
+        display: none;
     }
 
     /* Mobile Menu Toggle */

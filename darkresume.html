@@ -8,9 +8,29 @@
     <meta name="description"
         content="View and download the resume of Bhaskar T, Front-End Developer and Problem Solver.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+    <meta name="keywords"
+        content="Bhaskar T, Resume, CV, Front-End Developer, Web Developer, Software Engineer, Portfolio">
+    <meta name="author" content="Bhaskar T">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0a0a0f">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Resume | Bhaskar T">
+    <meta property="og:description"
+        content="View and download the resume of Bhaskar T, Front-End Developer and Problem Solver.">
+    <meta property="og:url" content="https://bhaskar.xyz/darkresume.html">
+    <meta property="og:image" content="https://bhaskar.xyz/logo.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Resume | Bhaskar T">
+    <meta name="twitter:description"
+        content="View and download the resume of Bhaskar T, Front-End Developer and Problem Solver.">
+    <meta name="twitter:image" content="https://bhaskar.xyz/logo.png">
 
     <style>
         * {
@@ -95,11 +115,31 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-left: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Circular moving element */
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            transition: transform 0.3s ease;
+            transform: translateX(10px);
+            /* Default to dark position */
         }
 
         .theme-toggle:hover {
             transform: scale(1.1);
             background: var(--border);
+        }
+
+        /* Hide the SVG icons */
+        .theme-toggle svg {
+            display: none;
         }
 
         .nav-links a::after {
