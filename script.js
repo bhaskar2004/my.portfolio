@@ -96,47 +96,6 @@ const updateActiveNavLink = () => {
  * Mobile Menu Toggle
  */
 
-function closeMobileMenu() {
-    if (!DOM.menuToggle || !DOM.navLinks) return;
-    DOM.menuToggle.classList.remove('active');
-    DOM.navLinks.classList.remove('active');
-    document.body.style.overflow = '';
-    DOM.menuToggle.setAttribute('aria-expanded', 'false');
-}
-
-function toggleMobileMenu() {
-    console.log('Toggling mobile menu');
-    if (!DOM.menuToggle || !DOM.navLinks) return;
-    const isExpanded = DOM.menuToggle.getAttribute('aria-expanded') === 'true';
-    DOM.menuToggle.setAttribute('aria-expanded', !isExpanded);
-    DOM.menuToggle.classList.toggle('active');
-    DOM.navLinks.classList.toggle('active');
-    document.body.style.overflow = !isExpanded ? 'hidden' : '';
-}
-
-function initMobileMenu() {
-    if (!DOM.menuToggle || !DOM.navLinks) {
-        console.error('Mobile menu elements not found', { toggle: DOM.menuToggle, links: DOM.navLinks });
-        return;
-    }
-
-    console.log('Initializing mobile menu');
-    DOM.menuToggle.addEventListener('click', toggleMobileMenu);
-
-    document.addEventListener('click', (e) => {
-        if (!DOM.menuToggle.contains(e.target) && !DOM.navLinks.contains(e.target)) {
-            closeMobileMenu();
-        }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMobileMenu();
-    });
-
-    DOM.navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-    });
-}
 
 /**
  * Smooth Scroll
@@ -448,7 +407,8 @@ const init = () => {
 
     new ParticleSystem();
     initThemeToggle();
-    initMobileMenu();
+    // Mobile menu initialization removed
+    // initMobileMenu();
     initSmoothScroll();
     initScrollAnimations();
     initTypewriter();

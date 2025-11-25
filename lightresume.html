@@ -213,6 +213,7 @@
             gap: 30px;
             list-style: none;
             align-items: center;
+            margin-left: auto;
         }
 
         .nav-links a {
@@ -223,6 +224,26 @@
             font-weight: 500;
             transition: all 0.3s ease;
             position: relative;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            padding: 0;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--border);
         }
 
         .nav-links a::after {
@@ -345,17 +366,20 @@
     <!-- Navigation -->
     <nav>
         <a href="index.html" class="nav-logo">← Bhaskar T</a>
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#projects">Projects</a></li>
             <li><a href="index.html#contact">Contact</a></li>
             <li><a href="index.html">Home</a></li>
         </ul>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode"
+            style="background: none; border: none; cursor: pointer; color: var(--text-primary);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+                stroke="none">
+                <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.12-1.36a5.389 5.389 0 0 1-4.52 4.52A5.5 5.5 0 1 1 12 3z">
+                </path>
+            </svg>
+        </button>
     </nav>
 
     <div class="container">
@@ -404,29 +428,10 @@
     </div>
 
     <script>
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                menuToggle.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
+        // Theme toggle redirect
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            window.location.href = 'darkresume.html';
         });
     </script>
 </body>
