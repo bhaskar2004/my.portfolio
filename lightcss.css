@@ -1489,7 +1489,7 @@
         }
 
         nav {
-            display: none;
+            padding: 15px 20px;
         }
 
         .logo {
@@ -1531,6 +1531,7 @@
         .nav-links a {
             font-size: var(--font-size-base);
             padding: var(--spacing-sm) 0;
+            color: var(--color-text);
         }
 
         /* Hero Section Mobile Centering */
