@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Bhaskar T</title>
+    <meta name="description"
+        content="View and download the resume of Bhaskar T, Front-End Developer and Problem Solver.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f5f3ed;
+            --bg-secondary: #faf8f2;
+            --text-primary: #1a1a1a;
+            --text-secondary: #3d3d3d;
+            --accent: #4a6bcf;
+            --border: #1a1a1a;
+            --card-bg: #faf8f2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                repeating-radial-gradient(circle at 17% 32%, transparent 0, rgba(45, 45, 45, 0.02) 1px, transparent 2px),
+                repeating-radial-gradient(circle at 82% 68%, transparent 0, rgba(45, 45, 45, 0.015) 1px, transparent 2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .header p {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 2px 2px 0 rgba(45, 45, 45, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 0 rgba(45, 45, 45, 0.2);
+        }
+
+        .btn.primary {
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border-color: var(--text-primary);
+        }
+
+        .btn.primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .pdf-viewer {
+            background: var(--card-bg);
+            border: 3px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 3px 3px 0 rgba(45, 45, 45, 0.2);
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 80vh;
+            min-height: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            border: 2px solid var(--border);
+        }
+
+        .pdf-container iframe,
+        .pdf-container object,
+        .pdf-container embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .pdf-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .pdf-fallback svg {
+            width: 80px;
+            height: 80px;
+            stroke: var(--accent);
+            margin-bottom: 24px;
+            opacity: 0.7;
+        }
+
+        .pdf-fallback h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .pdf-fallback p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .pdf-fallback .btn {
+            margin: 0 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 2px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer p {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .actions {
+                flex-direction: column;
+                max-width: 300px;
+                margin: 0 auto 40px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .pdf-container {
+                height: 70vh;
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resume</h1>
+            <p>Bhaskar T | Front-End Developer & Problem Solver</p>
+        </div>
+
+        <div class="actions">
+            <a href="index.html" class="btn">
+                ← Back to Portfolio
+            </a>
+            <a href="resume.pdf" download class="btn primary">
+                📥 Download PDF
+            </a>
+            <button onclick="window.print()" class="btn">
+                🖨️ Print
+            </button>
+        </div>
+
+        <div class="pdf-viewer">
+            <div class="pdf-container">
+                <object data="resume.pdf" type="application/pdf" width="100%" height="100%">
+                    <div class="pdf-fallback">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <h3>Resume.pdf</h3>
+                        <p>Your browser doesn't support PDF preview</p>
+                        <div>
+                            <a href="resume.pdf" target="_blank" class="btn primary">Open in New Tab</a>
+                            <a href="resume.pdf" download class="btn">Download PDF</a>
+                        </div>
+                    </div>
+                </object>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Bhaskar T. All rights reserved.</p>
+    </div>
+</body>
+
+</html>

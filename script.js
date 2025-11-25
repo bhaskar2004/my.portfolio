@@ -162,6 +162,102 @@ const initSmoothScroll = () => {
     });
 };
 
+/**
+ * Theme Toggle Functionality
+ */
+const initThemeToggle = () => {
+    console.log('🎨 Theme Toggle: Function called');
+
+    // Wait a bit to ensure DOM is fully loaded
+    setTimeout(() => {
+        const toggleBtn = document.querySelector('#theme-toggle');
+        const themeStylesheet = document.querySelector('#theme-stylesheet');
+        const workshopLinks = document.querySelectorAll('a[href*="workshop"]');
+        const resumeLinks = document.querySelectorAll('a[href*="resume.html"], a[href*="darkresume"], a[href*="lightresume"]');
+
+        console.log('🔍 Elements found:', {
+            button: !!toggleBtn,
+            stylesheet: !!themeStylesheet,
+            workshopLinks: workshopLinks.length,
+            resumeLinks: resumeLinks.length,
+            buttonElement: toggleBtn,
+            stylesheetElement: themeStylesheet
+        });
+
+        if (!toggleBtn || !themeStylesheet) {
+            console.error('❌ Theme toggle elements not found!');
+            return;
+        }
+
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        console.log('💾 Saved theme:', savedTheme);
+
+        // Apply theme
+        const applyTheme = (theme) => {
+            if (theme === 'light') {
+                themeStylesheet.href = 'lightcss.css';
+                document.body.setAttribute('data-theme', 'light');
+                toggleBtn.classList.add('light-mode');
+
+                // Update workshop links
+                workshopLinks.forEach(link => {
+                    link.href = 'lightworkshops.html';
+                });
+
+                // Update resume links
+                resumeLinks.forEach(link => {
+                    if (!link.hasAttribute('download')) {
+                        link.href = 'lightresume.html';
+                    }
+                });
+
+                console.log('✅ Applied LIGHT theme + lightworkshops.html + lightresume.html');
+            } else {
+                themeStylesheet.href = 'darkcss.css';
+                document.body.removeAttribute('data-theme');
+                toggleBtn.classList.remove('light-mode');
+
+                // Update workshop links
+                workshopLinks.forEach(link => {
+                    link.href = 'darkworkshop.html';
+                });
+
+                // Update resume links
+                resumeLinks.forEach(link => {
+                    if (!link.hasAttribute('download')) {
+                        link.href = 'darkresume.html';
+                    }
+                });
+
+                console.log('✅ Applied DARK theme + darkworkshop.html + darkresume.html');
+            }
+        };
+
+        // Apply saved theme
+        applyTheme(savedTheme);
+
+        // Click handler
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('🖱️ Button clicked!');
+
+            const currentTheme = document.body.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            console.log(`🔄 Switching: ${currentTheme} → ${newTheme}`);
+
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            console.log('📌 New CSS:', themeStylesheet.href);
+            console.log('📌 Links updated for:', newTheme, 'theme');
+        });
+
+        console.log('✨ Theme toggle initialized successfully!');
+    }, 100);
+};
+
 // ============================================
 // INTERACTIVE PARTICLE SYSTEM (CANVAS)
 // ============================================
@@ -351,6 +447,7 @@ const initTypewriter = () => {
 const init = () => {
 
     new ParticleSystem();
+    initThemeToggle();
     initMobileMenu();
     initSmoothScroll();
     initScrollAnimations();
