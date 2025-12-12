@@ -692,6 +692,66 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Filter Buttons */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 40px 0 60px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      padding: 12px 30px;
+      background: transparent;
+      border: 2px solid var(--accent);
+      border-radius: 50px;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+      z-index: -1;
+    }
+
+    .filter-btn:hover::before,
+    .filter-btn.active::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--bg-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+
+    .filter-btn.active {
+      font-weight: 600;
+    }
+
+    /* Hide/Show cards based on filter */
+    .workshop-card.hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -723,7 +783,14 @@
       <p class="subtitle">Sharing knowledge and building together</p>
     </header>
 
-    <div class="workshop-card reveal">
+    <!-- Filter Buttons -->
+    <div class="filter-container">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="workshop">Workshops</button>
+      <button class="filter-btn" data-filter="event">Events</button>
+    </div>
+
+    <div class="workshop-card reveal" data-type="workshop">
       <h2 class="workshop-title">SUI Move 101 — Workshop Contribution</h2>
 
       <div class="badges">
@@ -787,7 +854,7 @@
         </ul>
       </div>
     </div>
-    <div class="workshop-card reveal">
+    <div class="workshop-card reveal" data-type="workshop">
       <h2 class="workshop-title">Rust x Hifly — Workshop Contribution</h2>
 
       <div class="badges">
@@ -843,6 +910,122 @@
           <li>Enhanced skills in <span class="highlight">technical event coordination</span> and design</li>
           <li>Strengthened collaboration with <span class="highlight">CSE department faculty and student teams</span>
           </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal" data-type="event">
+      <h2 class="workshop-title">Sambrama 2025 — Core Committee Member</h2>
+
+      <div class="badges">
+        <span class="badge">Graphic Design</span>
+        <span class="badge">Core Committee</span>
+        <span class="badge">Event Planning</span>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Event</span>
+          <span class="meta-value">Sambrama 2025</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Location</span>
+          <span class="meta-value">SJCIT Campus</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Core Committee Member</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Cultural Fest</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">My Contributions</h3>
+        <ul>
+          <li>Designed <span class="highlight">official promotional posters</span> for the event branding</li>
+          <li>Served as <span class="highlight">core committee member</span> coordinating event activities</li>
+          <li>Collaborated with teams to ensure <span class="highlight">smooth event execution</span></li>
+          <li>Contributed to <span class="highlight">strategic planning and decision-making</span> processes</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Responsibilities</h3>
+        <ul>
+          <li><span class="highlight">Creative design leadership</span> for visual communications</li>
+          <li><span class="highlight">Event coordination</span> across multiple departments</li>
+          <li><span class="highlight">Team collaboration</span> with organizing committee members</li>
+          <li><span class="highlight">Marketing and promotion</span> through visual content</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Impact</h3>
+        <ul>
+          <li>Enhanced skills in <span class="highlight">event management and leadership</span></li>
+          <li>Strengthened expertise in <span class="highlight">graphic design and branding</span></li>
+          <li>Developed <span class="highlight">organizational and coordination abilities</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal" data-type="event">
+      <h2 class="workshop-title">Technotsava — Event Documentation</h2>
+
+      <div class="badges">
+        <span class="badge">Photography</span>
+        <span class="badge">Videography</span>
+        <span class="badge">Event Coverage</span>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Event</span>
+          <span class="meta-value">Technotsava</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Location</span>
+          <span class="meta-value">SJCIT Campus</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Lead Documentation</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Tech Fest</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">My Role</h3>
+        <ul>
+          <li>Handled <span class="highlight">complete photography coverage</span> throughout the event</li>
+          <li>Managed <span class="highlight">videography and video documentation</span> of all key moments</li>
+          <li>Captured <span class="highlight">technical sessions, competitions, and cultural activities</span></li>
+          <li>Created <span class="highlight">visual content</span> for promotional and archival purposes</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Coverage Highlights</h3>
+        <ul>
+          <li><span class="highlight">Multi-day event documentation</span> across various venues</li>
+          <li><span class="highlight">Technical competitions</span> and hackathon coverage</li>
+          <li><span class="highlight">Guest speaker sessions</span> and panel discussions</li>
+          <li><span class="highlight">Student activities</span> and cultural performances</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Impact</h3>
+        <ul>
+          <li>Enhanced skills in <span class="highlight">event photography</span> and live coverage</li>
+          <li>Improved proficiency in <span class="highlight">video editing and production</span></li>
+          <li>Developed expertise in <span class="highlight">capturing technical events</span> effectively</li>
         </ul>
       </div>
     </div>
@@ -947,6 +1130,34 @@
 
     window.addEventListener('scroll', reveal);
     reveal();
+
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const workshopCards = document.querySelectorAll('.workshop-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+
+        workshopCards.forEach(card => {
+          if (filter === 'all') {
+            card.classList.remove('hidden');
+          } else {
+            const cardType = card.getAttribute('data-type');
+            if (cardType === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
 
     // Theme toggle redirect
     const themeToggle = document.getElementById('theme-toggle');
