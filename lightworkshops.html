@@ -11,6 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <meta name="keywords" content="Bhaskar T, Workshops, Events, SUI Move, Blockchain, Web Development, SJCIT">
   <meta name="author" content="Bhaskar T">
@@ -543,27 +544,9 @@
       overflow: hidden;
     }
 
-    /* Circular moving element */
-    .theme-toggle::before {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--text-primary);
-      transition: transform 0.3s ease;
-      transform: translateX(-10px);
-      /* Default to light position */
-    }
-
     .theme-toggle:hover {
       transform: scale(1.1);
       background: var(--border);
-    }
-
-    /* Hide the SVG icons */
-    .theme-toggle svg {
-      display: none;
     }
 
     .nav-links a::after {
@@ -767,10 +750,7 @@
     </ul>
     <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode"
       style="background: none; border: none; cursor: pointer; color: var(--text-primary);">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
-        stroke="none">
-        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.12-1.36a5.389 5.389 0 0 1-4.52 4.52A5.5 5.5 0 1 1 12 3z"></path>
-      </svg>
+      <i data-lucide="moon"></i>
     </button>
   </nav>
 
@@ -1041,6 +1021,15 @@
     </div>
   </footer>
 
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-outline" data-cursor-outline></div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
   <script>
     // Particle animation
     const canvas = document.getElementById('particles');
@@ -1161,6 +1150,7 @@
 
     // Theme toggle redirect
     const themeToggle = document.getElementById('theme-toggle');
+    lucide.createIcons();
     themeToggle.addEventListener('click', () => {
       window.location.href = 'darkworkshop.html';
     });

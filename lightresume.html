@@ -8,9 +8,9 @@
     <meta name="description"
         content="View and download the resume of Bhaskar T, Front-End Developer and Problem Solver.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <meta name="keywords"
         content="Bhaskar T, Resume, CV, Front-End Developer, Web Developer, Software Engineer, Portfolio">
@@ -171,7 +171,7 @@
             justify-content: center;
             width: 42px;
             height: 42px;
-            border-radius: 12px;
+            border-radius: 50%;
             padding: 0;
             border: 2px solid var(--border);
             background: var(--card-bg);
@@ -181,16 +181,14 @@
             position: relative;
             overflow: hidden;
             box-shadow: 2px 2px 0 rgba(45, 45, 45, 0.15);
+            color: var(--text-primary);
         }
 
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--accent);
-            transition: all 0.3s ease;
+        .theme-toggle:hover {
+            transform: scale(1.08);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(74, 107, 207, 0.3);
+            color: var(--accent);
         }
 
         .theme-toggle:hover {
@@ -557,7 +555,9 @@
             <li><a href="index.html#contact">Contact</a></li>
             <li><a href="index.html">Home</a></li>
         </ul>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode"></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">
+            <i data-lucide="moon"></i>
+        </button>
     </nav>
 
     <div class="container">
@@ -602,7 +602,17 @@
         <p>&copy; 2025 Bhaskar T. All rights reserved.</p>
     </div>
 
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+
     <script>
+        lucide.createIcons();
         // Theme toggle redirect
         const themeToggle = document.getElementById('theme-toggle');
         themeToggle.addEventListener('click', () => {

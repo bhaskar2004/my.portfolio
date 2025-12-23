@@ -192,6 +192,160 @@ const initThemeToggle = () => {
     }, 100);
 };
 
+
+
+/**
+ * Custom Cursor Logic
+ */
+const initCustomCursor = () => {
+    const cursorDot = document.querySelector('[data-cursor-dot]');
+    const cursorOutline = document.querySelector('[data-cursor-outline]');
+
+    if (!cursorDot || !cursorOutline) return;
+
+    window.addEventListener('mousemove', function (e) {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Smooth trailing effect
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: "forwards" });
+    });
+
+    // Hover effects
+    const interactiveElements = document.querySelectorAll('a, button, .project-card, .filter-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+    });
+};
+
+/**
+ * Back to Top Button
+ */
+const initBackToTop = () => {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', throttle(() => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+            backToTopBtn.classList.remove('launching');
+        }
+    }, 200));
+
+    backToTopBtn.addEventListener('click', () => {
+        if (backToTopBtn.classList.contains('launching')) return;
+
+        // 1. Ignition: Shake and slow lift
+        backToTopBtn.classList.add('launching');
+
+        const startY = window.scrollY;
+        const activationDuration = 1000; // 1s ignition
+        const startTime = performance.now();
+
+        // Phase 1: Rumble (Ignition)
+        const ignitionLoop = (currentTime) => {
+            const elapsed = currentTime - startTime;
+
+            if (elapsed > activationDuration) {
+                // Phase 2: Liftoff (Rapid Acceleration)
+                requestAnimationFrame(liftoffLoop);
+                return;
+            }
+
+            // Ease in cubic for rumble: start slow, rumble harder
+            const t = elapsed / activationDuration;
+            const rumbleAmt = 50 * (t * t); // Small rumble distance
+
+            window.scrollTo(0, startY - rumbleAmt);
+            requestAnimationFrame(ignitionLoop);
+        };
+
+        // Phase 2: Liftoff variables
+        let liftoffVelocity = 0;
+        const gravity = 2; // Acceleration factor
+
+        const liftoffLoop = () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll <= 0) {
+                // Reached Space (Top)
+                backToTopBtn.classList.remove('launching');
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            // Accelerate upwards
+            liftoffVelocity += gravity;
+            // Exponential speed increase for "Warp" feel
+            liftoffVelocity *= 1.15;
+
+            const nextScroll = currentScroll - liftoffVelocity;
+            window.scrollTo(0, nextScroll);
+            requestAnimationFrame(liftoffLoop);
+        };
+
+        requestAnimationFrame(ignitionLoop);
+    });
+};
+
+
+
+/**
+ * Scroll Progress Bar
+ */
+const initScrollProgress = () => {
+    const progressBar = document.getElementById('scroll-progress');
+    if (!progressBar) return;
+
+    window.addEventListener('scroll', throttle(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+    }, 16));
+};
+
+/**
+ * 3D Tilt Effect
+ */
+const initTiltEffect = () => {
+    const cards = document.querySelectorAll('.project-card, .glass-card, .workshop-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -5;
+            const rotateY = ((x - centerX) / centerX) * 5;
+
+            // Using requestAnimationFrame for smoother performance
+            requestAnimationFrame(() => {
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            requestAnimationFrame(() => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    });
+};
+
 // ============================================
 // INTERACTIVE PARTICLE SYSTEM (CANVAS)
 // ============================================
@@ -386,11 +540,17 @@ const init = () => {
 
     new ParticleSystem();
     initThemeToggle();
+    initCustomCursor();
+    initBackToTop();
+
+    initScrollProgress();
+    initTiltEffect();
     // Mobile menu initialization removed
     // initMobileMenu();
     initSmoothScroll();
     initScrollAnimations();
     initTypewriter();
+    lucide.createIcons();
 
     // Scroll Event Listeners (Throttled)
     window.addEventListener('scroll', throttle(() => {

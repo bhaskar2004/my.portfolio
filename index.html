@@ -59,9 +59,14 @@
     <!-- Link to external CSS -->
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="darkcss.css" id="theme-stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
+
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress" class="scroll-progress"></div>
     <!-- Page Loader -->
 
 
@@ -97,17 +102,8 @@
         </ul>
 
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-            <!-- Light mode icon (full circle) -->
-            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                fill="currentColor" stroke="none">
-                <circle cx="12" cy="12" r="6"></circle>
-            </svg>
-            <!-- Dark mode icon (half circle) -->
-            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                fill="currentColor" stroke="none">
-                <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.12-1.36a5.389 5.389 0 0 1-4.52 4.52A5.5 5.5 0 1 1 12 3z">
-                </path>
-            </svg>
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
         </button>
     </nav>
 
@@ -429,6 +425,15 @@
         </div>
     </footer>
 
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
 
     <!-- Link to external JS -->
     <script src="script.js"></script>

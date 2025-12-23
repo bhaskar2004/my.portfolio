@@ -19,7 +19,7 @@
 
         /* Sketch-specific colors */
         --sketch-stroke: #1a1a1a;
-        --sketch-light-stroke: #4a4a4a;
+        --sketch-light-stroke: #7e7e7e;
         --sketch-accent-stroke: #3a5bbf;
         --sketch-bg-tint: #fcfaf5;
 
@@ -265,6 +265,7 @@
         padding: 0;
         border: 1px solid var(--color-border);
         background: var(--color-surface);
+        color: var(--color-text);
         cursor: pointer;
         transition: all 0.3s ease;
         margin-left: var(--spacing-md);
@@ -272,32 +273,16 @@
         overflow: hidden;
     }
 
-    /* Circular moving element */
-    .theme-toggle::before {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: var(--color-text);
-        transition: transform 0.3s ease;
-        transform: translateX(-10px);
-    }
-
-    /* Move circle on dark theme */
-    body.dark-theme .theme-toggle::before {
-        transform: translateX(10px);
-    }
-
     .theme-toggle:hover {
         transform: scale(1.1);
         background: var(--color-border);
+        color: var(--color-primary);
     }
 
-    /* Hide the SVG icons if you want only the circle */
-    .theme-toggle svg {
+    .theme-toggle .sun-icon {
         display: none;
     }
+
 
     /* Mobile Menu Toggle - Sketch style */
     .menu-toggle {
@@ -825,7 +810,7 @@
     .glass-card {
         background: var(--color-surface);
         border: 3px solid var(--sketch-stroke);
-        border-radius: var(--radius-lg);
+        border-radius: 24px;
         overflow: hidden;
         position: relative;
         box-shadow: var(--shadow-md);
@@ -1967,4 +1952,131 @@
         .projects-grid {
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         }
+    }
+
+    /* =========================================
+       UX Enhancements
+       ========================================= */
+
+    /* 1. Custom Cursor */
+    .cursor-dot,
+    .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+    }
+
+    .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--accent);
+    }
+
+    .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--accent);
+        background-color: transparent;
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+
+    /* Hover state for cursor */
+    body.hovering .cursor-outline {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(74, 107, 207, 0.1);
+        border-color: transparent;
+    }
+
+    /* 2. Back-to-Top Button */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        border: 2px solid var(--border);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: var(--shadow-md);
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+        background: var(--accent);
+        color: var(--bg-primary);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .back-to-top.launching {
+        background: var(--accent);
+        color: var(--bg-primary);
+        box-shadow: 0 0 20px var(--accent);
+    }
+
+    /* 3. Active Nav Link (Scroll Spy) */
+    .nav-links a.active {
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .nav-links a.active::after {
+        width: 100%;
+    }
+
+    /* =========================================
+       Visual Enhancements (Preloader, Scroll, Tilt)
+       ========================================= */
+
+    /* 4. Preloader Removed */
+
+    /* 5. Scroll Progress Bar */
+    .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--accent), #4a6bcf);
+        z-index: 9999;
+        transition: width 0.1s linear;
+        box-shadow: 0 0 10px rgba(74, 107, 207, 0.4);
+    }
+
+    /* 6. 3D Tilt Effect Base Styles */
+    .project-card,
+    .glass-card,
+    .workshop-card {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        will-change: transform;
+    }
+
+    .project-content,
+    .workshop-title,
+    .badges,
+    .meta-grid,
+    .section {
+        transform: translateZ(20px);
+        transform-style: preserve-3d;
     }
