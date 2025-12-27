@@ -994,9 +994,8 @@
     }
 
     .project-card:hover {
-        transform: translateY(-5px);
         border-color: var(--color-text);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
     }
 
     .project-title {
@@ -1110,9 +1109,7 @@
 
     .view-project:hover {
         color: #fff;
-        transform: translateY(-3px) scale(1.04);
-        box-shadow: 0 6px 20px rgba(150, 150, 150, 0.45);
-        animation: metallicPulse 1.7s ease-in-out infinite;
+        box-shadow: 0 4px 15px rgba(150, 150, 150, 0.3);
     }
 
     /* Focus state */
@@ -1987,13 +1984,13 @@
         transition: width 0.2s, height 0.2s, background-color 0.2s;
     }
 
-    /* Hover state for cursor */
+    /* Hover state for cursor
     body.hovering .cursor-outline {
         width: 60px;
         height: 60px;
         background-color: rgba(183, 148, 246, 0.1);
         border-color: transparent;
-    }
+    } */
 
     /* 2. Back-to-Top Button */
     .back-to-top {

@@ -315,36 +315,37 @@ const initScrollProgress = () => {
 };
 
 /**
- * 3D Tilt Effect
+ * 3D Tilt Effect - DISABLED
+ * Removed to create a flatter, cleaner UI
  */
-const initTiltEffect = () => {
-    const cards = document.querySelectorAll('.project-card, .glass-card, .workshop-card');
+// const initTiltEffect = () => {
+//     const cards = document.querySelectorAll('.project-card, .glass-card, .workshop-card');
 
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+//     cards.forEach(card => {
+//         card.addEventListener('mousemove', (e) => {
+//             const rect = card.getBoundingClientRect();
+//             const x = e.clientX - rect.left;
+//             const y = e.clientY - rect.top;
 
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+//             const centerX = rect.width / 2;
+//             const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -5;
-            const rotateY = ((x - centerX) / centerX) * 5;
+//             const rotateX = ((y - centerY) / centerY) * -5;
+//             const rotateY = ((x - centerX) / centerX) * 5;
 
-            // Using requestAnimationFrame for smoother performance
-            requestAnimationFrame(() => {
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-            });
-        });
+//             // Using requestAnimationFrame for smoother performance
+//             requestAnimationFrame(() => {
+//                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+//             });
+//         });
 
-        card.addEventListener('mouseleave', () => {
-            requestAnimationFrame(() => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            });
-        });
-    });
-};
+//         card.addEventListener('mouseleave', () => {
+//             requestAnimationFrame(() => {
+//                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+//             });
+//         });
+//     });
+// };
 
 // ============================================
 // INTERACTIVE PARTICLE SYSTEM (CANVAS)
@@ -544,7 +545,7 @@ const init = () => {
     initBackToTop();
 
     initScrollProgress();
-    initTiltEffect();
+    // initTiltEffect(); // Disabled for flatter UI
     // Mobile menu initialization removed
     // initMobileMenu();
     initSmoothScroll();
