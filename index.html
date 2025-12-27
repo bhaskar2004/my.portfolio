@@ -5,29 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Primary Meta Tags -->
     <meta name="description"
         content="Bhaskar - Front-End Developer and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz.">
     <meta name="keywords"
         content="Bhaskar, Bhaskar T, Bhaskar portfolio, Bhaskar developer, Bhaskar XYZ, Front-End Developer, Web Developer, HTML CSS JS, Computer Science Student, SJCIT">
     <meta name="author" content="Bhaskar">
-
-    <!-- Allow indexing -->
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://bhaskar.xyz">
 
-    <!-- Theme color -->
+    <!-- Theme & Favicon -->
     <meta name="theme-color" content="#6366f1">
     <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
 
-    <!-- Open Graph (social media preview) -->
+    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Bhaskar - Front-End Developer Portfolio">
     <meta property="og:description"
         content="Explore Bhaskar's web development projects, skills, and journey at bhaskar.xyz.">
     <meta property="og:image" content="https://bhaskar.xyz/logo.png">
     <meta property="og:url" content="https://bhaskar.xyz">
-
-    <title>Bhaskar T | Front-End Developer & Problem Solver</title>
+    <meta property="og:site_name" content="Bhaskar.xyz">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -36,45 +35,62 @@
         content="Front-End Developer and Problem Solver. Explore my projects and tech journey.">
     <meta name="twitter:image" content="https://bhaskar.xyz/logo.png">
 
+    <title>Bhaskar T | Front-End Developer & Problem Solver</title>
+
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Bhaskar.xyz",
-  "url": "https://bhaskar.xyz",
-  "logo": "https://bhaskar.xyz/logo.png"
-}
-</script>
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Bhaskar T",
+        "url": "https://bhaskar.xyz",
+        "image": "https://bhaskar.xyz/logo.png",
+        "jobTitle": "Front-End Developer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "SJC Institute of Technology"
+        },
+        "sameAs": [
+            "https://github.com/bhaskar2004",
+            "https://www.linkedin.com/in/bhaskart2004/"
+        ],
+        "email": "bhaskart.dev@gmail.com"
+    }
+    </script>
 
-
-
-    <!-- Preconnect to external domains -->
+    <!-- Preconnect to External Domains for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://unpkg.com">
 
-    <!-- Link to external CSS -->
-    <!-- Link to external CSS -->
+    <!-- Fonts -->
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+            rel="stylesheet">
+    </noscript>
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="darkcss.css" id="theme-stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 
 <body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="scroll-progress" role="progressbar" aria-label="Page scroll progress"
+        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
+    <!-- Interactive Particle Canvas -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-    <!-- Scroll Progress -->
-    <div id="scroll-progress" class="scroll-progress"></div>
-    <!-- Page Loader -->
-
-
-    <!-- Canvas for Interactive Particles -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- Liquid Glass Orbs -->
-    <div class="geometric-shapes">
+    <!-- Decorative Background Shapes -->
+    <div class="geometric-shapes" aria-hidden="true">
         <div class="liquid-orb"></div>
         <div class="liquid-orb"></div>
         <div class="liquid-orb"></div>
@@ -85,14 +101,13 @@
     </div>
 
     <!-- Particle System -->
-    <div class="particles" id="particles"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
 
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
         <div class="logo">
-            <img src="logo.png" alt="Bhaskar T Logo" class="logo-img">
+            <img src="logo.png" alt="Bhaskar T Logo" class="logo-img" width="40" height="40">
         </div>
-
 
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
@@ -101,284 +116,385 @@
             <li><a href="darkworkshop.html">Workshops & Events</a></li>
         </ul>
 
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-            <i data-lucide="sun" class="sun-icon"></i>
-            <i data-lucide="moon" class="moon-icon"></i>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+            <i data-lucide="sun" class="sun-icon" aria-hidden="true"></i>
+            <i data-lucide="moon" class="moon-icon" aria-hidden="true"></i>
         </button>
     </nav>
 
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="portfolio-label font-mono" aria-label="Portfolio site">PORTFOLIO</div>
+                <h1>&lt; Bhaskar T &gt;</h1>
+                <p class="subtitle font-mono">Front-End Dev & Problem Solver</p>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn primary">Contact Me</a>
+                    <a href="#projects" class="btn secondary">View Projects</a>
+                    <a href="darkresume.html" class="btn outline">View Resume</a>
+                </div>
 
-
-            <div class="portfolio-label font-mono">PORTFOLIO</div>
-            <h1>&lt; Bhaskar T &gt;</h1>
-            <p class="subtitle font-mono">Front-End Dev & Problem Solver</p>
-
-            <div class="cta-buttons">
-                <a href="#contact" class="btn primary">Contact Me</a>
-                <a href="#projects" class="btn secondary">View Projects</a>
-                <a href="darkresume.html" class="btn outline">View Resume</a>
-                <!-- <a href="resume.pdf" class="btn outline" download>Download Resume</a> -->
+                <div class="social-links" role="list" aria-label="Social media links">
+                    <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer"
+                        aria-label="Visit my GitHub profile">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Visit my LinkedIn profile">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:bhaskart.dev@gmail.com" aria-label="Send me an email">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z" />
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <div class="social-links">
-                <a href="https://github.com/bhaskar2004" target="_blank">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                </a>
-                <a href="mailto:bhaskart.dev@gmail.com">
-                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z" />
-                    </svg>
-                </a>
-            </div>
+        </section>
 
-        </div>
-    </section>
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <p class="about-content">
+                    I'm an average Computer Science student who's learning to build exceptional things. I turn ideas
+                    into
+                    impactful, user-friendly solutions by staying committed to continuous learning and focusing on
+                    clean,
+                    accessible, and performant web experiences.
+                </p>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <p class="about-content">
-                I'm an average Computer Science student who's learning to build exceptional things. I turn ideas into
-                impactful, user-friendly solutions by staying committed to continuous learning and focusing on clean,
-                accessible, and performant web experiences.
-            </p>
+                <div class="about-grid">
+                    <!-- Education Timeline -->
+                    <div class="timeline-section">
+                        <h3 class="section-title font-mono">EDUCATION TIMELINE</h3>
 
-            <div class="about-grid">
-                <div class="timeline-section">
-                    <div class="section-title font-mono">EDUCATION TIMELINE</div>
+                        <div class="timeline" role="list">
+                            <article class="timeline-item" role="listitem">
+                                <time class="timeline-date font-mono" datetime="2022/2026">2022 - 2026</time>
+                                <div class="timeline-content">
+                                    <h4>SJC Institute of Technology</h4>
+                                    <p>Computer Science Engineering</p>
+                                    <span class="grade font-mono">8.67 CGPA</span>
+                                </div>
+                            </article>
 
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date font-mono">2022 - 2026</div>
-                            <div class="timeline-content">
-                                <h3>SJC Institute of Technology</h3>
-                                <p>Computer Science Engineering</p>
-                                <span class="grade font-mono">8.67 CGPA</span>
-                            </div>
+                            <article class="timeline-item" role="listitem">
+                                <time class="timeline-date font-mono">Completed</time>
+                                <div class="timeline-content">
+                                    <h4>BGS PU College</h4>
+                                    <p>Pre-University</p>
+                                    <span class="grade font-mono">91.33%</span>
+                                </div>
+                            </article>
+
+                            <article class="timeline-item" role="listitem">
+                                <time class="timeline-date font-mono">Completed</time>
+                                <div class="timeline-content">
+                                    <h4>BGS Public School</h4>
+                                    <p>High School</p>
+                                    <span class="grade font-mono">96.33%</span>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div class="skills-section">
+                        <h3 class="section-title">SKILLS</h3>
+
+                        <div class="skill-category">
+                            <h4 class="skill-label">Technical Skills:</h4>
+                            <p class="skill-items">Core Java, SQL, Selenium</p>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date font-mono">Completed</div>
-                            <div class="timeline-content">
-                                <h3>BGS PU College</h3>
-                                <p>Pre-University</p>
-                                <span class="grade font-mono">91.33%</span>
-                            </div>
+                        <div class="skill-category">
+                            <h4 class="skill-label">Tools:</h4>
+                            <p class="skill-items">GitHub, IntelliJ, VS Code</p>
                         </div>
 
-                        <div class="timeline-item">
-                            <div class="timeline-date font-mono">Completed</div>
-                            <div class="timeline-content">
-                                <h3>BGS Public School</h3>
-                                <p>High School</p>
-                                <span class="grade font-mono">96.33%</span>
-                            </div>
+                        <div class="skill-category">
+                            <h4 class="skill-label">Creative:</h4>
+                            <p class="skill-items">Photography, Video Editing</p>
+                        </div>
+
+                        <div class="skill-category">
+                            <h4 class="skill-label">Languages:</h4>
+                            <p class="skill-items">English, Kannada, Telugu, Hindi</p>
+                        </div>
+
+                        <div class="skill-category">
+                            <h4 class="skill-label">Soft Skills:</h4>
+                            <p class="skill-items">Team Collaboration, Problem Solving</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="skills-section">
-                    <div class="section-title">SKILLS</div>
-
-                    <div class="skill-category">
-                        <div class="skill-label">Technical Skills:</div>
-                        <div class="skill-items">Core Java, SQL , Selenium </div>
-                    </div>
-
-                    <div class="skill-category">
-                        <div class="skill-label">Tools:</div>
-                        <div class="skill-items">GitHub, IntelliJ, VS Code</div>
-                    </div>
-
-                    <div class="skill-category">
-                        <div class="skill-label">Creative:</div>
-                        <div class="skill-items">Photography, Video Editing</div>
-                    </div>
-
-                    <div class="skill-category">
-                        <div class="skill-label">Languages:</div>
-                        <div class="skill-items">English, Kannada, Telugu, Hindi</div>
-                    </div>
-
-                    <div class="skill-category">
-                        <div class="skill-label">Soft Skills:</div>
-                        <div class="skill-items">Team Collaboration, Problem Solving</div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Vehicle Registration System</h3>
-                        <p class="project-description">A comprehensive system for managing vehicle registrations and
-                            owner details.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">Java</span>
-                            <span class="tech-tag font-mono">SQL</span>
+        <!-- Projects Section -->
+        <section class="projects" id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Projects</h2>
+                    <p class="section-subtitle">Transforming ideas into functional, user-centric solutions</p>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 1: Vehicle Registration System -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="car" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#01</span>
+                            </div>
                         </div>
-                        <div class="project-actions">
+                        <div class="project-body">
+                            <h3 class="project-title">Vehicle Registration System</h3>
+                            <p class="project-description">A comprehensive system for managing vehicle registrations and
+                                owner details with intuitive database management.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">SQL</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
                             <a href="https://github.com/bhaskar2004/vehicle-registration-management-system.git"
-                                class="view-project" target="_blank" rel="noopener noreferrer">View Code</a>
+                                class="project-link" target="_blank" rel="noopener noreferrer">
+                                <span>View on GitHub</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
                         </div>
-                    </div>
-                </div>
+                    </article>
 
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Smart Navigation (Visually Impaired)</h3>
-                        <p class="project-description">Navigation aid system designed to help visually impaired users
-                            navigate safely.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">IoT</span>
-                            <span class="tech-tag font-mono">Python</span>
+                    <!-- Project 2: Smart Navigation -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="navigation" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#02</span>
+                            </div>
                         </div>
-                        <div class="project-actions">
+                        <div class="project-body">
+                            <h3 class="project-title">Smart Navigation</h3>
+                            <p class="project-description">IoT-powered navigation aid system designed to help visually
+                                impaired users navigate safely and independently.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">IoT</span>
+                                <span class="tech-tag">Python</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
                             <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind.git"
-                                class="view-project" target="_blank" rel="noopener noreferrer">View Code</a>
+                                class="project-link" target="_blank" rel="noopener noreferrer">
+                                <span>View on GitHub</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
                         </div>
-                    </div>
+                    </article>
+
+                    <!-- Project 3: Weather Bot -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="cloud-rain" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#03</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3 class="project-title">Weather Forecast Bot</h3>
+                            <p class="project-description">Intelligent chatbot integrating OpenWeatherMap API to provide
+                                multi-city weather forecasts with formatted responses.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">BotPress</span>
+                                <span class="tech-tag">API</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="https://github.com/bhaskar2004/weather-bot" class="project-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <span>View on GitHub</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 4: Better Trips -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="map-pin" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#04</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3 class="project-title">Better Trips</h3>
+                            <p class="project-description">Responsive web application showcasing nearby attractions via
+                                Geoapify with advanced filters and routing capabilities.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Geoapify API</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="https://github.com/bhaskar2004/better-trips" class="project-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <span>View on GitHub</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 5: Blood Donor -->
+                    <article class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="heart-pulse" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#05</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3 class="project-title">Blood Donor</h3>
+                            <p class="project-description">Web platform that efficiently connects people in need of
+                                blood with available donors in their area.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Web</span>
+                                <span class="tech-tag">Database</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="https://github.com/bhaskar2004/blood-donor" class="project-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <span>View on GitHub</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 6: Feedx -->
+                    <article class="project-card featured">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="newspaper" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#06</span>
+                                <span class="project-badge">Live</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3 class="project-title">Feedx</h3>
+                            <p class="project-description">Clean and elegant news aggregator delivering the latest
+                                headlines from multiple trusted sources in one place.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">API Integration</span>
+                                <span class="tech-tag">Frontend</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="https://github.com/bhaskar2004/feedx" class="project-link secondary"
+                                target="_blank" rel="noopener noreferrer">
+                                <span>View Code</span>
+                                <i data-lucide="github" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://feedx.bhaskar.xyz/" class="project-link primary" target="_blank"
+                                rel="noopener noreferrer">
+                                <span>Live Demo</span>
+                                <i data-lucide="external-link" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Project 7: CodePreview -->
+                    <article class="project-card featured">
+                        <div class="project-header">
+                            <div class="project-icon">
+                                <i data-lucide="code-2" aria-hidden="true"></i>
+                            </div>
+                            <div class="project-meta">
+                                <span class="project-number">#07</span>
+                                <span class="project-badge">Live</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3 class="project-title">CodePreview</h3>
+                            <p class="project-description">Intuitive web-based application for previewing and testing
+                                code snippets in real-time with instant visual feedback.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
+                        </div>
+                        <div class="project-footer">
+                            <a href="https://github.com/bhaskar2004/code-preview" class="project-link secondary"
+                                target="_blank" rel="noopener noreferrer">
+                                <span>View Code</span>
+                                <i data-lucide="github" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://preview.bhaskar.xyz/" class="project-link primary" target="_blank"
+                                rel="noopener noreferrer">
+                                <span>Live Demo</span>
+                                <i data-lucide="external-link" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
                 </div>
-
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Weather Forecast Bot</h3>
-                        <p class="project-description">BotPress chatbot integrating OpenWeatherMap API for multi-city,
-                            formatted forecasts.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">BotPress</span>
-                            <span class="tech-tag font-mono">API</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/bhaskar2004/weather-bot" class="view-project" target="_blank"
-                                rel="noopener noreferrer">View Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Better Trips</h3>
-                        <p class="project-description">Responsive web app showing nearby attractions via Geoapify with
-                            filters and routing.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">JavaScript</span>
-                            <span class="tech-tag font-mono">Geoapify</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/bhaskar2004/better-trips" class="view-project" target="_blank"
-                                rel="noopener noreferrer">View Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Blood Donor</h3>
-                        <p class="project-description">A web app that connects people in need with blood donors
-                            efficiently.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">Web</span>
-                            <span class="tech-tag font-mono">Database</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/bhaskar2004/blood-donor" class="view-project" target="_blank"
-                                rel="noopener noreferrer">View Code</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Feedx</h3>
-                        <p class="project-description">Clean and simple news aggregator bringing latest headlines from
-                            various sources.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">API</span>
-                            <span class="tech-tag font-mono">Frontend</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/bhaskar2004/feedx" class="view-project" target="_blank"
-                                rel="noopener noreferrer">View Code</a>
-                            <a href="https://feedx.bhaskar.xyz/" class="view-project visit-site" target="_blank"
-                                rel="noopener noreferrer">Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card glass-card">
-                    <div class="project-content">
-                        <h3 class="project-title">CodePreview</h3>
-                        <p class="project-description">Simple web-based application designed for previewing code
-                            snippets in real-time.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag font-mono">HTML/CSS</span>
-                            <span class="tech-tag font-mono">JS</span>
-                        </div>
-                        <div class="project-actions">
-                            <a href="https://github.com/bhaskar2004/code-preview" class="view-project" target="_blank"
-                                rel="noopener noreferrer">View Code</a>
-                            <a href="https://preview.bhaskar.xyz/" class="view-project visit-site" target="_blank"
-                                rel="noopener noreferrer">Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Contact</h2>
-            <p class="contact-description">I'm open to work and collaborations. Let's connect!</p>
-            <div class="contact-links">
-                <a href="mailto:bhaskart.dev@gmail.com" class="contact-item">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z" />
-                    </svg>
-                    bhaskart.dev@gmail.com
-                </a>
-                <a href="https://github.com/bhaskar2004" target="_blank" class="contact-item">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    github.com/bhaskar2004
-                </a>
-                <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" class="contact-item">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                    linkedin.com/in/bhaskar2004
-                </a>
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2>Contact</h2>
+                <p class="contact-description">I'm open to work and collaborations. Let's connect!</p>
+                <div class="contact-links" role="list">
+                    <a href="mailto:bhaskart.dev@gmail.com" class="contact-item" role="listitem">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z" />
+                        </svg>
+                        bhaskart.dev@gmail.com
+                    </a>
+                    <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer"
+                        class="contact-item" role="listitem">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        github.com/bhaskar2004
+                    </a>
+                    <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer"
+                        class="contact-item" role="listitem">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                        linkedin.com/in/bhaskar2004
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer Section -->
     <footer>
@@ -434,17 +550,16 @@
         </div>
     </footer>
 
-
     <!-- Custom Cursor -->
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
+    <div class="cursor-dot" data-cursor-dot="" aria-hidden="true"></div>
+    <div class="cursor-outline" data-cursor-outline="" aria-hidden="true"></div>
 
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <i data-lucide="arrow-up"></i>
+        <i data-lucide="arrow-up" aria-hidden="true"></i>
     </button>
 
-    <!-- Link to external JS -->
+    <!-- Main JavaScript -->
     <script src="script.js"></script>
 </body>
 
