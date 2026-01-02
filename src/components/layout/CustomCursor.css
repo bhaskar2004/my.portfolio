@@ -1,0 +1,43 @@
+/* Custom Cursor Styles */
+
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-text, #ffffff);
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.cursor-outline {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--color-text, #ffffff);
+    border-radius: 50%;
+    opacity: 0.5;
+    transition: all 0.15s ease-out;
+}
+
+.cursor-outline.hovering {
+    width: 48px;
+    height: 48px;
+    opacity: 0.8;
+    border-color: var(--color-primary, #ffffff);
+}
+
+@media (max-width: 768px),
+(hover: none) {
+
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+}

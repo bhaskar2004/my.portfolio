@@ -1,0 +1,162 @@
+/* Navigation styles - Theme Aware */
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--spacing-md, 16px) var(--spacing-lg, 32px);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light theme navigation - white background */
+:root[data-theme="light"] nav {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+nav.scrolled {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(30px);
+    padding: 15px var(--spacing-lg, 32px);
+}
+
+:root[data-theme="light"] nav.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-img {
+    height: 45px;
+    width: auto;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--spacing-lg, 32px);
+    list-style: none;
+    align-items: center;
+    margin-left: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.875rem;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary, var(--color-primary)));
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-text);
+}
+
+/* Theme Toggle Button - Clean Implementation */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 16px;
+    position: relative;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Light Mode Theme Toggle */
+:root[data-theme="light"] .theme-toggle {
+    background-color: rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme="light"] .theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon Styling - Force visibility */
+.theme-togg.logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Dark mode - white icons */
+:root[data-theme="dark"] .theme-toggle svg {
+    stroke: #ffffff;
+    color: #ffffff;
+}
+
+/* Light mode - black icons with high contrast */
+:root[data-theme="light"] .theme-toggle svg {
+    stroke: #000000;
+    color: #000000;
+    opacity: 0.85;
+}
+
+:root[data-theme="light"] .theme-toggle:hover svg {
+    opacity: 1;
+}
+
+/* Menu toggle removed - nav hidden on mobile */
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+}
