@@ -51,31 +51,5 @@ All functionality preserved:
 - ✅ Mobile responsive design
 - ✅ SEO meta tags and structured data
 
-## Running Your Portfolio
-
-**Development:**
-```bash
-npm run dev
-# Opens at http://localhost:5173/
-```
-
-**Production Build:**
-```bash
-npm run build
-# Creates optimized build in dist/ folder
-```
-
-**Preview Production:**
-```bash
-npm run preview
-# Preview production build locally
-```
-
-## Ready for Deployment
-
-Your React portfolio is production-ready! Deploy to:
-- **Vercel**: `vercel` (recommended)
-- **Netlify**: Connect GitHub repo, build: `npm run build`, dir: `dist`
-- **GitHub Pages**: Configure base path in vite.config.js
 
 The `old_files_backup/` folder can be safely deleted once you've verified everything works correctly.
