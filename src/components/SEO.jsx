@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async'
 const SEO = ({ title, description, keywords, image, url, type = 'website', jsonLd }) => {
     const siteTitle = 'Bhaskar T | Front-End Developer & Problem Solver'
     const defaultDescription = 'Front-End Developer and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz.'
-    const defaultKeywords = 'Bhaskar, Bhaskar T, bhaskar2004, Bhaskar portfolio, Bhaskar developer, Front-End Developer, Web Developer, React, Computer Science Student, SJCIT'
+    const defaultKeywords = 'Bhaskar, Bhaskar T, bhaskar2004, Bhaskar portfolio'
     const siteUrl = 'https://bhaskar.xyz'
     const defaultImage = `${siteUrl}/logo.png`
 

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Calculator, Github, Linkedin, Mail } from 'lucide-react'
 import SEO from '../components/SEO'
 import './Home.css'
 
@@ -328,6 +328,37 @@ const Home = () => {
                                     <Github />
                                 </a>
                                 <a href="https://preview.bhaskar.xyz/" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>Live Demo</span>
+                                    <ArrowUpRight />
+                                </a>
+                            </div>
+                        </article>
+
+                        {/* Project 8 */}
+                        <article className="project-card featured">
+                            <div className="project-header">
+                                <div className="project-icon">
+                                    <Calculator />
+                                </div>
+                                <div className="project-meta">
+                                    <span className="project-number">#08</span>
+                                    <span className="project-badge">Live</span>
+                                </div>
+                            </div>
+                            <div className="project-body">
+                                <h3 className="project-title">Advanced Scientific Calculator</h3>
+                                <p className="project-description">Modern, feature-rich scientific calculator with elegant UI, supporting advanced mathematical operations and conversions.</p>
+                                <div className="tech-stack">
+                                    <span className="tech-tag">HTML/CSS</span>
+                                    <span className="tech-tag">JavaScript</span>
+                                </div>
+                            </div>
+                            <div className="project-footer">
+                                <a href="https://github.com/bhaskar2004/modernCalculator" className="project-link secondary" target="_blank" rel="noopener noreferrer">
+                                    <span>View Code</span>
+                                    <Github />
+                                </a>
+                                <a href="https://bhaskar2004.github.io/modernCalculator/" className="project-link primary" target="_blank" rel="noopener noreferrer">
                                     <span>Live Demo</span>
                                     <ArrowUpRight />
                                 </a>
