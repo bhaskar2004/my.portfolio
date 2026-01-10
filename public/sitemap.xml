@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bhaskar.xyz/</loc>
-    <lastmod>2025-01-24</lastmod>
+    <lastmod>2025-01-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://bhaskar.xyz/workshops.html</loc>
-    <lastmod>2025-01-24</lastmod>
+    <loc>https://bhaskar.xyz/workshops</loc>
+    <lastmod>2025-01-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

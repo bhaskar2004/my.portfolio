@@ -9,9 +9,11 @@ import GeometricShapes from './components/particles/GeometricShapes'
 import Home from './pages/Home'
 import Workshops from './pages/Workshops'
 
+import { HelmetProvider } from 'react-helmet-async'
+
 function App() {
     return (
-        <>
+        <HelmetProvider>
             {/* Global UI Elements */}
             <ScrollProgress />
             <ParticleCanvas />
@@ -29,7 +31,7 @@ function App() {
 
             <Footer />
             <BackToTop />
-        </>
+        </HelmetProvider>
     )
 }
 

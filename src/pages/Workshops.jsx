@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import SEO from '../components/SEO'
 import './Workshops.css'
 
 const Workshops = () => {
@@ -131,6 +132,11 @@ const Workshops = () => {
 
     return (
         <div className="workshops-page">
+            <SEO
+                title="Workshops & Events"
+                description="Explore workshops and events Bhaskar T (bhaskar2004) has contributed to or organized, including SUI Move, Rust x Hifly, and more."
+                url="/workshops"
+            />
             <div className="container">
                 <header className="page-header">
                     <div className="label">Community</div>

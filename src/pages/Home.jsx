@@ -1,9 +1,33 @@
 import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Github, Linkedin, Mail } from 'lucide-react'
+import SEO from '../components/SEO'
 import './Home.css'
 
 const Home = () => {
+    const personSchema = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Bhaskar T",
+        "url": "https://bhaskar.xyz",
+        "image": "https://bhaskar.xyz/logo.png",
+        "jobTitle": "Front-End Developer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "SJC Institute of Technology"
+        },
+        "sameAs": [
+            "https://github.com/bhaskar2004",
+            "https://www.linkedin.com/in/bhaskart2004/"
+        ],
+        "email": "bhaskart.dev@gmail.com"
+    }
+
     return (
         <>
+            <SEO
+                title="Front-End Developer & Problem Solver"
+                description="Bhaskar (bhaskar2004) - Front-End Developer and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz."
+                jsonLd={personSchema}
+            />
             {/* Hero Section */}
             <section className="hero" id="home">
                 <div className="container">
