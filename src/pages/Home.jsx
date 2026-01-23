@@ -221,13 +221,14 @@ const Home = () => {
                         </article>
 
                         {/* Project 4 */}
-                        <article className="project-card">
+                        <article className="project-card featured">
                             <div className="project-header">
                                 <div className="project-icon">
                                     <MapPin />
                                 </div>
                                 <div className="project-meta">
                                     <span className="project-number">#04</span>
+                                    <span className="project-badge">Live</span>
                                 </div>
                             </div>
                             <div className="project-body">
@@ -239,8 +240,12 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="project-footer">
-                                <a href="https://github.com/bhaskar2004/better-trips" className="project-link" target="_blank" rel="noopener noreferrer">
-                                    <span>View on GitHub</span>
+                                <a href="https://github.com/bhaskar2004/better-trips" className="project-link secondary" target="_blank" rel="noopener noreferrer">
+                                    <span>View Code</span>
+                                    <Github />
+                                </a>
+                                <a href="https://better-trips.vercel.app/" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>Live Demo</span>
                                     <ArrowUpRight />
                                 </a>
                             </div>
