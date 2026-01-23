@@ -9,7 +9,7 @@ const Home = () => {
         "name": "Bhaskar T",
         "url": "https://bhaskar.xyz",
         "image": "https://bhaskar.xyz/logo.png",
-        "jobTitle": "Front-End Developer",
+        "jobTitle": "Software Tester",
         "worksFor": {
             "@type": "Organization",
             "name": "SJC Institute of Technology"
@@ -24,8 +24,8 @@ const Home = () => {
     return (
         <>
             <SEO
-                title="Front-End Developer & Problem Solver"
-                description="Bhaskar (bhaskar2004) - Front-End Developer and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz."
+                title="Software Tester & Problem Solver"
+                description="Bhaskar (bhaskar2004) - Software Tester and Problem Solver. Explore my projects, portfolio, skills, and tech journey at bhaskar.xyz."
                 jsonLd={personSchema}
             />
             {/* Hero Section */}
@@ -33,7 +33,7 @@ const Home = () => {
                 <div className="container">
                     <div className="portfolio-label font-mono" aria-label="Portfolio site">PORTFOLIO</div>
                     <h1>&lt; Bhaskar T &gt;</h1>
-                    <p className="subtitle font-mono">Front-End Dev & Problem Solver</p>
+                    <p className="subtitle font-mono">Software Tester & Problem Solver</p>
 
                     <div className="cta-buttons">
                         <a href="#contact" className="btn primary">Contact Me</a>
@@ -76,7 +76,7 @@ const Home = () => {
                                     <div className="timeline-content">
                                         <h4>SJC Institute of Technology</h4>
                                         <p>Computer Science Engineering</p>
-                                        <span className="grade font-mono">8.67 CGPA</span>
+                                        <span className="grade font-mono">Completed</span>
                                     </div>
                                 </article>
 
@@ -85,7 +85,7 @@ const Home = () => {
                                     <div className="timeline-content">
                                         <h4>BGS PU College</h4>
                                         <p>Pre-University</p>
-                                        <span className="grade font-mono">91.33%</span>
+                                        <span className="grade font-mono">Completed</span>
                                     </div>
                                 </article>
 
@@ -94,7 +94,7 @@ const Home = () => {
                                     <div className="timeline-content">
                                         <h4>BGS Public School</h4>
                                         <p>High School</p>
-                                        <span className="grade font-mono">96.33%</span>
+                                        <span className="grade font-mono">Completed</span>
                                     </div>
                                 </article>
                             </div>
@@ -247,13 +247,14 @@ const Home = () => {
                         </article>
 
                         {/* Project 5 */}
-                        <article className="project-card">
+                        <article className="project-card featured">
                             <div className="project-header">
                                 <div className="project-icon">
                                     <HeartPulse />
                                 </div>
                                 <div className="project-meta">
                                     <span className="project-number">#05</span>
+                                    <span className="project-badge">Live</span>
                                 </div>
                             </div>
                             <div className="project-body">
@@ -265,8 +266,12 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="project-footer">
-                                <a href="https://github.com/bhaskar2004/blood-donor" className="project-link" target="_blank" rel="noopener noreferrer">
-                                    <span>View on GitHub</span>
+                                <a href="https://github.com/bhaskar2004/blood-donor" className="project-link secondary" target="_blank" rel="noopener noreferrer">
+                                    <span>View Code</span>
+                                    <Github />
+                                </a>
+                                <a href="https://bhaskar2004.github.io/blood-donor/" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>Live Demo</span>
                                     <ArrowUpRight />
                                 </a>
                             </div>

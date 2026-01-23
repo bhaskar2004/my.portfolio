@@ -39,7 +39,7 @@ const Resume = () => {
             <div className="container">
                 <div className="header">
                     <h1>Resume</h1>
-                    <p>Bhaskar T | Front-End Developer & Problem Solver</p>
+                    <p>Bhaskar T | Software Tester & Problem Solver</p>
                 </div>
 
                 <div className="actions">
