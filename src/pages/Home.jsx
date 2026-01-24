@@ -60,9 +60,7 @@ const Home = () => {
                 <div className="container">
                     <h2>About Me</h2>
                     <p className="about-content">
-                        I'm an average Computer Science student who's learning to build exceptional things. I turn ideas into
-                        impactful, user-friendly solutions by staying committed to continuous learning and focusing on clean,
-                        accessible, and performant web experiences.
+                        Just a CS student who happens to love finding bugs. I'm the guy who'll test your app until something breaks, then figure out why. I'm all about making sure software is solid, reliable, and won't fall apart when people actually use it. Details matter, and I'm kind of obsessed with getting them right.
                     </p>
 
                     <div className="about-grid">

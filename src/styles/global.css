@@ -7,8 +7,8 @@
         --color-surface: #0a0a0a;
         --color-surface-glass: rgba(20, 20, 20, 0.6);
         --color-text: #ffffff;
-        --color-text-muted: #a0a0a0;
-        --color-text-dark: #666666;
+        --color-text-muted: #ffffff;
+        --color-text-dark: #ffffff;
         --color-border: rgba(255, 255, 255, 0.1);
         --color-border-hover: rgba(255, 255, 255, 0.3);
         --color-primary: #ffffff;
@@ -68,9 +68,9 @@
         --color-bg: #ffffff;
         --color-surface: #f8f9fa;
         --color-surface-glass: rgba(248, 249, 250, 0.9);
-        --color-text: #1a1a1a;
-        --color-text-muted: #4a5568;
-        --color-text-dark: #2d3748;
+        --color-text: #000000;
+        --color-text-muted: #000000;
+        --color-text-dark: #000000;
         --color-border: rgba(0, 0, 0, 0.15);
         --color-border-hover: rgba(0, 0, 0, 0.4);
         --color-primary: #2563eb;
