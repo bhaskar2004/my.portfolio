@@ -8,6 +8,7 @@ import ParticleCanvas from './components/particles/ParticleCanvas'
 import GeometricShapes from './components/particles/GeometricShapes'
 import Home from './pages/Home'
 import Workshops from './pages/Workshops'
+import Resume from './pages/Resume'
 
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -27,6 +28,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/workshops" element={<Workshops />} />
+                <Route path="/resume" element={<Resume />} />
             </Routes>
 
             <Footer />

@@ -55,7 +55,10 @@ footer {
     font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--color-text, #ffffff);
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 8px;
 }
 
@@ -91,10 +94,11 @@ footer {
 }
 
 .footer-social:hover {
-    background: var(--color-border, rgba(255, 255, 255, 0.1));
-    color: var(--color-text, #ffffff);
+    background: rgba(124, 77, 255, 0.1);
+    color: #fff;
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
+    border-color: rgba(124, 77, 255, 0.5);
 }
 
 .footer-bottom {

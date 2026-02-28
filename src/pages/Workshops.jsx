@@ -1,276 +1,345 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Users, Clock, Briefcase, Star } from 'lucide-react'
 import SEO from '../components/SEO'
 import './Workshops.css'
 
+/* ─────────────────────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────────────────────── */
+const workshops = [
+    {
+        id: 1,
+        type: 'workshop',
+        title: 'SUI Move 101',
+        subtitle: 'Workshop Contribution',
+        badges: ['Blockchain', 'Community', 'Event Management'],
+        meta: [
+            { icon: Star, label: 'Event', value: 'Build on Sui Move 101' },
+            { icon: MapPin, label: 'Location', value: 'SJC Institute of Technology' },
+            { icon: Calendar, label: 'Date', value: 'Nov 10–12, 2025' },
+            { icon: Users, label: 'Participants', value: '38+ Students' },
+        ],
+        sections: [
+            {
+                title: 'My Contributions',
+                items: [
+                    'Designed the official promotional poster for the workshop',
+                    'Created Google Forms for registrations and feedback collection',
+                    'Captured event photos and videos across all three days for documentation',
+                    'Assisted the organizing team to ensure smooth workflow during the sessions',
+                ],
+            },
+            {
+                title: 'About the Workshop',
+                intro: 'The event introduced students to the following topics and practical workflows:',
+                items: [
+                    'Blockchain fundamentals & Sui architecture',
+                    'Move programming & Smart contract development',
+                    'Hands-on deployment using Sui tools and CLI',
+                ],
+            },
+            {
+                title: 'Impact',
+                items: [
+                    'Strengthened experience in technical event coordination',
+                    'Improved skills in creative design for academic events',
+                    'Fostered collaboration with speakers, faculty, and student teams',
+                ],
+            },
+        ],
+    },
+    {
+        id: 2,
+        type: 'workshop',
+        title: 'Rust × Hifly',
+        subtitle: 'Workshop Contribution',
+        badges: ['Rust Programming', 'Community', 'Event Management'],
+        meta: [
+            { icon: Star, label: 'Event', value: 'Rust × Hifly Workshop' },
+            { icon: MapPin, label: 'Location', value: 'CSE Seminar Hall, SJCIT' },
+            { icon: Calendar, label: 'Date', value: 'Nov 25–26, 2025' },
+            { icon: Clock, label: 'Duration', value: '2 Days' },
+        ],
+        sections: [
+            {
+                title: 'My Contributions',
+                items: [
+                    'Designed the official promotional poster for the workshop',
+                    'Created Google Forms for registrations and attendance tracking',
+                    'Coordinated with speakers and organizing team for smooth execution',
+                    'Managed event documentation through photos and videos',
+                ],
+            },
+            {
+                title: 'Workshop Topics Covered',
+                items: [
+                    'Rust fundamentals — syntax, variables, and data types',
+                    "Ownership & Borrowing — understanding Rust's memory safety",
+                    'Control flow and pattern matching techniques',
+                    'Functions & Error handling in Rust',
+                    'Hands-on exercises and code reviews with participants',
+                ],
+            },
+            {
+                title: 'Impact',
+                items: [
+                    'Introduced students to systems programming with Rust',
+                    'Enhanced skills in technical event coordination and design',
+                    'Strengthened collaboration with CSE department faculty and student teams',
+                ],
+            },
+        ],
+    },
+    {
+        id: 3,
+        type: 'event',
+        title: 'Sambrama 2025',
+        subtitle: 'Core Committee Member',
+        badges: ['Graphic Design', 'Core Committee', 'Event Planning'],
+        meta: [
+            { icon: Star, label: 'Event', value: 'Sambrama 2025' },
+            { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
+            { icon: Briefcase, label: 'Role', value: 'Core Committee Member' },
+            { icon: Users, label: 'Type', value: 'Cultural Fest' },
+        ],
+        sections: [
+            {
+                title: 'My Contributions',
+                items: [
+                    'Designed official promotional posters for the event branding',
+                    'Served as core committee member coordinating event activities',
+                    'Collaborated with teams to ensure smooth event execution',
+                    'Contributed to strategic planning and decision-making processes',
+                ],
+            },
+            {
+                title: 'Responsibilities',
+                items: [
+                    'Creative design leadership for visual communications',
+                    'Event coordination across multiple departments',
+                    'Team collaboration with organizing committee members',
+                    'Marketing and promotion through visual content',
+                ],
+            },
+            {
+                title: 'Impact',
+                items: [
+                    'Enhanced skills in event management and leadership',
+                    'Strengthened expertise in graphic design and branding',
+                    'Developed organizational and coordination abilities',
+                ],
+            },
+        ],
+    },
+    {
+        id: 4,
+        type: 'event',
+        title: 'Technotsava',
+        subtitle: 'Event Documentation',
+        badges: ['Photography', 'Videography', 'Event Coverage'],
+        meta: [
+            { icon: Star, label: 'Event', value: 'Technotsava' },
+            { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
+            { icon: Briefcase, label: 'Role', value: 'Lead Documentation' },
+            { icon: Users, label: 'Type', value: 'Tech Fest' },
+        ],
+        sections: [
+            {
+                title: 'My Role',
+                items: [
+                    'Handled complete photography coverage throughout the event',
+                    'Managed videography and video documentation of all key moments',
+                    'Captured technical sessions, competitions, and cultural activities',
+                    'Created visual content for promotional and archival purposes',
+                ],
+            },
+            {
+                title: 'Coverage Highlights',
+                items: [
+                    'Multi-day event documentation across various venues',
+                    'Technical competitions and hackathon coverage',
+                    'Guest speaker sessions and panel discussions',
+                    'Student activities and cultural performances',
+                ],
+            },
+            {
+                title: 'Impact',
+                items: [
+                    'Enhanced skills in event photography and live coverage',
+                    'Improved proficiency in video editing and production',
+                    'Developed expertise in capturing technical events effectively',
+                ],
+            },
+        ],
+    },
+]
+
+/* ─────────────────────────────────────────────────────────────
+   HOOK — stagger reveal on scroll
+───────────────────────────────────────────────────────────── */
+function useStaggerReveal(deps) {
+    const refs = useRef([])
+
+    useEffect(() => {
+        refs.current = refs.current.slice(0, deps.length)
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed')
+                        observer.unobserve(entry.target)
+                    }
+                })
+            },
+            { threshold: 0.08 }
+        )
+
+        refs.current.forEach((el) => el && observer.observe(el))
+        return () => observer.disconnect()
+    }, [deps])
+
+    return refs
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SUB-COMPONENTS
+───────────────────────────────────────────────────────────── */
+const TypeChip = ({ type }) => (
+    <span className={`type-chip type-chip--${type}`}>
+        {type === 'workshop' ? 'Workshop' : 'Event'}
+    </span>
+)
+
+const MetaGrid = ({ items }) => (
+    <div className="meta-grid">
+        {items.map(({ icon: Icon, label, value }) => (
+            <div key={label} className="meta-item">
+                <span className="meta-label">
+                    <Icon size={11} strokeWidth={2} aria-hidden="true" />
+                    {label}
+                </span>
+                <span className="meta-value">{value}</span>
+            </div>
+        ))}
+    </div>
+)
+
+const Section = ({ title, intro, items }) => (
+    <div className="section">
+        <h3 className="section-title">{title}</h3>
+        {intro && <p className="section-intro">{intro}</p>}
+        <ul>
+            {items.map((item, i) => (
+                <li key={i}>{item}</li>
+            ))}
+        </ul>
+    </div>
+)
+
+const WorkshopCard = ({ workshop, index, cardRef }) => (
+    <article
+        ref={cardRef}
+        className="workshop-card card-stagger"
+        style={{ '--stagger-delay': `${index * 80}ms` }}
+        data-type={workshop.type}
+    >
+        {/* Card header row */}
+        <div className="card-header">
+            <div className="card-header__titles">
+                <p className="card-subtitle">{workshop.subtitle}</p>
+                <h2 className="workshop-title">{workshop.title}</h2>
+            </div>
+            <TypeChip type={workshop.type} />
+        </div>
+
+        {/* Badges */}
+        <div className="badges" role="list" aria-label="Tags">
+            {workshop.badges.map((badge) => (
+                <span key={badge} className="badge" role="listitem">{badge}</span>
+            ))}
+        </div>
+
+        {/* Meta info */}
+        <MetaGrid items={workshop.meta} />
+
+        {/* Content sections */}
+        {workshop.sections.map((section) => (
+            <Section key={section.title} {...section} />
+        ))}
+    </article>
+)
+
+/* ─────────────────────────────────────────────────────────────
+   PAGE
+───────────────────────────────────────────────────────────── */
 const Workshops = () => {
     const [activeFilter, setActiveFilter] = useState('all')
 
-    const workshops = [
-        {
-            id: 1,
-            type: 'workshop',
-            title: 'SUI Move 101 — Workshop Contribution',
-            badges: ['Blockchain', 'Community', 'Event Management'],
-            meta: {
-                event: 'Build on Sui Move 101',
-                location: 'SJC Institute of Technology',
-                date: 'Nov 10–12, 2025',
-                participants: '38+ Students'
-            },
-            contributions: [
-                'Designed the official promotional poster for the workshop',
-                'Created Google Forms for registrations and feedback collection',
-                'Captured event photos and videos across all three days for documentation',
-                'Assisted the organizing team to ensure smooth workflow during the sessions'
-            ],
-            about: [
-                'Blockchain fundamentals & Sui architecture',
-                'Move programming & Smart contract development',
-                'Hands-on deployment using Sui tools and CLI'
-            ],
-            impact: [
-                'Strengthened experience in technical event coordination',
-                'Improved skills in creative design for academic events',
-                'Fostered collaboration with speakers, faculty, and student teams'
-            ]
-        },
-        {
-            id: 2,
-            type: 'workshop',
-            title: 'Rust x Hifly — Workshop Contribution',
-            badges: ['Rust Programming', 'Community', 'Event Management'],
-            meta: {
-                event: 'Rust x Hifly Workshop',
-                location: 'CSE Seminar Hall, SJCIT',
-                date: 'Nov 25–26, 2025',
-                duration: '2 Days'
-            },
-            contributions: [
-                'Designed the official promotional poster for the workshop',
-                'Created Google Forms for registrations and attendance tracking',
-                'Coordinated with speakers and organizing team for smooth execution',
-                'Managed event documentation through photos and videos'
-            ],
-            topics: [
-                'Rust fundamentals — syntax, variables, and data types',
-                'Ownership & Borrowing — understanding Rust\'s memory safety',
-                'Control flow and pattern matching techniques',
-                'Functions & Error handling in Rust',
-                'Hands-on exercises and code reviews with participants'
-            ],
-            impact: [
-                'Introduced students to systems programming with Rust',
-                'Enhanced skills in technical event coordination and design',
-                'Strengthened collaboration with CSE department faculty and student teams'
-            ]
-        },
-        {
-            id: 3,
-            type: 'event',
-            title: 'Sambrama 2025 — Core Committee Member',
-            badges: ['Graphic Design', 'Core Committee', 'Event Planning'],
-            meta: {
-                event: 'Sambrama 2025',
-                location: 'SJCIT Campus',
-                role: 'Core Committee Member',
-                type: 'Cultural Fest'
-            },
-            contributions: [
-                'Designed official promotional posters for the event branding',
-                'Served as core committee member coordinating event activities',
-                'Collaborated with teams to ensure smooth event execution',
-                'Contributed to strategic planning and decision-making processes'
-            ],
-            responsibilities: [
-                'Creative design leadership for visual communications',
-                'Event coordination across multiple departments',
-                'Team collaboration with organizing committee members',
-                'Marketing and promotion through visual content'
-            ],
-            impact: [
-                'Enhanced skills in event management and leadership',
-                'Strengthened expertise in graphic design and branding',
-                'Developed organizational and coordination abilities'
-            ]
-        },
-        {
-            id: 4,
-            type: 'event',
-            title: 'Technotsava — Event Documentation',
-            badges: ['Photography', 'Videography', 'Event Coverage'],
-            meta: {
-                event: 'Technotsava',
-                location: 'SJCIT Campus',
-                role: 'Lead Documentation',
-                type: 'Tech Fest'
-            },
-            role: [
-                'Handled complete photography coverage throughout the event',
-                'Managed videography and video documentation of all key moments',
-                'Captured technical sessions, competitions, and cultural activities',
-                'Created visual content for promotional and archival purposes'
-            ],
-            highlights: [
-                'Multi-day event documentation across various venues',
-                'Technical competitions and hackathon coverage',
-                'Guest speaker sessions and panel discussions',
-                'Student activities and cultural performances'
-            ],
-            impact: [
-                'Enhanced skills in event photography and live coverage',
-                'Improved proficiency in video editing and production',
-                'Developed expertise in capturing technical events effectively'
-            ]
-        }
-    ]
-
-    const filteredWorkshops = workshops.filter(workshop =>
-        activeFilter === 'all' || workshop.type === activeFilter
+    const filtered = workshops.filter(
+        (w) => activeFilter === 'all' || w.type === activeFilter
     )
+
+    const cardRefs = useStaggerReveal(filtered)
+
+    const filters = [
+        { id: 'all', label: 'All' },
+        { id: 'workshop', label: 'Workshops' },
+        { id: 'event', label: 'Events' },
+    ]
 
     return (
         <div className="workshops-page">
             <SEO
                 title="Workshops & Events"
-                description="Explore workshops and events Bhaskar T (bhaskar2004) has contributed to or organized, including SUI Move, Rust x Hifly, and more."
+                description="Workshops and events Bhaskar T has contributed to or organized — SUI Move, Rust × Hifly, Sambrama 2025, and more."
                 url="/workshops"
             />
+
             <div className="container">
+                {/* ── Header ── */}
                 <header className="page-header">
-                    <div className="label">Community</div>
-                    <h1>Workshops & Events</h1>
+                    <div className="label" aria-hidden="true">Community</div>
+                    <h1>Workshops &amp; Events</h1>
                     <p className="subtitle">Sharing knowledge and building together</p>
                 </header>
 
-                {/* Filter Buttons */}
-                <div className="filter-container">
-                    <button
-                        className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => setActiveFilter('all')}
-                    >
-                        All
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'workshop' ? 'active' : ''}`}
-                        onClick={() => setActiveFilter('workshop')}
-                    >
-                        Workshops
-                    </button>
-                    <button
-                        className={`filter-btn ${activeFilter === 'event' ? 'active' : ''}`}
-                        onClick={() => setActiveFilter('event')}
-                    >
-                        Events
-                    </button>
+                {/* ── Filter bar ── */}
+                <nav className="filter-container" aria-label="Filter workshops">
+                    {filters.map(({ id, label }) => (
+                        <button
+                            key={id}
+                            className={`filter-btn${activeFilter === id ? ' active' : ''}`}
+                            onClick={() => setActiveFilter(id)}
+                            aria-pressed={activeFilter === id}
+                        >
+                            {label}
+                            {id !== 'all' && (
+                                <span className="filter-count">
+                                    {workshops.filter((w) => w.type === id).length}
+                                </span>
+                            )}
+                        </button>
+                    ))}
+                </nav>
+
+                {/* ── Cards ── */}
+                <div className="cards-list" role="list">
+                    {filtered.map((workshop, index) => (
+                        <WorkshopCard
+                            key={workshop.id}
+                            workshop={workshop}
+                            index={index}
+                            cardRef={(el) => (cardRefs.current[index] = el)}
+                        />
+                    ))}
                 </div>
 
-                {/* Workshop Cards */}
-                {filteredWorkshops.map(workshop => (
-                    <div key={workshop.id} className="workshop-card reveal active" data-type={workshop.type}>
-                        <h2 className="workshop-title">{workshop.title}</h2>
-
-                        <div className="badges">
-                            {workshop.badges.map((badge, index) => (
-                                <span key={index} className="badge">{badge}</span>
-                            ))}
-                        </div>
-
-                        <div className="meta-grid">
-                            {Object.entries(workshop.meta).map(([key, value]) => (
-                                <div key={key} className="meta-item">
-                                    <span className="meta-label">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
-                                    <span className="meta-value">{value}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {workshop.contributions && (
-                            <div className="section">
-                                <h3 className="section-title">My Contributions</h3>
-                                <ul>
-                                    {workshop.contributions.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.about && (
-                            <div className="section">
-                                <h3 className="section-title">About the Workshop</h3>
-                                <p style={{ color: 'var(--color-text-muted)', marginBottom: '20px' }}>
-                                    The event introduced students to the following topics and practical workflows:
-                                </p>
-                                <ul>
-                                    {workshop.about.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.topics && (
-                            <div className="section">
-                                <h3 className="section-title">Workshop Topics Covered</h3>
-                                <ul>
-                                    {workshop.topics.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.role && (
-                            <div className="section">
-                                <h3 className="section-title">My Role</h3>
-                                <ul>
-                                    {workshop.role.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.responsibilities && (
-                            <div className="section">
-                                <h3 className="section-title">Responsibilities</h3>
-                                <ul>
-                                    {workshop.responsibilities.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.highlights && (
-                            <div className="section">
-                                <h3 className="section-title">Coverage Highlights</h3>
-                                <ul>
-                                    {workshop.highlights.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-
-                        {workshop.impact && (
-                            <div className="section">
-                                <h3 className="section-title">Impact</h3>
-                                <ul>
-                                    {workshop.impact.map((item, index) => (
-                                        <li key={index}>{item}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                ))}
-
+                {/* ── Back nav ── */}
                 <div className="back-nav">
-                    <Link to="/" className="btn">
-                        <ArrowLeft size={16} />
+                    <Link to="/" className="btn-back">
+                        <ArrowLeft size={14} strokeWidth={2} aria-hidden="true" />
                         <span>Back to Portfolio</span>
                     </Link>
                 </div>
