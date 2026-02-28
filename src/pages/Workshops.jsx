@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, MapPin, Calendar, Users, Clock, Briefcase, Star } from 'lucide-react'
+import { ArrowLeft, MapPin, Calendar, Users, Clock, Briefcase, Star, ChevronDown } from 'lucide-react'
 import SEO from '../components/SEO'
 import './Workshops.css'
 
@@ -178,11 +178,11 @@ const workshops = [
 /* ─────────────────────────────────────────────────────────────
    HOOK — stagger reveal on scroll
 ───────────────────────────────────────────────────────────── */
-function useStaggerReveal(deps) {
+function useStaggerReveal(count) {
     const refs = useRef([])
 
     useEffect(() => {
-        refs.current = refs.current.slice(0, deps.length)
+        refs.current = refs.current.slice(0, count)
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -193,12 +193,12 @@ function useStaggerReveal(deps) {
                     }
                 })
             },
-            { threshold: 0.08 }
+            { threshold: 0.05 }
         )
 
         refs.current.forEach((el) => el && observer.observe(el))
         return () => observer.disconnect()
-    }, [deps])
+    }, [count])
 
     return refs
 }
@@ -212,82 +212,127 @@ const TypeChip = ({ type }) => (
     </span>
 )
 
-const MetaGrid = ({ items }) => (
-    <div className="meta-grid">
-        {items.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="meta-item">
-                <span className="meta-label">
-                    <Icon size={11} strokeWidth={2} aria-hidden="true" />
-                    {label}
-                </span>
-                <span className="meta-value">{value}</span>
-            </div>
-        ))}
-    </div>
-)
-
 const Section = ({ title, intro, items }) => (
     <div className="section">
         <h3 className="section-title">{title}</h3>
         {intro && <p className="section-intro">{intro}</p>}
         <ul>
-            {items.map((item, i) => (
-                <li key={i}>{item}</li>
-            ))}
+            {items.map((item, i) => <li key={i}>{item}</li>)}
         </ul>
     </div>
 )
 
-const WorkshopCard = ({ workshop, index, cardRef }) => (
-    <article
-        ref={cardRef}
-        className="workshop-card card-stagger"
-        style={{ '--stagger-delay': `${index * 80}ms` }}
-        data-type={workshop.type}
-    >
-        {/* Card header row */}
-        <div className="card-header">
-            <div className="card-header__titles">
-                <p className="card-subtitle">{workshop.subtitle}</p>
-                <h2 className="workshop-title">{workshop.title}</h2>
+/* ─────────────────────────────────────────────────────────────
+   ACCORDION ITEM
+───────────────────────────────────────────────────────────── */
+const AccordionItem = ({ workshop, index, isOpen, onToggle, itemRef }) => {
+    const panelId = `panel-${workshop.id}`
+    const triggerId = `trigger-${workshop.id}`
+
+    return (
+        <article
+            ref={itemRef}
+            className={`accordion-item${isOpen ? ' open' : ''}`}
+            style={{ '--stagger-delay': `${index * 80}ms` }}
+            data-type={workshop.type}
+        >
+            {/* ── Trigger row ── */}
+            <button
+                id={triggerId}
+                className="accordion-trigger"
+                onClick={onToggle}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+            >
+                {/* Index */}
+                <span className="row-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                </span>
+
+                {/* Title block */}
+                <span className="row-title-block">
+                    <span className="row-subtitle">{workshop.subtitle}</span>
+                    <span className="row-title">{workshop.title}</span>
+                </span>
+
+                {/* Badges */}
+                <span className="row-badges" aria-hidden="true">
+                    {workshop.badges.slice(0, 2).map((b) => (
+                        <span key={b} className="badge">{b}</span>
+                    ))}
+                </span>
+
+                {/* Type chip */}
+                <TypeChip type={workshop.type} />
+
+                {/* Chevron */}
+                <span className="row-chevron" aria-hidden="true">
+                    <ChevronDown size={16} strokeWidth={1.5} />
+                </span>
+            </button>
+
+            {/* ── Expandable panel ── */}
+            <div
+                id={panelId}
+                className="accordion-panel"
+                role="region"
+                aria-labelledby={triggerId}
+            >
+                <div className="accordion-panel-inner">
+                    <div className="accordion-content">
+                        {/* Left: meta */}
+                        <div className="content-meta">
+                            {workshop.meta.map(({ icon: Icon, label, value }) => (
+                                <div key={label} className="meta-row">
+                                    <span className="meta-label">
+                                        <Icon size={10} strokeWidth={1.5} aria-hidden="true" />
+                                        {label}
+                                    </span>
+                                    <span className="meta-value">{value}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Right: sections */}
+                        <div className="content-sections">
+                            {workshop.sections.map((section) => (
+                                <Section key={section.title} {...section} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <TypeChip type={workshop.type} />
-        </div>
-
-        {/* Badges */}
-        <div className="badges" role="list" aria-label="Tags">
-            {workshop.badges.map((badge) => (
-                <span key={badge} className="badge" role="listitem">{badge}</span>
-            ))}
-        </div>
-
-        {/* Meta info */}
-        <MetaGrid items={workshop.meta} />
-
-        {/* Content sections */}
-        {workshop.sections.map((section) => (
-            <Section key={section.title} {...section} />
-        ))}
-    </article>
-)
+        </article>
+    )
+}
 
 /* ─────────────────────────────────────────────────────────────
    PAGE
 ───────────────────────────────────────────────────────────── */
 const Workshops = () => {
     const [activeFilter, setActiveFilter] = useState('all')
+    const [openId, setOpenId] = useState(null)
 
     const filtered = workshops.filter(
         (w) => activeFilter === 'all' || w.type === activeFilter
     )
 
-    const cardRefs = useStaggerReveal(filtered)
+    const cardRefs = useStaggerReveal(filtered.length)
 
     const filters = [
         { id: 'all', label: 'All' },
         { id: 'workshop', label: 'Workshops' },
         { id: 'event', label: 'Events' },
     ]
+
+    const handleFilterChange = (id) => {
+        setActiveFilter(id)
+        setOpenId(null)
+    }
+
+    const handleToggle = (id) => {
+        setOpenId((prev) => (prev === id ? null : id))
+    }
 
     return (
         <div className="workshops-page">
@@ -300,23 +345,32 @@ const Workshops = () => {
             <div className="container">
                 {/* ── Header ── */}
                 <header className="page-header">
-                    <div className="label" aria-hidden="true">Community</div>
-                    <h1>Workshops &amp; Events</h1>
-                    <p className="subtitle">Sharing knowledge and building together</p>
+                    <p className="header-eyebrow">Community · Portfolio</p>
+                    <h1>Workshops &amp; <strong>Events</strong></h1>
+                    <div className="header-meta">
+                        <p className="header-desc">Sharing knowledge and building together</p>
+                    </div>
+                    {/* Ghost total counter */}
+                    <span className="header-ghost" aria-hidden="true">
+                        {String(workshops.length).padStart(2, '0')}
+                    </span>
                 </header>
 
-                {/* ── Filter bar ── */}
+                {/* ── Full-width rule ── */}
+                <div className="header-border-top" aria-hidden="true" />
+
+                {/* ── Filter tabs ── */}
                 <nav className="filter-container" aria-label="Filter workshops">
                     {filters.map(({ id, label }) => (
                         <button
                             key={id}
                             className={`filter-btn${activeFilter === id ? ' active' : ''}`}
-                            onClick={() => setActiveFilter(id)}
+                            onClick={() => handleFilterChange(id)}
                             aria-pressed={activeFilter === id}
                         >
                             {label}
                             {id !== 'all' && (
-                                <span className="filter-count">
+                                <span className="filter-count" aria-hidden="true">
                                     {workshops.filter((w) => w.type === id).length}
                                 </span>
                             )}
@@ -324,14 +378,25 @@ const Workshops = () => {
                     ))}
                 </nav>
 
-                {/* ── Cards ── */}
-                <div className="cards-list" role="list">
+                {/* ── Column headers ── */}
+                <div className="directory-header" aria-hidden="true">
+                    <span>#</span>
+                    <span>Title</span>
+                    <span>Tags</span>
+                    <span>Type</span>
+                    <span />
+                </div>
+
+                {/* ── Accordion list ── */}
+                <div className="accordion-list" role="list">
                     {filtered.map((workshop, index) => (
-                        <WorkshopCard
+                        <AccordionItem
                             key={workshop.id}
                             workshop={workshop}
                             index={index}
-                            cardRef={(el) => (cardRefs.current[index] = el)}
+                            isOpen={openId === workshop.id}
+                            onToggle={() => handleToggle(workshop.id)}
+                            itemRef={(el) => (cardRefs.current[index] = el)}
                         />
                     ))}
                 </div>
@@ -339,7 +404,7 @@ const Workshops = () => {
                 {/* ── Back nav ── */}
                 <div className="back-nav">
                     <Link to="/" className="btn-back">
-                        <ArrowLeft size={14} strokeWidth={2} aria-hidden="true" />
+                        <ArrowLeft size={13} strokeWidth={1.5} aria-hidden="true" />
                         <span>Back to Portfolio</span>
                     </Link>
                 </div>

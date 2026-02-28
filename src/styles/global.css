@@ -16,7 +16,7 @@
         /* Vibrant Accents */
         --color-primary: #7c4dff;
         --color-secondary: #006eff;
-        --color-accent: #ff2a85;
+        --color-accent: #ffffff;
         --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
         --gradient-text: linear-gradient(135deg, #ffffff 0%, #b3b3ff 100%);
         --color-particle-rgb: 124, 77, 255;
