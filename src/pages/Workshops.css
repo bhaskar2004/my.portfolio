@@ -915,22 +915,129 @@
         border-radius: 0;
         border: none;
         margin: 0;
+        display: flex;
+        flex-direction: column;
     }
 
-    .ws-modal__meta-grid {
-        grid-template-columns: 1fr;
+    .ws-modal__hero {
+        padding: 30px 16px 12px;
+        flex-shrink: 0;
     }
 
-    .ws-modal__header {
-        padding: 18px 20px 0;
+    .ws-modal__hero-glow {
+        top: -40px;
+        width: 200px;
+        height: 150px;
     }
 
-    .ws-modal__title-block {
-        padding: 16px 20px 18px;
+    .ws-modal__hero-icon {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 8px;
+        border-radius: 12px;
     }
 
-    .ws-modal__sections {
-        padding: 18px 20px 24px;
+    .ws-modal__hero-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .ws-modal__title {
+        font-size: 1.4rem;
+        margin-bottom: 2px;
+    }
+
+    .ws-modal__tagline {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        margin-bottom: 4px;
+    }
+
+    .ws-modal__chip {
+        padding: 4px 10px;
+        font-size: 0.55rem;
+        margin-bottom: 8px;
+    }
+
+    .ws-modal__meta-bar {
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.8rem;
+    }
+
+    .ws-modal__meta-item {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .ws-modal__meta-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+    }
+
+    .ws-modal__meta-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .ws-modal__meta-label {
+        font-size: 0.45rem;
+        letter-spacing: 0.1em;
+    }
+
+    .ws-modal__meta-value {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+
+    .ws-modal__badges-wrap {
+        padding: 10px 16px;
+        gap: 6px;
+        justify-content: center;
+    }
+
+    .ws-modal__badge {
+        padding: 4px 8px;
+        font-size: 0.5rem;
+    }
+
+    .ws-modal__content {
+        padding: 16px 16px 24px;
+        gap: 16px;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .ws-modal__section-title {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        padding-bottom: 6px;
+    }
+
+    .ws-modal__section-list li {
+        padding: 6px 10px;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .ws-modal__item-num {
+        min-width: 18px;
+        height: 18px;
+        line-height: 18px;
+        font-size: 0.5rem;
+        margin-top: 2px;
+    }
+
+    .ws-modal__item-text {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .ws-modal__close {
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
     }
 
     .ws-filter-btn {
