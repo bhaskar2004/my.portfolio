@@ -1,6 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, MapPin, Calendar, Users, Clock, Briefcase, Star, ChevronDown } from 'lucide-react'
+import {
+    ArrowLeft, MapPin, Calendar, Users, Clock,
+    Briefcase, Star, X, Code2, Layers, Camera, ArrowUpRight
+} from 'lucide-react'
 import SEO from '../components/SEO'
 import './Workshops.css'
 
@@ -11,9 +14,13 @@ const workshops = [
     {
         id: 1,
         type: 'workshop',
+        number: '01',
+        icon: Code2,
         title: 'SUI Move 101',
         subtitle: 'Workshop Contribution',
+        tagline: 'Blockchain & Smart Contracts with Sui Move',
         badges: ['Blockchain', 'Community', 'Event Management'],
+        color: '#7c4dff',
         meta: [
             { icon: Star, label: 'Event', value: 'Build on Sui Move 101' },
             { icon: MapPin, label: 'Location', value: 'SJC Institute of Technology' },
@@ -31,8 +38,8 @@ const workshops = [
                 ],
             },
             {
-                title: 'About the Workshop',
-                intro: 'The event introduced students to the following topics and practical workflows:',
+                title: 'Workshop Topics',
+                intro: 'The event introduced students to the following topics:',
                 items: [
                     'Blockchain fundamentals & Sui architecture',
                     'Move programming & Smart contract development',
@@ -52,9 +59,13 @@ const workshops = [
     {
         id: 2,
         type: 'workshop',
+        number: '02',
+        icon: Layers,
         title: 'Rust × Hifly',
         subtitle: 'Workshop Contribution',
+        tagline: 'Systems Programming — Memory Safety & Ownership',
         badges: ['Rust Programming', 'Community', 'Event Management'],
+        color: '#006eff',
         meta: [
             { icon: Star, label: 'Event', value: 'Rust × Hifly Workshop' },
             { icon: MapPin, label: 'Location', value: 'CSE Seminar Hall, SJCIT' },
@@ -72,7 +83,7 @@ const workshops = [
                 ],
             },
             {
-                title: 'Workshop Topics Covered',
+                title: 'Topics Covered',
                 items: [
                     'Rust fundamentals — syntax, variables, and data types',
                     "Ownership & Borrowing — understanding Rust's memory safety",
@@ -94,9 +105,13 @@ const workshops = [
     {
         id: 3,
         type: 'event',
+        number: '03',
+        icon: Star,
         title: 'Sambrama 2025',
         subtitle: 'Core Committee Member',
+        tagline: 'Cultural Fest — Creative Leadership & Planning',
         badges: ['Graphic Design', 'Core Committee', 'Event Planning'],
+        color: '#f472b6',
         meta: [
             { icon: Star, label: 'Event', value: 'Sambrama 2025' },
             { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
@@ -135,9 +150,13 @@ const workshops = [
     {
         id: 4,
         type: 'event',
+        number: '04',
+        icon: Camera,
         title: 'Technotsava',
         subtitle: 'Event Documentation',
+        tagline: 'Tech Fest — Photography & Videography Lead',
         badges: ['Photography', 'Videography', 'Event Coverage'],
+        color: '#34d399',
         meta: [
             { icon: Star, label: 'Event', value: 'Technotsava' },
             { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
@@ -176,131 +195,135 @@ const workshops = [
 ]
 
 /* ─────────────────────────────────────────────────────────────
-   HOOK — stagger reveal on scroll
+   MODAL — Redesigned for maximum readability
 ───────────────────────────────────────────────────────────── */
-function useStaggerReveal(count) {
-    const refs = useRef([])
+const WorkshopModal = ({ workshop, onClose }) => {
+    const Icon = workshop.icon
 
     useEffect(() => {
-        refs.current = refs.current.slice(0, count)
+        const handler = (e) => { if (e.key === 'Escape') onClose() }
+        document.addEventListener('keydown', handler)
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.removeEventListener('keydown', handler)
+            document.body.style.overflow = ''
+        }
+    }, [onClose])
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed')
-                        observer.unobserve(entry.target)
-                    }
-                })
-            },
-            { threshold: 0.05 }
-        )
+    return (
+        <div className="ws-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-label={workshop.title}>
+            <div className="ws-modal" onClick={(e) => e.stopPropagation()} style={{ '--card-color': workshop.color }}>
 
-        refs.current.forEach((el) => el && observer.observe(el))
-        return () => observer.disconnect()
-    }, [count])
+                {/* ── Hero banner ── */}
+                <div className="ws-modal__hero">
+                    <div className="ws-modal__hero-glow" aria-hidden="true" />
+                    <button className="ws-modal__close" onClick={onClose} aria-label="Close modal">
+                        <X size={20} strokeWidth={2} />
+                    </button>
+                    <div className="ws-modal__hero-icon">
+                        <Icon size={32} strokeWidth={1.5} />
+                    </div>
+                    <span className={`ws-modal__chip ws-modal__chip--${workshop.type} font-mono`}>
+                        {workshop.type === 'workshop' ? 'Workshop' : 'Event'}
+                    </span>
+                    <h2 className="ws-modal__title">{workshop.title}</h2>
+                    <p className="ws-modal__tagline">{workshop.tagline}</p>
+                </div>
 
-    return refs
+                {/* ── Meta info bar ── */}
+                <div className="ws-modal__meta-bar">
+                    {workshop.meta.map(({ icon: MetaIcon, label, value }) => (
+                        <div key={label} className="ws-modal__meta-item">
+                            <div className="ws-modal__meta-icon">
+                                <MetaIcon size={16} strokeWidth={1.8} />
+                            </div>
+                            <div className="ws-modal__meta-text">
+                                <span className="ws-modal__meta-label font-mono">{label}</span>
+                                <span className="ws-modal__meta-value">{value}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* ── Badges ── */}
+                <div className="ws-modal__badges-wrap">
+                    {workshop.badges.map((b) => (
+                        <span key={b} className="ws-modal__badge font-mono">{b}</span>
+                    ))}
+                </div>
+
+                {/* ── Content sections ── */}
+                <div className="ws-modal__content">
+                    {workshop.sections.map((section) => (
+                        <div key={section.title} className="ws-modal__section">
+                            <h3 className="ws-modal__section-title">{section.title}</h3>
+                            {section.intro && <p className="ws-modal__section-intro">{section.intro}</p>}
+                            <ul className="ws-modal__section-list">
+                                {section.items.map((item, i) => (
+                                    <li key={i}>
+                                        <span className="ws-modal__item-num font-mono">{String(i + 1).padStart(2, '0')}</span>
+                                        <span className="ws-modal__item-text">{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SUB-COMPONENTS
+   CARD
 ───────────────────────────────────────────────────────────── */
-const TypeChip = ({ type }) => (
-    <span className={`type-chip type-chip--${type}`}>
-        {type === 'workshop' ? 'Workshop' : 'Event'}
-    </span>
-)
-
-const Section = ({ title, intro, items }) => (
-    <div className="section">
-        <h3 className="section-title">{title}</h3>
-        {intro && <p className="section-intro">{intro}</p>}
-        <ul>
-            {items.map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-    </div>
-)
-
-/* ─────────────────────────────────────────────────────────────
-   ACCORDION ITEM
-───────────────────────────────────────────────────────────── */
-const AccordionItem = ({ workshop, index, isOpen, onToggle, itemRef }) => {
-    const panelId = `panel-${workshop.id}`
-    const triggerId = `trigger-${workshop.id}`
-
+const WorkshopCard = ({ workshop, index, onClick }) => {
+    const Icon = workshop.icon
     return (
         <article
-            ref={itemRef}
-            className={`accordion-item${isOpen ? ' open' : ''}`}
-            style={{ '--stagger-delay': `${index * 80}ms` }}
-            data-type={workshop.type}
+            className="ws-card"
+            style={{ '--card-color': workshop.color, '--card-delay': `${index * 90}ms` }}
+            onClick={onClick}
+            role="button"
+            tabIndex={0}
+            aria-label={`Open ${workshop.title} details`}
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
         >
-            {/* ── Trigger row ── */}
-            <button
-                id={triggerId}
-                className="accordion-trigger"
-                onClick={onToggle}
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-            >
-                {/* Index */}
-                <span className="row-index" aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                </span>
+            <div className="ws-card__shimmer" aria-hidden="true" />
 
-                {/* Title block */}
-                <span className="row-title-block">
-                    <span className="row-subtitle">{workshop.subtitle}</span>
-                    <span className="row-title">{workshop.title}</span>
-                </span>
-
-                {/* Badges */}
-                <span className="row-badges" aria-hidden="true">
-                    {workshop.badges.slice(0, 2).map((b) => (
-                        <span key={b} className="badge">{b}</span>
-                    ))}
-                </span>
-
-                {/* Type chip */}
-                <TypeChip type={workshop.type} />
-
-                {/* Chevron */}
-                <span className="row-chevron" aria-hidden="true">
-                    <ChevronDown size={16} strokeWidth={1.5} />
-                </span>
-            </button>
-
-            {/* ── Expandable panel ── */}
-            <div
-                id={panelId}
-                className="accordion-panel"
-                role="region"
-                aria-labelledby={triggerId}
-            >
-                <div className="accordion-panel-inner">
-                    <div className="accordion-content">
-                        {/* Left: meta */}
-                        <div className="content-meta">
-                            {workshop.meta.map(({ icon: Icon, label, value }) => (
-                                <div key={label} className="meta-row">
-                                    <span className="meta-label">
-                                        <Icon size={10} strokeWidth={1.5} aria-hidden="true" />
-                                        {label}
-                                    </span>
-                                    <span className="meta-value">{value}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Right: sections */}
-                        <div className="content-sections">
-                            {workshop.sections.map((section) => (
-                                <Section key={section.title} {...section} />
-                            ))}
-                        </div>
-                    </div>
+            {/* Top row: icon + meta */}
+            <div className="ws-card__top">
+                <div className="ws-card__icon-wrap">
+                    <Icon size={20} strokeWidth={1.5} />
                 </div>
+                <div className="ws-card__top-meta">
+                    <span className="ws-card__number font-mono">{workshop.number}</span>
+                    <span className={`ws-card__type-chip ws-card__type-chip--${workshop.type}`}>
+                        {workshop.type === 'workshop' ? 'Workshop' : 'Event'}
+                    </span>
+                </div>
+            </div>
+
+            {/* Body */}
+            <div className="ws-card__body">
+                <span className="ws-card__subtitle font-mono">{workshop.subtitle}</span>
+                <h3 className="ws-card__title">{workshop.title}</h3>
+                <p className="ws-card__tagline">{workshop.tagline}</p>
+            </div>
+
+            {/* Badges */}
+            <div className="ws-card__badges">
+                {workshop.badges.map((b) => (
+                    <span key={b} className="ws-card__badge font-mono">{b}</span>
+                ))}
+            </div>
+
+            {/* Footer CTA */}
+            <div className="ws-card__footer">
+                <span className="ws-card__cta font-mono">View Details</span>
+                <span className="ws-card__arrow">
+                    <ArrowUpRight size={15} strokeWidth={2} />
+                </span>
             </div>
         </article>
     )
@@ -311,28 +334,25 @@ const AccordionItem = ({ workshop, index, isOpen, onToggle, itemRef }) => {
 ───────────────────────────────────────────────────────────── */
 const Workshops = () => {
     const [activeFilter, setActiveFilter] = useState('all')
-    const [openId, setOpenId] = useState(null)
+    const [selectedId, setSelectedId] = useState(null)
+    const [revealed, setRevealed] = useState(false)
+
+    useEffect(() => {
+        const t = setTimeout(() => setRevealed(true), 80)
+        return () => clearTimeout(t)
+    }, [])
 
     const filtered = workshops.filter(
         (w) => activeFilter === 'all' || w.type === activeFilter
     )
 
-    const cardRefs = useStaggerReveal(filtered.length)
+    const selectedWorkshop = workshops.find((w) => w.id === selectedId)
 
     const filters = [
-        { id: 'all', label: 'All' },
-        { id: 'workshop', label: 'Workshops' },
-        { id: 'event', label: 'Events' },
+        { id: 'all', label: 'All', count: workshops.length },
+        { id: 'workshop', label: 'Workshops', count: workshops.filter(w => w.type === 'workshop').length },
+        { id: 'event', label: 'Events', count: workshops.filter(w => w.type === 'event').length },
     ]
-
-    const handleFilterChange = (id) => {
-        setActiveFilter(id)
-        setOpenId(null)
-    }
-
-    const handleToggle = (id) => {
-        setOpenId((prev) => (prev === id ? null : id))
-    }
 
     return (
         <div className="workshops-page">
@@ -342,73 +362,86 @@ const Workshops = () => {
                 url="/workshops"
             />
 
+            {/* Background orbs */}
+            <div className="ws-orb ws-orb--1" aria-hidden="true" />
+            <div className="ws-orb ws-orb--2" aria-hidden="true" />
+
             <div className="container">
-                {/* ── Header ── */}
-                <header className="page-header">
-                    <p className="header-eyebrow">Community · Portfolio</p>
-                    <h1>Workshops &amp; <strong>Events</strong></h1>
-                    <div className="header-meta">
-                        <p className="header-desc">Sharing knowledge and building together</p>
+                {/* Hero */}
+                <header className={`ws-hero${revealed ? ' ws-hero--revealed' : ''}`}>
+                    <div className="ws-hero__label font-mono">PORTFOLIO · COMMUNITY</div>
+                    <h1 className="ws-hero__title">
+                        Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
+                    </h1>
+                    <p className="ws-hero__subtitle font-mono">
+                        Sharing knowledge · Building community · Creating impact
+                    </p>
+
+                    {/* Stats */}
+                    <div className="ws-stats">
+                        {[
+                            { num: workshops.length, label: 'Total' },
+                            { num: workshops.filter(w => w.type === 'workshop').length, label: 'Workshops' },
+                            { num: workshops.filter(w => w.type === 'event').length, label: 'Events' },
+                            { num: '38+', label: 'Students' },
+                        ].map((s, i, arr) => (
+                            <>
+                                <div key={s.label} className="ws-stat">
+                                    <span className="ws-stat__num">{s.num}</span>
+                                    <span className="ws-stat__label font-mono">{s.label}</span>
+                                </div>
+                                {i < arr.length - 1 && <div className="ws-stat-divider" />}
+                            </>
+                        ))}
                     </div>
-                    {/* Ghost total counter */}
-                    <span className="header-ghost" aria-hidden="true">
-                        {String(workshops.length).padStart(2, '0')}
-                    </span>
                 </header>
 
-                {/* ── Full-width rule ── */}
-                <div className="header-border-top" aria-hidden="true" />
-
-                {/* ── Filter tabs ── */}
-                <nav className="filter-container" aria-label="Filter workshops">
-                    {filters.map(({ id, label }) => (
+                {/* Filters */}
+                <nav className="ws-filters" aria-label="Filter">
+                    {filters.map(({ id, label, count }) => (
                         <button
                             key={id}
-                            className={`filter-btn${activeFilter === id ? ' active' : ''}`}
-                            onClick={() => handleFilterChange(id)}
+                            className={`ws-filter-btn${activeFilter === id ? ' ws-filter-btn--active' : ''} font-mono`}
+                            onClick={() => { setActiveFilter(id) }}
                             aria-pressed={activeFilter === id}
                         >
                             {label}
-                            {id !== 'all' && (
-                                <span className="filter-count" aria-hidden="true">
-                                    {workshops.filter((w) => w.type === id).length}
-                                </span>
-                            )}
+                            <span className="ws-filter-btn__count">{count}</span>
                         </button>
                     ))}
                 </nav>
 
-                {/* ── Column headers ── */}
-                <div className="directory-header" aria-hidden="true">
-                    <span>#</span>
-                    <span>Title</span>
-                    <span>Tags</span>
-                    <span>Type</span>
-                    <span />
-                </div>
+                {/* Helper text */}
+                <p className="ws-hint font-mono">Click any card to view full details</p>
 
-                {/* ── Accordion list ── */}
-                <div className="accordion-list" role="list">
+                {/* Card grid */}
+                <div className="ws-grid">
                     {filtered.map((workshop, index) => (
-                        <AccordionItem
+                        <WorkshopCard
                             key={workshop.id}
                             workshop={workshop}
                             index={index}
-                            isOpen={openId === workshop.id}
-                            onToggle={() => handleToggle(workshop.id)}
-                            itemRef={(el) => (cardRefs.current[index] = el)}
+                            onClick={() => setSelectedId(workshop.id)}
                         />
                     ))}
                 </div>
 
-                {/* ── Back nav ── */}
-                <div className="back-nav">
-                    <Link to="/" className="btn-back">
-                        <ArrowLeft size={13} strokeWidth={1.5} aria-hidden="true" />
+                {/* Back nav */}
+                <div className="ws-back-nav">
+                    <Link to="/" className="btn primary ws-back-btn">
+                        <ArrowLeft size={14} strokeWidth={2} />
                         <span>Back to Portfolio</span>
                     </Link>
                 </div>
             </div>
+
+            {/* Modal */}
+            {selectedWorkshop && (
+                <WorkshopModal
+                    workshop={selectedWorkshop}
+                    onClose={() => setSelectedId(null)}
+                />
+            )}
         </div>
     )
 }

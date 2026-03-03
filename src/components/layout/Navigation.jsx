@@ -79,6 +79,8 @@ const Navigation = () => {
                 </li>
             </ul>
 
+            <span className="nav-divider" />
+
             <button
                 id="theme-toggle"
                 className="theme-toggle"
