@@ -87,9 +87,9 @@
 }
 
 :root[data-theme="light"] .ws-hero__title {
-    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+    background: none;
+    -webkit-text-fill-color: #000000;
+    color: #000000;
 }
 
 .ws-hero__subtitle {
@@ -250,6 +250,41 @@
     animation: wsCardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0ms) both;
     transition: background var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
     --card-color: #06C167;
+}
+
+@media (max-width: 480px) {
+    .ws-card {
+        padding-bottom: 12px;
+    }
+
+    .ws-card__body {
+        padding: 12px 18px;
+    }
+
+    .ws-card__top {
+        padding: 18px 18px 0;
+    }
+
+    .ws-card__title {
+        font-size: 0.95rem;
+    }
+
+    .ws-card__tagline {
+        font-size: 0.78rem;
+    }
+
+    .ws-card__meta {
+        padding: 10px 18px;
+        gap: 12px;
+    }
+
+    .ws-card__badges {
+        padding: 0 18px 14px;
+    }
+
+    .ws-card__footer {
+        padding: 12px 18px;
+    }
 }
 
 @keyframes wsCardIn {
