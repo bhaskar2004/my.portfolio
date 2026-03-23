@@ -394,7 +394,7 @@ const Workshops = () => {
             <div className="container">
 
                 {/* Hero */}
-                <header className={`ws-hero${revealed ? ' ws-hero--revealed' : ''}`} ref={useScrollReveal()}>
+                <header className={`ws-hero reveal-active${revealed ? ' ws-hero--revealed' : ''}`} ref={useScrollReveal()}>
                     <div className="reveal">
                         <span className="ws-hero__label">Portfolio · Community</span>
                         <h1 className="ws-hero__title">
