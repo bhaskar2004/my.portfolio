@@ -30,8 +30,9 @@ const Resume = () => {
     }
 
     return (
-        <div className="resume-page">
-            <div className="container" ref={useScrollReveal()}>
+        <div className="page-transition-wrapper">
+            <div className="resume-page">
+                <div className="container" ref={useScrollReveal()}>
 
                 {/* ── Header ── */}
                 <div className="header reveal">
@@ -114,6 +115,7 @@ const Resume = () => {
                     )}
                 </div>
 
+            </div>
             </div>
         </div>
     )

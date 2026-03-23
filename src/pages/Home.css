@@ -36,6 +36,7 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .hero h1 .char-fade {
@@ -43,9 +44,11 @@
 }
 
 :root[data-theme="light"] .hero h1 {
-    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+    background: none;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #000000;
+    color: #000000;
 }
 
 /* Subtitle / descriptor */

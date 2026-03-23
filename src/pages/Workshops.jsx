@@ -379,7 +379,8 @@ const Workshops = () => {
     ]
 
     return (
-        <div className="workshops-page">
+        <div className="page-transition-wrapper">
+            <div className="workshops-page">
             <SEO
                 title="Workshops & Events"
                 description="Workshops and events Bhaskar T has contributed to or organized — SUI Move, Rust × Hifly, Sambrama 2025, and more."
@@ -474,6 +475,7 @@ const Workshops = () => {
                     onClose={() => setSelectedId(null)}
                 />
             )}
+        </div>
         </div>
     )
 }
