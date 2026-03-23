@@ -7,50 +7,38 @@ const BackToTop = () => {
     const [isLaunching, setIsLaunching] = useState(false)
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsVisible(window.scrollY > 300)
-        }
-
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        const onScroll = () => setIsVisible(window.scrollY > 400)
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
     const scrollToTop = () => {
         if (isLaunching) return
-
         setIsLaunching(true)
 
-        // Start ignition animation
         const btn = document.getElementById('backToTop')
         if (btn) {
             btn.classList.add('igniting')
-
             setTimeout(() => {
                 btn.classList.remove('igniting')
                 btn.classList.add('launching')
-
-                // Smooth scroll to top
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                })
-
+                window.scrollTo({ top: 0, behavior: 'smooth' })
                 setTimeout(() => {
                     btn.classList.remove('launching')
                     setIsLaunching(false)
-                }, 1000)
-            }, 300)
+                }, 700)
+            }, 280)
         }
     }
 
     return (
         <button
             id="backToTop"
-            className={`back-to-top ${isVisible ? 'visible' : ''}`}
+            className={`back-to-top${isVisible ? ' visible' : ''}`}
             onClick={scrollToTop}
             aria-label="Back to top"
         >
-            <ArrowUp size={24} />
+            <ArrowUp size={20} strokeWidth={2} />
         </button>
     )
 }

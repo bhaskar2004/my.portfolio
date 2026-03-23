@@ -39,19 +39,21 @@ function App() {
             <CustomCursor />
 
             {/* Main Layout */}
-            <Navigation />
+            <div className="main-content-wrapper" style={{ position: 'relative', zIndex: 'var(--z-content)' }}>
+                <Navigation />
 
-            {/* Routes */}
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/workshops" element={<Workshops />} />
-                <Route path="/resume" element={<Resume />} />
+                {/* Routes */}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/workshops" element={<Workshops />} />
+                    <Route path="/resume" element={<Resume />} />
 
-                {/* ADDED: Catch-all 404 — noindex keeps crawl budget clean */}
-                <Route path="*" element={<NotFound />} />
-            </Routes>
+                    {/* ADDED: Catch-all 404 — noindex keeps crawl budget clean */}
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
 
-            <Footer />
+                <Footer />
+            </div>
             <BackToTop />
         </HelmetProvider>
     )

@@ -1,27 +1,35 @@
-/* Resume Page Styles */
+/* ============================================================
+   RESUME PAGE — Uber-inspired
+   ============================================================ */
 
 .resume-page {
     min-height: 100vh;
-    padding-top: 100px;
-    padding-bottom: 50px;
+    padding-top: 68px;
+    /* nav height */
 }
 
 .resume-page .container {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 32px;
 }
 
+/* ── Header ─────────────────────────────────────────────────── */
 .resume-page .header {
-    text-align: center;
-    margin-bottom: 50px;
-    animation: fadeInDown 0.6s ease-out;
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+    animation: fadeInDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes fadeInDown {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-16px);
     }
 
     to {
@@ -30,36 +38,43 @@
     }
 }
 
+.resume-page .header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .resume-page .header h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    letter-spacing: -0.04em;
     background: var(--gradient-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 0;
 }
 
 .resume-page .header p {
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: 0.82rem;
     color: var(--color-text-muted);
-    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
+/* ── Action Buttons ─────────────────────────────────────────── */
 .resume-page .actions {
     display: flex;
-    justify-content: center;
-    gap: 18px;
-    margin-bottom: 45px;
+    gap: 12px;
     flex-wrap: wrap;
-    animation: fadeInUp 0.6s ease-out 0.2s backwards;
+    align-self: flex-end;
+    animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
 }
 
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(12px);
     }
 
     to {
@@ -68,16 +83,29 @@
     }
 }
 
+/* ── PDF Viewer Wrapper ─────────────────────────────────────── */
 .pdf-viewer {
-    background: rgba(15, 15, 25, 0.4);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-        0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.6s ease-out 0.4s backwards;
+    margin: 32px 0 48px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    animation: fadeIn 0.5s ease 0.3s both;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Green top rule — Uber accent line */
+.pdf-viewer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 @keyframes fadeIn {
@@ -90,14 +118,15 @@
     }
 }
 
+/* ── PDF Container ──────────────────────────────────────────── */
 .pdf-container {
     width: 100%;
-    height: 95vh;
-    min-height: 900px;
-    border-radius: 12px;
+    height: 90vh;
+    min-height: 800px;
+    border-radius: var(--radius-md);
     overflow: hidden;
     background: #fff;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .pdf-container iframe,
@@ -106,30 +135,31 @@
     width: 100%;
     height: 100%;
     border: none;
+    display: block;
 }
 
+/* ── PDF Fallback ───────────────────────────────────────────── */
 .pdf-fallback {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    background: var(--color-surface);
-    border-radius: 12px;
-    padding: 50px;
+    min-height: 480px;
+    padding: 60px 40px;
     text-align: center;
+    gap: 0;
 }
 
 .pdf-fallback svg {
-    width: 90px;
-    height: 90px;
-    stroke: var(--color-accent, var(--color-primary));
-    margin-bottom: 28px;
-    opacity: 0.8;
-    animation: float 3s ease-in-out infinite;
+    width: 72px;
+    height: 72px;
+    stroke: var(--color-primary);
+    margin-bottom: 24px;
+    opacity: 0.9;
+    animation: floatIcon 3.5s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes floatIcon {
 
     0%,
     100% {
@@ -137,49 +167,56 @@
     }
 
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-8px);
     }
 }
 
 .pdf-fallback h3 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
     color: var(--color-text);
-    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .pdf-fallback p {
     color: var(--color-text-muted);
-    margin-bottom: 30px;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    font-weight: 300;
 }
 
-.pdf-fallback .btn {
-    margin: 0 10px;
+.pdf-fallback-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
+/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-    .resume-page {
-        padding-top: 80px;
-        padding-bottom: 40px;
-    }
-
     .resume-page .container {
         padding: 0 20px;
     }
 
-    .resume-page .header h1 {
-        font-size: 2.2rem;
+    .resume-page .header {
+        padding: 56px 0 32px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        border-bottom: 2px solid var(--color-primary);
     }
 
-    .resume-page .header p {
-        font-size: 0.95rem;
+    .resume-page .header h1 {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        line-height: 1;
+        letter-spacing: -0.05em;
     }
 
     .resume-page .actions {
         flex-direction: column;
-        max-width: 300px;
-        margin: 0 auto 40px;
+        width: 100%;
     }
 
     .resume-page .actions .btn {
@@ -188,11 +225,18 @@
     }
 
     .pdf-container {
-        height: 75vh;
-        min-height: 600px;
+        height: 72vh;
+        min-height: 520px;
     }
 
     .pdf-viewer {
-        padding: 20px;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pdf-container {
+        height: 65vh;
+        min-height: 420px;
     }
 }

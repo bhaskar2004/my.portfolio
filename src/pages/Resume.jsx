@@ -1,27 +1,22 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Printer, Download, ExternalLink, FileText } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import './Resume.css'
 
 const Resume = () => {
     const [pdfError, setPdfError] = useState(false)
 
     useEffect(() => {
-        // Check if PDF exists
         fetch('/resume.pdf', { method: 'HEAD' })
-            .then(response => {
-                if (!response.ok) setPdfError(true)
-            })
+            .then(response => { if (!response.ok) setPdfError(true) })
             .catch(() => setPdfError(true))
     }, [])
 
     const handlePrint = () => {
-        // Open PDF in new window and trigger print
         const printWindow = window.open('/resume.pdf', '_blank')
         if (printWindow) {
-            printWindow.onload = () => {
-                printWindow.print()
-            }
+            printWindow.onload = () => printWindow.print()
         }
     }
 
@@ -36,54 +31,80 @@ const Resume = () => {
 
     return (
         <div className="resume-page">
-            <div className="container">
-                <div className="header">
-                    <h1>Resume</h1>
-                    <p>Bhaskar T | Software Tester & Problem Solver</p>
+            <div className="container" ref={useScrollReveal()}>
+
+                {/* ── Header ── */}
+                <div className="header reveal">
+                    <div className="header-text">
+                        {/* eyebrow label */}
+                        <span className="section-eyebrow">Document</span>
+                        <h1>Resume</h1>
+                        <p>Bhaskar T &nbsp;·&nbsp; Software Tester &amp; Problem Solver</p>
+                    </div>
+
+                    <div className="actions">
+                        <Link to="/" className="btn">
+                            <ArrowLeft size={15} />
+                            <span>Back</span>
+                        </Link>
+                        <button onClick={handlePrint} className="btn primary">
+                            <Printer size={15} />
+                            <span>Print</span>
+                        </button>
+                        <button onClick={handleDownload} className="btn secondary">
+                            <Download size={15} />
+                            <span>Download</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div className="actions">
-                    <Link to="/" className="btn">
-                        <ArrowLeft size={16} />
-                        <span>Back to Portfolio</span>
-                    </Link>
-                    <button onClick={handlePrint} className="btn primary">
-                        <Printer size={16} />
-                        <span>Print Resume</span>
-                    </button>
-                </div>
-
-                <div className="pdf-viewer">
+                {/* ── PDF Viewer ── */}
+                <div className="pdf-viewer reveal reveal-delay-2" ref={useScrollReveal()}>
                     {pdfError ? (
                         <div className="pdf-fallback">
-                            <FileText size={90} strokeWidth={1.5} />
+                            <FileText size={72} strokeWidth={1.2} />
                             <h3>Resume.pdf</h3>
-                            <p>PDF file could not be loaded</p>
-                            <div>
-                                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn primary">
-                                    <ExternalLink size={16} />
+                            <p>Could not load the PDF preview in your browser.</p>
+                            <div className="pdf-fallback-actions">
+                                <a
+                                    href="/resume.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn primary"
+                                >
+                                    <ExternalLink size={14} />
                                     <span>Open in New Tab</span>
                                 </a>
                                 <button onClick={handleDownload} className="btn">
-                                    <Download size={16} />
+                                    <Download size={14} />
                                     <span>Download PDF</span>
                                 </button>
                             </div>
                         </div>
                     ) : (
                         <div className="pdf-container">
-                            <object data="/resume.pdf" type="application/pdf" width="100%" height="100%">
+                            <object
+                                data="/resume.pdf"
+                                type="application/pdf"
+                                width="100%"
+                                height="100%"
+                            >
                                 <div className="pdf-fallback">
-                                    <FileText size={90} strokeWidth={1.5} />
+                                    <FileText size={72} strokeWidth={1.2} />
                                     <h3>Resume.pdf</h3>
-                                    <p>Your browser doesn't support PDF preview</p>
-                                    <div>
-                                        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="btn primary">
-                                            <ExternalLink size={16} />
+                                    <p>Your browser doesn't support inline PDF preview.</p>
+                                    <div className="pdf-fallback-actions">
+                                        <a
+                                            href="/resume.pdf"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="btn primary"
+                                        >
+                                            <ExternalLink size={14} />
                                             <span>Open in New Tab</span>
                                         </a>
                                         <button onClick={handleDownload} className="btn">
-                                            <Download size={16} />
+                                            <Download size={14} />
                                             <span>Download PDF</span>
                                         </button>
                                     </div>
@@ -92,9 +113,10 @@ const Resume = () => {
                         </div>
                     )}
                 </div>
+
             </div>
         </div>
     )
 }
 
-export default Resume   
+export default Resume

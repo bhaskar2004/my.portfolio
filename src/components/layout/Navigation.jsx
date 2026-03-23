@@ -6,18 +6,18 @@ import './Navigation.css'
 
 const Navigation = () => {
     const [isScrolled, setIsScrolled] = useState(false)
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [isMobileMenuOpen, setIsMobileOpen] = useState(false)
     const { theme, toggleTheme } = useTheme()
     const location = useLocation()
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50)
-        }
-
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        const onScroll = () => setIsScrolled(window.scrollY > 20)
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
     }, [])
+
+    /* Close mobile menu on route change */
+    useEffect(() => { setIsMobileOpen(false) }, [location.pathname])
 
     const isActive = (path) => {
         if (path === '/') return location.pathname === '/'
@@ -26,35 +26,29 @@ const Navigation = () => {
 
     const scrollToSection = (sectionId) => {
         if (location.pathname !== '/') {
-            // Navigate to home first, then scroll
             window.location.href = `/#${sectionId}`
             return
         }
-
-        const element = document.getElementById(sectionId)
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
-            setIsMobileMenuOpen(false)
-        }
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
+        setIsMobileOpen(false)
     }
 
     return (
         <nav className={isScrolled ? 'scrolled' : ''} id="navbar">
-            <Link to="/" className="logo">
-                <img src="/logo.png" alt="Bhaskar T Logo" className="logo-img" width="40" height="40" />
+
+            {/* Logo */}
+            <Link to="/" className="logo" aria-label="Bhaskar T — Home">
+                <img
+                    src="/logo.png"
+                    alt="Bhaskar T"
+                    className="logo-img"
+                    width="36"
+                    height="36"
+                />
             </Link>
 
-            <div
-                className={`menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle mobile menu"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            <ul className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+            {/* Nav links — conditionally scroll-spy or route links */}
+            <ul className={`nav-links${isMobileMenuOpen ? ' active' : ''}`}>
                 {location.pathname === '/' ? (
                     <>
                         <li><a href="#about" onClick={() => scrollToSection('about')}>About</a></li>
@@ -72,23 +66,49 @@ const Navigation = () => {
                     <Link
                         to="/workshops"
                         className={isActive('/workshops') ? 'active' : ''}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => setIsMobileOpen(false)}
                     >
-                        Workshops & Events
+                        Workshops
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to="/resume"
+                        className={isActive('/resume') ? 'active' : ''}
+                        onClick={() => setIsMobileOpen(false)}
+                    >
+                        Resume
                     </Link>
                 </li>
             </ul>
 
-            <span className="nav-divider" />
+            <span className="nav-divider" aria-hidden="true" />
 
+            {/* Theme toggle */}
             <button
                 id="theme-toggle"
                 className="theme-toggle"
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
-                {theme === 'dark' ? <Sun className="sun-icon" size={20} /> : <Moon className="moon-icon" size={20} />}
+                {theme === 'dark'
+                    ? <Sun size={18} strokeWidth={1.8} />
+                    : <Moon size={18} strokeWidth={1.8} />
+                }
             </button>
+
+            {/* Hamburger */}
+            <button
+                className={`menu-toggle${isMobileMenuOpen ? ' active' : ''}`}
+                onClick={() => setIsMobileOpen(!isMobileMenuOpen)}
+                aria-label="Toggle navigation menu"
+                aria-expanded={isMobileMenuOpen}
+            >
+                <span />
+                <span />
+                <span />
+            </button>
+
         </nav>
     )
 }

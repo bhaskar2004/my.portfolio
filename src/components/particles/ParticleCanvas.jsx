@@ -1,6 +1,17 @@
 import { useEffect, useRef } from 'react'
 import './ParticleCanvas.css'
 
+/**
+ * ParticleCanvas
+ *
+ * Uber-redesigned particle system:
+ *  – Particles use Uber green (#06C167) instead of white
+ *  – Connection lines use green at very low opacity
+ *  – Theme-aware: lighter on dark bg, near-invisible on light bg
+ *  – Mouse repulsion radius tightened (80px) for subtlety
+ *  – Particle count capped lower for a cleaner, sparser field
+ *  – Speed halved — slow drift, not frantic movement
+ */
 const ParticleCanvas = () => {
     const canvasRef = useRef(null)
 
@@ -11,10 +22,10 @@ const ParticleCanvas = () => {
         const ctx = canvas.getContext('2d')
         let particles = []
         let animationFrameId
-        let mouseX = 0
-        let mouseY = 0
+        let mouseX = -9999
+        let mouseY = -9999
 
-        // Canvas setup
+        /* ── Resize ─────────────────────────────────────────── */
         const resizeCanvas = () => {
             canvas.width = window.innerWidth
             canvas.height = window.innerHeight
@@ -22,34 +33,41 @@ const ParticleCanvas = () => {
         resizeCanvas()
         window.addEventListener('resize', resizeCanvas)
 
-        // Particle class
+        /* ── Theme detection ────────────────────────────────── */
+        const isDark = () =>
+            !document.documentElement.getAttribute('data-theme') ||
+            document.documentElement.getAttribute('data-theme') === 'dark'
+
+        /* ── Particle ───────────────────────────────────────── */
         class Particle {
-            constructor() {
+            constructor() { this.reset() }
+
+            reset() {
                 this.x = Math.random() * canvas.width
                 this.y = Math.random() * canvas.height
-                this.size = Math.random() * 2 + 0.5
-                this.speedX = Math.random() * 0.5 - 0.25
-                this.speedY = Math.random() * 0.5 - 0.25
-                this.opacity = Math.random() * 0.5 + 0.2
+                this.size = Math.random() * 1.4 + 0.4   // 0.4 – 1.8px
+                this.speedX = (Math.random() - 0.5) * 0.22
+                this.speedY = (Math.random() - 0.5) * 0.22
+                this.opacity = Math.random() * 0.4 + 0.2  // 0.20 – 0.60
             }
 
             update() {
                 this.x += this.speedX
                 this.y += this.speedY
 
-                // Mouse interaction
+                /* Mouse repulsion — gentle push away */
                 const dx = mouseX - this.x
                 const dy = mouseY - this.y
-                const distance = Math.sqrt(dx * dx + dy * dy)
-                const maxDistance = 100
+                const dist = Math.sqrt(dx * dx + dy * dy)
+                const repelR = 80
 
-                if (distance < maxDistance) {
-                    const force = (maxDistance - distance) / maxDistance
-                    this.x -= (dx / distance) * force * 2
-                    this.y -= (dy / distance) * force * 2
+                if (dist > 0 && dist < repelR) {
+                    const force = ((repelR - dist) / repelR) * 1.4
+                    this.x -= (dx / dist) * force
+                    this.y -= (dy / dist) * force
                 }
 
-                // Wrap around edges
+                /* Edge wrap */
                 if (this.x > canvas.width) this.x = 0
                 if (this.x < 0) this.x = canvas.width
                 if (this.y > canvas.height) this.y = 0
@@ -57,42 +75,56 @@ const ParticleCanvas = () => {
             }
 
             draw() {
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`
+                /* Uber green on dark; near-invisible on light */
+                const alpha = isDark()
+                    ? this.opacity
+                    : this.opacity * 0.5
+
+                ctx.fillStyle = `rgba(6, 193, 103, ${alpha})`
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
                 ctx.fill()
             }
         }
 
-        // Initialize particles
+        /* ── Init ───────────────────────────────────────────── */
         const initParticles = () => {
             particles = []
-            const particleCount = Math.min(Math.floor(canvas.width * canvas.height / 10000), 150)
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle())
-            }
+            /* Sparser field: ~1 particle per 14k px² max 100 */
+            const count = Math.min(
+                Math.floor((canvas.width * canvas.height) / 14000),
+                100
+            )
+            for (let i = 0; i < count; i++) particles.push(new Particle())
         }
 
-        // Animation loop
+        /* ── Animate ────────────────────────────────────────── */
+        const connectDistance = 90
+
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            particles.forEach((particle, index) => {
-                particle.update()
-                particle.draw()
+            const dark = isDark()
 
-                // Draw connections
-                for (let j = index + 1; j < particles.length; j++) {
-                    const dx = particles[j].x - particle.x
-                    const dy = particles[j].y - particle.y
-                    const distance = Math.sqrt(dx * dx + dy * dy)
+            particles.forEach((p, i) => {
+                p.update()
+                p.draw()
 
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - distance / 100)})`
-                        ctx.lineWidth = 0.5
+                /* Connection lines — only between nearby pairs */
+                for (let j = i + 1; j < particles.length; j++) {
+                    const q = particles[j]
+                    const dx = q.x - p.x
+                    const dy = q.y - p.y
+                    const d = Math.sqrt(dx * dx + dy * dy)
+
+                    if (d < connectDistance) {
+                        const baseAlpha = dark ? 0.25 : 0.1
+                        const alpha = baseAlpha * (1 - d / connectDistance)
+                        ctx.strokeStyle = `rgba(6, 193, 103, ${alpha})`
+                        ctx.lineWidth = 0.6
                         ctx.beginPath()
-                        ctx.moveTo(particle.x, particle.y)
-                        ctx.lineTo(particles[j].x, particles[j].y)
+                        ctx.moveTo(p.x, p.y)
+                        ctx.lineTo(q.x, q.y)
                         ctx.stroke()
                     }
                 }
@@ -101,25 +133,32 @@ const ParticleCanvas = () => {
             animationFrameId = requestAnimationFrame(animate)
         }
 
-        // Mouse tracking
-        const handleMouseMove = (e) => {
-            mouseX = e.clientX
-            mouseY = e.clientY
-        }
+        /* ── Mouse tracking ─────────────────────────────────── */
+        const onMouseMove = (e) => { mouseX = e.clientX; mouseY = e.clientY }
+        const onMouseLeave = () => { mouseX = -9999; mouseY = -9999 }
 
-        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mousemove', onMouseMove)
+        window.addEventListener('mouseleave', onMouseLeave)
 
         initParticles()
         animate()
 
+        /* ── Cleanup ─────────────────────────────────────────── */
         return () => {
             window.removeEventListener('resize', resizeCanvas)
-            window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('mousemove', onMouseMove)
+            window.removeEventListener('mouseleave', onMouseLeave)
             cancelAnimationFrame(animationFrameId)
         }
     }, [])
 
-    return <canvas ref={canvasRef} id="particle-canvas" aria-hidden="true" />
+    return (
+        <canvas
+            ref={canvasRef}
+            id="particle-canvas"
+            aria-hidden="true"
+        />
+    )
 }
 
 export default ParticleCanvas

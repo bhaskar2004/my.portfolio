@@ -5,6 +5,7 @@ import {
     Briefcase, Star, X, Code2, Layers, Camera, ArrowUpRight
 } from 'lucide-react'
 import SEO from '../components/SEO'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 import './Workshops.css'
 
 /* ─────────────────────────────────────────────────────────────
@@ -20,7 +21,7 @@ const workshops = [
         subtitle: 'Workshop Contribution',
         tagline: 'Blockchain & Smart Contracts with Sui Move',
         badges: ['Blockchain', 'Community', 'Event Management'],
-        color: '#7c4dff',
+        color: '#06C167',
         meta: [
             { icon: Star, label: 'Event', value: 'Build on Sui Move 101' },
             { icon: MapPin, label: 'Location', value: 'SJC Institute of Technology' },
@@ -65,7 +66,7 @@ const workshops = [
         subtitle: 'Workshop Contribution',
         tagline: 'Systems Programming — Memory Safety & Ownership',
         badges: ['Rust Programming', 'Community', 'Event Management'],
-        color: '#006eff',
+        color: '#06C167',
         meta: [
             { icon: Star, label: 'Event', value: 'Rust × Hifly Workshop' },
             { icon: MapPin, label: 'Location', value: 'CSE Seminar Hall, SJCIT' },
@@ -111,7 +112,7 @@ const workshops = [
         subtitle: 'Core Committee Member',
         tagline: 'Cultural Fest — Creative Leadership & Planning',
         badges: ['Graphic Design', 'Core Committee', 'Event Planning'],
-        color: '#f472b6',
+        color: '#06C167',
         meta: [
             { icon: Star, label: 'Event', value: 'Sambrama 2025' },
             { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
@@ -156,7 +157,7 @@ const workshops = [
         subtitle: 'Event Documentation',
         tagline: 'Tech Fest — Photography & Videography Lead',
         badges: ['Photography', 'Videography', 'Event Coverage'],
-        color: '#34d399',
+        color: '#06C167',
         meta: [
             { icon: Star, label: 'Event', value: 'Technotsava' },
             { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
@@ -195,7 +196,7 @@ const workshops = [
 ]
 
 /* ─────────────────────────────────────────────────────────────
-   MODAL — Redesigned for maximum readability
+   MODAL
 ───────────────────────────────────────────────────────────── */
 const WorkshopModal = ({ workshop, onClose }) => {
     const Icon = workshop.icon
@@ -211,31 +212,43 @@ const WorkshopModal = ({ workshop, onClose }) => {
     }, [onClose])
 
     return (
-        <div className="ws-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-label={workshop.title}>
-            <div className="ws-modal" onClick={(e) => e.stopPropagation()} style={{ '--card-color': workshop.color }}>
-
-                {/* ── Hero banner ── */}
+        <div
+            className="ws-modal-backdrop"
+            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label={workshop.title}
+        >
+            <div
+                className="ws-modal"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Hero banner */}
                 <div className="ws-modal__hero">
                     <div className="ws-modal__hero-glow" aria-hidden="true" />
-                    <button className="ws-modal__close" onClick={onClose} aria-label="Close modal">
-                        <X size={20} strokeWidth={2} />
+                    <button
+                        className="ws-modal__close"
+                        onClick={onClose}
+                        aria-label="Close modal"
+                    >
+                        <X size={18} strokeWidth={2} />
                     </button>
                     <div className="ws-modal__hero-icon">
-                        <Icon size={32} strokeWidth={1.5} />
+                        <Icon size={28} strokeWidth={1.5} />
                     </div>
-                    <span className={`ws-modal__chip ws-modal__chip--${workshop.type} font-mono`}>
+                    <span className="ws-modal__chip font-mono">
                         {workshop.type === 'workshop' ? 'Workshop' : 'Event'}
                     </span>
                     <h2 className="ws-modal__title">{workshop.title}</h2>
                     <p className="ws-modal__tagline">{workshop.tagline}</p>
                 </div>
 
-                {/* ── Meta info bar ── */}
+                {/* Meta info bar */}
                 <div className="ws-modal__meta-bar">
                     {workshop.meta.map(({ icon: MetaIcon, label, value }) => (
                         <div key={label} className="ws-modal__meta-item">
                             <div className="ws-modal__meta-icon">
-                                <MetaIcon size={16} strokeWidth={1.8} />
+                                <MetaIcon size={15} strokeWidth={1.8} />
                             </div>
                             <div className="ws-modal__meta-text">
                                 <span className="ws-modal__meta-label font-mono">{label}</span>
@@ -245,23 +258,27 @@ const WorkshopModal = ({ workshop, onClose }) => {
                     ))}
                 </div>
 
-                {/* ── Badges ── */}
+                {/* Badges */}
                 <div className="ws-modal__badges-wrap">
                     {workshop.badges.map((b) => (
                         <span key={b} className="ws-modal__badge font-mono">{b}</span>
                     ))}
                 </div>
 
-                {/* ── Content sections ── */}
+                {/* Content sections */}
                 <div className="ws-modal__content">
                     {workshop.sections.map((section) => (
                         <div key={section.title} className="ws-modal__section">
                             <h3 className="ws-modal__section-title">{section.title}</h3>
-                            {section.intro && <p className="ws-modal__section-intro">{section.intro}</p>}
+                            {section.intro && (
+                                <p className="ws-modal__section-intro">{section.intro}</p>
+                            )}
                             <ul className="ws-modal__section-list">
                                 {section.items.map((item, i) => (
                                     <li key={i}>
-                                        <span className="ws-modal__item-num font-mono">{String(i + 1).padStart(2, '0')}</span>
+                                        <span className="ws-modal__item-num font-mono">
+                                            {String(i + 1).padStart(2, '0')}
+                                        </span>
                                         <span className="ws-modal__item-text">{item}</span>
                                     </li>
                                 ))}
@@ -282,23 +299,24 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
     return (
         <article
             className="ws-card"
-            style={{ '--card-color': workshop.color, '--card-delay': `${index * 90}ms` }}
+            style={{ '--card-delay': `${index * 80}ms` }}
             onClick={onClick}
             role="button"
             tabIndex={0}
             aria-label={`Open ${workshop.title} details`}
             onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
         >
+            {/* Green top bar on hover */}
             <div className="ws-card__shimmer" aria-hidden="true" />
 
-            {/* Top row: icon + meta */}
+            {/* Top: icon + number/type */}
             <div className="ws-card__top">
                 <div className="ws-card__icon-wrap">
                     <Icon size={20} strokeWidth={1.5} />
                 </div>
                 <div className="ws-card__top-meta">
-                    <span className="ws-card__number font-mono">{workshop.number}</span>
-                    <span className={`ws-card__type-chip ws-card__type-chip--${workshop.type}`}>
+                    <span className="ws-card__num font-mono">{workshop.number}</span>
+                    <span className="ws-card__status font-mono">
                         {workshop.type === 'workshop' ? 'Workshop' : 'Event'}
                     </span>
                 </div>
@@ -306,9 +324,18 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
 
             {/* Body */}
             <div className="ws-card__body">
-                <span className="ws-card__subtitle font-mono">{workshop.subtitle}</span>
                 <h3 className="ws-card__title">{workshop.title}</h3>
                 <p className="ws-card__tagline">{workshop.tagline}</p>
+            </div>
+
+            {/* Meta strip */}
+            <div className="ws-card__meta">
+                {workshop.meta.slice(0, 2).map(({ icon: MIcon, value }) => (
+                    <div key={value} className="ws-card__meta-item">
+                        <MIcon size={11} strokeWidth={1.8} />
+                        <span>{value}</span>
+                    </div>
+                ))}
             </div>
 
             {/* Badges */}
@@ -321,9 +348,7 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             {/* Footer CTA */}
             <div className="ws-card__footer">
                 <span className="ws-card__cta font-mono">View Details</span>
-                <span className="ws-card__arrow">
-                    <ArrowUpRight size={15} strokeWidth={2} />
-                </span>
+                <ArrowUpRight size={14} strokeWidth={2} />
             </div>
         </article>
     )
@@ -345,7 +370,6 @@ const Workshops = () => {
     const filtered = workshops.filter(
         (w) => activeFilter === 'all' || w.type === activeFilter
     )
-
     const selectedWorkshop = workshops.find((w) => w.id === selectedId)
 
     const filters = [
@@ -362,47 +386,50 @@ const Workshops = () => {
                 url="/workshops"
             />
 
-            {/* Background orbs */}
+            {/* Background blobs */}
             <div className="ws-orb ws-orb--1" aria-hidden="true" />
             <div className="ws-orb ws-orb--2" aria-hidden="true" />
 
             <div className="container">
-                {/* Hero */}
-                <header className={`ws-hero${revealed ? ' ws-hero--revealed' : ''}`}>
-                    <div className="ws-hero__label font-mono">PORTFOLIO · COMMUNITY</div>
-                    <h1 className="ws-hero__title">
-                        Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
-                    </h1>
-                    <p className="ws-hero__subtitle font-mono">
-                        Sharing knowledge · Building community · Creating impact
-                    </p>
 
-                    {/* Stats */}
-                    <div className="ws-stats">
+                {/* Hero */}
+                <header className={`ws-hero${revealed ? ' ws-hero--revealed' : ''}`} ref={useScrollReveal()}>
+                    <div className="reveal">
+                        <span className="ws-hero__label">Portfolio · Community</span>
+                        <h1 className="ws-hero__title">
+                            Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
+                        </h1>
+                        <span className="ws-hero__subtitle font-mono">
+                            Sharing knowledge · Building community · Creating impact
+                        </span>
+                    </div>
+
+                    {/* Stats row */}
+                    <div className="ws-stats reveal reveal-delay-2">
                         {[
                             { num: workshops.length, label: 'Total' },
                             { num: workshops.filter(w => w.type === 'workshop').length, label: 'Workshops' },
                             { num: workshops.filter(w => w.type === 'event').length, label: 'Events' },
                             { num: '38+', label: 'Students' },
                         ].map((s, i, arr) => (
-                            <>
-                                <div key={s.label} className="ws-stat">
+                            <div key={s.label} style={{ display: 'contents' }}>
+                                <div className="ws-stat">
                                     <span className="ws-stat__num">{s.num}</span>
                                     <span className="ws-stat__label font-mono">{s.label}</span>
                                 </div>
                                 {i < arr.length - 1 && <div className="ws-stat-divider" />}
-                            </>
+                            </div>
                         ))}
                     </div>
                 </header>
 
                 {/* Filters */}
-                <nav className="ws-filters" aria-label="Filter">
+                <nav className="ws-filters" aria-label="Filter workshops">
                     {filters.map(({ id, label, count }) => (
                         <button
                             key={id}
                             className={`ws-filter-btn${activeFilter === id ? ' ws-filter-btn--active' : ''} font-mono`}
-                            onClick={() => { setActiveFilter(id) }}
+                            onClick={() => setActiveFilter(id)}
                             aria-pressed={activeFilter === id}
                         >
                             {label}
@@ -411,24 +438,29 @@ const Workshops = () => {
                     ))}
                 </nav>
 
-                {/* Helper text */}
                 <p className="ws-hint font-mono">Click any card to view full details</p>
 
                 {/* Card grid */}
-                <div className="ws-grid">
-                    {filtered.map((workshop, index) => (
-                        <WorkshopCard
-                            key={workshop.id}
-                            workshop={workshop}
-                            index={index}
-                            onClick={() => setSelectedId(workshop.id)}
-                        />
-                    ))}
+                <div className="ws-grid reveal reveal-delay-1" ref={useScrollReveal()}>
+                    {filtered.length > 0 ? (
+                        filtered.map((workshop, index) => (
+                            <WorkshopCard
+                                key={workshop.id}
+                                workshop={workshop}
+                                index={index}
+                                onClick={() => setSelectedId(workshop.id)}
+                            />
+                        ))
+                    ) : (
+                        <div className="ws-empty">
+                            <p>No items match the current filter.</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Back nav */}
                 <div className="ws-back-nav">
-                    <Link to="/" className="btn primary ws-back-btn">
+                    <Link to="/" className="btn ws-back-btn">
                         <ArrowLeft size={14} strokeWidth={2} />
                         <span>Back to Portfolio</span>
                     </Link>

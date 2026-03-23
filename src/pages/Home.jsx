@@ -1,14 +1,9 @@
 import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Calculator, Github, Linkedin, Mail } from 'lucide-react'
 import SEO from '../components/SEO'
 import './Home.css'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const Home = () => {
-    /*
-     * ── FAQ schema ───────────────────────────────────────────────────────
-     * These Q&As target zero-click snippets for name-based queries like
-     * "who is bhaskar", "what does bhaskar t do", "bhaskar2004 portfolio".
-     * Google pulls the answer text directly into search results.
-     */
     const homeFaq = [
         {
             question: 'Who is Bhaskar T?',
@@ -25,9 +20,9 @@ const Home = () => {
                 'is passionate about making software reliable and bug-free.',
         },
         {
-            question: 'Where can I find Bhaskar T\'s portfolio?',
+            question: "Where can I find Bhaskar T's portfolio?",
             answer:
-                'Bhaskar T\'s official portfolio is at https://bhaskar.xyz. ' +
+                "Bhaskar T's official portfolio is at https://bhaskar.xyz. " +
                 'You can also find him on GitHub at github.com/bhaskar2004 and ' +
                 'on LinkedIn at linkedin.com/in/bhaskart2004.',
         },
@@ -36,11 +31,6 @@ const Home = () => {
     return (
         <>
             <SEO
-                /*
-                 * isHome → renders ProfilePage schema (most impactful for name ranking)
-                 * title  → kept descriptive; SEO component prepends "Bhaskar T –" automatically
-                 * faq    → injects FAQPage schema targeting "who is bhaskar" queries
-                 */
                 isHome
                 title="Software Tester & Problem Solver"
                 description={
@@ -49,24 +39,16 @@ const Home = () => {
                 }
                 keywords="Bhaskar T portfolio, bhaskar2004, Bhaskar software tester India, bhaskar.xyz"
                 faq={homeFaq}
-            /*
-             * No jsonLd prop needed here — the new SEO component already
-             * emits a richer Person schema with all your details built-in.
-             * Passing a second Person schema would create duplicate/conflicting signals.
-             */
             />
 
-            {/* ── Hero Section ──────────────────────────────────────────────
-                itemScope + itemType + itemProp = microdata layer on top of JSON-LD.
-                Two independent signals for the same entity = stronger confidence for Google.
-            ─────────────────────────────────────────────────────────────── */}
+            {/* ── Hero ────────────────────────────────────────────────── */}
             <section
                 className="hero"
                 id="home"
                 itemScope
                 itemType="https://schema.org/Person"
             >
-                {/* Hidden but crawlable identity anchors */}
+                {/* Hidden schema anchors */}
                 <meta itemProp="name" content="Bhaskar T" />
                 <meta itemProp="alternateName" content="bhaskar2004" />
                 <meta itemProp="url" content="https://bhaskar.xyz" />
@@ -75,20 +57,20 @@ const Home = () => {
                 <meta itemProp="image" content="https://bhaskar.xyz/logo.png" />
 
                 <div className="container">
-                    <div className="portfolio-label font-mono" aria-label="Portfolio site">PORTFOLIO</div>
+                    {/* Eyebrow label */}
+                    <div className="portfolio-label font-mono" aria-label="Portfolio site">
+                        Portfolio
+                    </div>
 
-                    {/*
-                     * CHANGED: Removed decorative < > angle brackets.
-                     * Google was reading the h1 as "< Bhaskar T >" (literal text with
-                     * HTML entities) instead of "Bhaskar T". Clean name in h1 is critical.
-                     * Keep the visual styling via CSS (e.g. font-mono or a ::before/::after).
-                     */}
+                    {/* Name — clean h1 for SEO */}
                     <h1 itemProp="name">Bhaskar T</h1>
 
+                    {/* Role descriptor */}
                     <p className="subtitle font-mono" itemProp="description">
-                        Software Tester &amp; Problem Solver
+                        Software Tester &amp;&nbsp;Problem Solver
                     </p>
 
+                    {/* CTA buttons */}
                     <div className="cta-buttons">
                         <a href="#contact" className="btn primary">Contact Me</a>
                         <a href="#projects" className="btn secondary">View Projects</a>
@@ -102,21 +84,17 @@ const Home = () => {
                         </a>
                     </div>
 
+                    {/* Social links */}
                     <div className="social-links" role="list" aria-label="Social media links">
-                        {/*
-                         * CHANGED: Added rel="me" to all social links.
-                         * This is how Google verifies you own these profiles — it matches
-                         * rel="me" on your site with rel="me" back-links on the social profiles.
-                         * Critical for entity graph verification and Knowledge Panel eligibility.
-                         */}
                         <a
                             href="https://github.com/bhaskar2004"
                             target="_blank"
                             rel="noopener noreferrer me"
                             aria-label="Visit Bhaskar T on GitHub"
                             itemProp="sameAs"
+                            role="listitem"
                         >
-                            <Github size={24} />
+                            <Github size={20} />
                         </a>
                         <a
                             href="https://www.linkedin.com/in/bhaskart2004/"
@@ -124,139 +102,123 @@ const Home = () => {
                             rel="noopener noreferrer me"
                             aria-label="Visit Bhaskar T on LinkedIn"
                             itemProp="sameAs"
+                            role="listitem"
                         >
-                            <Linkedin size={24} />
+                            <Linkedin size={20} />
                         </a>
                         <a
                             href="mailto:bhaskart.dev@gmail.com"
                             aria-label="Send Bhaskar T an email"
                             itemProp="email"
+                            role="listitem"
                         >
-                            <Mail size={24} />
+                            <Mail size={20} />
                         </a>
                     </div>
                 </div>
             </section>
 
-            {/* ── About Section ─────────────────────────────────────────── */}
-            <section className="about" id="about">
+            {/* ── About ───────────────────────────────────────────────── */}
+            <section className="about" id="about" ref={useScrollReveal()}>
                 <div className="container">
-                    {/* CHANGED: "About Me" → "About Bhaskar T" — name in headings matters */}
-                    <h2>About Bhaskar T</h2>
-                    <p className="about-content">
-                        {/*
-                         * CHANGED: First sentence now includes full name + handle.
-                         * Google uses on-page text to confirm entity identity.
-                         * The original was good copy but had zero name-signal value.
-                         */}
-                        I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
-                        I test software until something breaks, then figure out exactly why.
-                        My focus is on making software solid, reliable, and production-ready.
-                        Details matter, and I'm kind of obsessed with getting them right.
-                    </p>
+                    {/* Left column: bio */}
+                    <div className="reveal">
+                        <span className="section-eyebrow">About</span>
+                        <h2>About Bhaskar T</h2>
+                        <p className="about-content">
+                            I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
+                            I test software until something breaks, then figure out exactly why.
+                            My focus is on making software solid, reliable, and production-ready.
+                            Details matter, and I'm kind of obsessed with getting them right.
+                        </p>
 
-                    <div className="about-grid">
-                        {/* Education Timeline — unchanged, already semantic */}
-                        <div className="timeline-section">
-                            <h3 className="section-title font-mono">EDUCATION TIMELINE</h3>
+                        {/* Education & Skills */}
+                        <div className="education-skills-grid">
+                            {/* Education */}
+                            <div className="education-section">
+                                <h3>Education</h3>
+                                <div className="degree">
+                                    <span className="degree-title">SJC Institute of Technology</span>
+                                    <span className="institution">Computer Science Engineering</span>
+                                    <span className="grad-year">2022 – 2026</span>
+                                </div>
+                            </div>
 
-                            <div className="timeline" role="list">
-                                <article className="timeline-item" role="listitem">
-                                    <time className="timeline-date font-mono" dateTime="2022/2026">2022 - 2026</time>
-                                    <div className="timeline-content">
-                                        <h4>SJC Institute of Technology</h4>
-                                        <p>Computer Science Engineering</p>
-                                        <span className="grade font-mono">Completed</span>
-                                    </div>
-                                </article>
-
-                                <article className="timeline-item" role="listitem">
-                                    <time className="timeline-date font-mono">Completed</time>
-                                    <div className="timeline-content">
-                                        <h4>BGS PU College</h4>
-                                        <p>Pre-University</p>
-                                        <span className="grade font-mono">Completed</span>
-                                    </div>
-                                </article>
-
-                                <article className="timeline-item" role="listitem">
-                                    <time className="timeline-date font-mono">Completed</time>
-                                    <div className="timeline-content">
-                                        <h4>BGS Public School</h4>
-                                        <p>High School</p>
-                                        <span className="grade font-mono">Completed</span>
-                                    </div>
-                                </article>
+                            {/* Skills */}
+                            <div className="skills-section">
+                                <h3>Skills</h3>
+                                <div className="skills-grid">
+                                    {['Java', 'SQL', 'Selenium', 'GitHub', 'IntelliJ', 'VS Code',
+                                        'Python', 'Photography', 'Video Editing'].map(s => (
+                                            <span key={s} className="skill-tag">{s}</span>
+                                        ))}
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Skills Section — unchanged */}
-                        <div className="skills-section">
-                            <h3 className="section-title">SKILLS</h3>
-
-                            <div className="skill-category">
-                                <h4 className="skill-label">Technical Skills:</h4>
-                                <p className="skill-items">Core Java, SQL, Selenium</p>
-                            </div>
-
-                            <div className="skill-category">
-                                <h4 className="skill-label">Tools:</h4>
-                                <p className="skill-items">GitHub, IntelliJ, VS Code</p>
-                            </div>
-
-                            <div className="skill-category">
-                                <h4 className="skill-label">Creative:</h4>
-                                <p className="skill-items">Photography, Video Editing</p>
-                            </div>
-
-                            <div className="skill-category">
-                                <h4 className="skill-label">Languages:</h4>
-                                <p className="skill-items">English, Kannada, Telugu, Hindi</p>
-                            </div>
-
-                            <div className="skill-category">
-                                <h4 className="skill-label">Soft Skills:</h4>
-                                <p className="skill-items">Team Collaboration, Problem Solving</p>
-                            </div>
+                    {/* Right column: stats */}
+                    <div className="about-stats reveal reveal-delay-2">
+                        <div className="about-stat">
+                            <div className="number">8+</div>
+                            <div className="label">Projects Built</div>
+                        </div>
+                        <div className="about-stat">
+                            <div className="number">3+</div>
+                            <div className="label">Years Coding</div>
+                        </div>
+                        <div className="about-stat">
+                            <div className="number">4</div>
+                            <div className="label">Languages</div>
+                        </div>
+                        <div className="about-stat">
+                            <div className="number">∞</div>
+                            <div className="label">Bugs Squashed</div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* ── Projects Section ──────────────────────────────────────── */}
-            <section className="projects" id="projects">
+            {/* ── Projects ────────────────────────────────────────────── */}
+            <section className="projects" id="projects" ref={useScrollReveal()}>
                 <div className="container">
-                    <div className="section-header">
-                        <h2>Featured Projects</h2>
-                        <p className="section-subtitle">Transforming ideas into functional, user-centric solutions</p>
+                    <div className="projects-header reveal">
+                        <div>
+                            <span className="section-eyebrow">Work</span>
+                            <h2>Featured Projects</h2>
+                        </div>
+                        <span className="projects-count">08 projects</span>
                     </div>
 
-                    <div className="projects-grid">
-                        <article className="project-card">
+                    <div className="projects-grid reveal reveal-delay-1">
+
+                        {/* #01 */}
+                        <article className="project-card reveal">
                             <div className="project-header">
-                                <div className="project-icon"><Car /></div>
+                                <div className="project-icon"><Car size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#01</span>
                                 </div>
                             </div>
                             <div className="project-body">
                                 <h3 className="project-title">Vehicle Registration System</h3>
-                                <p className="project-description">A comprehensive system for managing vehicle registrations and owner details with intuitive database management.</p>
+                                <p className="project-description">Comprehensive system for managing vehicle registrations and owner details with intuitive database management.</p>
                                 <div className="tech-stack">
                                     <span className="tech-tag">Java</span>
                                     <span className="tech-tag">SQL</span>
                                 </div>
                             </div>
                             <div className="project-footer">
-                                <a href="https://github.com/bhaskar2004/vehicle-registration-management-system.git" className="project-link" target="_blank" rel="noopener noreferrer">
-                                    <span>View on GitHub</span><ArrowUpRight />
+                                <a href="https://github.com/bhaskar2004/vehicle-registration-management-system.git" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>GitHub</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
-                        <article className="project-card">
+                        {/* #02 */}
+                        <article className="project-card reveal reveal-delay-1">
                             <div className="project-header">
-                                <div className="project-icon"><NavigationIcon /></div>
+                                <div className="project-icon"><NavigationIcon size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#02</span>
                                 </div>
@@ -270,15 +232,16 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="project-footer">
-                                <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind.git" className="project-link" target="_blank" rel="noopener noreferrer">
-                                    <span>View on GitHub</span><ArrowUpRight />
+                                <a href="https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind.git" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>GitHub</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
-                        <article className="project-card">
+                        {/* #03 */}
+                        <article className="project-card reveal reveal-delay-2">
                             <div className="project-header">
-                                <div className="project-icon"><CloudRain /></div>
+                                <div className="project-icon"><CloudRain size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#03</span>
                                 </div>
@@ -292,15 +255,16 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="project-footer">
-                                <a href="https://github.com/bhaskar2004/weather-bot" className="project-link" target="_blank" rel="noopener noreferrer">
-                                    <span>View on GitHub</span><ArrowUpRight />
+                                <a href="https://github.com/bhaskar2004/weather-bot" className="project-link primary" target="_blank" rel="noopener noreferrer">
+                                    <span>GitHub</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
-                        <article className="project-card featured">
+                        {/* #04 */}
+                        <article className="project-card featured reveal reveal-delay-1">
                             <div className="project-header">
-                                <div className="project-icon"><MapPin /></div>
+                                <div className="project-icon"><MapPin size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#04</span>
                                     <span className="project-badge">Live</span>
@@ -316,17 +280,18 @@ const Home = () => {
                             </div>
                             <div className="project-footer">
                                 <a href="https://github.com/bhaskar2004/better-trips" className="project-link secondary" target="_blank" rel="noopener noreferrer">
-                                    <span>View Code</span><Github />
+                                    <span>Code</span><Github size={13} />
                                 </a>
                                 <a href="https://better-trips.vercel.app/" className="project-link primary" target="_blank" rel="noopener noreferrer">
-                                    <span>Live Demo</span><ArrowUpRight />
+                                    <span>Live</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
+                        {/* #05 */}
                         <article className="project-card featured">
                             <div className="project-header">
-                                <div className="project-icon"><HeartPulse /></div>
+                                <div className="project-icon"><HeartPulse size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#05</span>
                                     <span className="project-badge">Live</span>
@@ -342,17 +307,18 @@ const Home = () => {
                             </div>
                             <div className="project-footer">
                                 <a href="https://github.com/bhaskar2004/blood-donor" className="project-link secondary" target="_blank" rel="noopener noreferrer">
-                                    <span>View Code</span><Github />
+                                    <span>Code</span><Github size={13} />
                                 </a>
                                 <a href="https://bhaskar2004.github.io/blood-donor/" className="project-link primary" target="_blank" rel="noopener noreferrer">
-                                    <span>Live Demo</span><ArrowUpRight />
+                                    <span>Live</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
+                        {/* #06 */}
                         <article className="project-card featured">
                             <div className="project-header">
-                                <div className="project-icon"><Newspaper /></div>
+                                <div className="project-icon"><Newspaper size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#06</span>
                                     <span className="project-badge">Live</span>
@@ -368,17 +334,18 @@ const Home = () => {
                             </div>
                             <div className="project-footer">
                                 <a href="https://github.com/bhaskar2004/feedx" className="project-link secondary" target="_blank" rel="noopener noreferrer">
-                                    <span>View Code</span><Github />
+                                    <span>Code</span><Github size={13} />
                                 </a>
                                 <a href="https://feedx.bhaskar.xyz/" className="project-link primary" target="_blank" rel="noopener noreferrer">
-                                    <span>Live Demo</span><ArrowUpRight />
+                                    <span>Live</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
+                        {/* #07 */}
                         <article className="project-card featured">
                             <div className="project-header">
-                                <div className="project-icon"><Code2 /></div>
+                                <div className="project-icon"><Code2 size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#07</span>
                                     <span className="project-badge">Live</span>
@@ -394,17 +361,18 @@ const Home = () => {
                             </div>
                             <div className="project-footer">
                                 <a href="https://github.com/bhaskar2004/code-preview" className="project-link secondary" target="_blank" rel="noopener noreferrer">
-                                    <span>View Code</span><Github />
+                                    <span>Code</span><Github size={13} />
                                 </a>
                                 <a href="https://preview.bhaskar.xyz/" className="project-link primary" target="_blank" rel="noopener noreferrer">
-                                    <span>Live Demo</span><ArrowUpRight />
+                                    <span>Live</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
 
+                        {/* #08 */}
                         <article className="project-card featured">
                             <div className="project-header">
-                                <div className="project-icon"><Calculator /></div>
+                                <div className="project-icon"><Calculator size={20} /></div>
                                 <div className="project-meta">
                                     <span className="project-number">#08</span>
                                     <span className="project-badge">Live</span>
@@ -420,23 +388,29 @@ const Home = () => {
                             </div>
                             <div className="project-footer">
                                 <a href="https://github.com/bhaskar2004/modernCalculator" className="project-link secondary" target="_blank" rel="noopener noreferrer">
-                                    <span>View Code</span><Github />
+                                    <span>Code</span><Github size={13} />
                                 </a>
                                 <a href="https://bhaskar2004.github.io/modernCalculator/" className="project-link primary" target="_blank" rel="noopener noreferrer">
-                                    <span>Live Demo</span><ArrowUpRight />
+                                    <span>Live</span><ArrowUpRight size={13} />
                                 </a>
                             </div>
                         </article>
+
                     </div>
                 </div>
             </section>
 
-            {/* ── Contact Section ───────────────────────────────────────── */}
-            <section className="contact" id="contact">
+            {/* ── Contact ─────────────────────────────────────────────── */}
+            <section className="contact" id="contact" ref={useScrollReveal()}>
                 <div className="container">
-                    <h2>Contact Bhaskar T</h2>
-                    {/* CHANGED: "Contact" → "Contact Bhaskar T" — name in every heading */}
-                    <p className="contact-description">I'm open to work and collaborations. Let's connect!</p>
+                    <div className="reveal">
+                        <span className="section-eyebrow">Contact</span>
+                        <h2>Contact Bhaskar T</h2>
+                        <p className="contact-description">
+                            I'm open to work and collaborations.<br />Let's build something together.
+                        </p>
+                    </div>
+
                     <div className="contact-links" role="list">
                         <a
                             href="mailto:bhaskart.dev@gmail.com"
@@ -444,7 +418,8 @@ const Home = () => {
                             role="listitem"
                             aria-label="Email Bhaskar T"
                         >
-                            <Mail size={20} />
+                            <Mail size={18} />
+                            <span>bhaskart.dev@gmail.com</span>
                         </a>
                         <a
                             href="https://github.com/bhaskar2004"
@@ -454,7 +429,8 @@ const Home = () => {
                             role="listitem"
                             aria-label="Bhaskar T on GitHub"
                         >
-                            <Github size={20} />
+                            <Github size={18} />
+                            <span>github.com/bhaskar2004</span>
                         </a>
                         <a
                             href="https://www.linkedin.com/in/bhaskart2004/"
@@ -464,7 +440,8 @@ const Home = () => {
                             role="listitem"
                             aria-label="Bhaskar T on LinkedIn"
                         >
-                            <Linkedin size={20} />
+                            <Linkedin size={18} />
+                            <span>linkedin.com/in/bhaskart2004</span>
                         </a>
                     </div>
                 </div>

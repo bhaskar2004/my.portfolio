@@ -1,25 +1,28 @@
-/* Back to Top Button Styles */
+/* =============================================================
+   BACK TO TOP — Uber-inspired
+   Square button · green on hover · no circle, no glow
+   ============================================================= */
 
 .back-to-top {
     position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--color-text, #ffffff);
-    color: var(--color-bg, #000000);
-    border: none;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    /* Sharp Uber corners */
+    background: var(--color-surface-2);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border-strong);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 90;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
+    transform: translateY(10px);
 }
 
 .back-to-top.visible {
@@ -29,19 +32,24 @@
 }
 
 .back-to-top:hover {
-    transform: translateY(-4px) scale(1.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    background: var(--color-primary);
+    color: #0a0a0a;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(6, 193, 103, 0.3);
 }
 
+/* Ignition shake */
 .back-to-top.igniting {
-    animation: rumble 0.3s ease-in-out;
+    animation: bttRumble 0.28s ease-in-out;
 }
 
+/* Launch — minimal upward fade */
 .back-to-top.launching {
-    animation: launch 1s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+    animation: bttLaunch 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes rumble {
+@keyframes bttRumble {
 
     0%,
     100% {
@@ -53,27 +61,27 @@
     }
 
     50% {
-        transform: translateY(2px) translateX(-2px);
+        transform: translateY(1px) translateX(-2px);
     }
 
     75% {
-        transform: translateY(-2px) translateX(-2px);
+        transform: translateY(-2px) translateX(-1px);
     }
 }
 
-@keyframes launch {
+@keyframes bttLaunch {
     0% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
         opacity: 1;
     }
 
-    50% {
-        transform: translateY(-30px) scale(1.2);
-        opacity: 0.8;
+    60% {
+        transform: translateY(-20px);
+        opacity: 0.6;
     }
 
     100% {
-        transform: translateY(-100vh) scale(0.5);
+        transform: translateY(-60px);
         opacity: 0;
     }
 }
@@ -82,7 +90,7 @@
     .back-to-top {
         bottom: 20px;
         right: 20px;
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
     }
 }
