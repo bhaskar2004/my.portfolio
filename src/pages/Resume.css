@@ -16,14 +16,12 @@
 
 /* ── Header ─────────────────────────────────────────────────── */
 .resume-page .header {
-    padding: 56px 0 40px;
-    border-bottom: 1px solid var(--color-border);
+    padding: 100px 0 64px;
+    border-bottom: 2px solid var(--color-primary);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 32px;
-    flex-wrap: wrap;
-    animation: fadeInDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+    gap: 40px;
 }
 
 @keyframes fadeInDown {
@@ -85,15 +83,16 @@
 
 /* ── PDF Viewer Wrapper ─────────────────────────────────────── */
 .pdf-viewer {
-    margin: 32px 0 48px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    margin: 48px 0 80px;
+    background: var(--color-surface-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-lg);
-    padding: 20px;
-    animation: fadeIn 0.5s ease 0.3s both;
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
+    padding: 24px;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
     position: relative;
+    overflow: hidden;
 }
 
 /* Green top rule — Uber accent line */

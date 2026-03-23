@@ -1,9 +1,26 @@
-import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Calculator, Github, Linkedin, Mail } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { ArrowUpRight, Car, Navigation as NavigationIcon, CloudRain, MapPin, HeartPulse, Newspaper, Code2, Calculator, Github, Linkedin, Mail, ExternalLink } from 'lucide-react'
 import SEO from '../components/SEO'
 import './Home.css'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
 const Home = () => {
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const heroRef = useRef(null);
+
+    const handleMouseMove = (e) => {
+        const { clientX, clientY } = e;
+        setMousePos({ x: clientX, y: clientY });
+    };
+
+    const handleCardMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
+    };
     const homeFaq = [
         {
             question: 'Who is Bhaskar T?',
@@ -45,6 +62,8 @@ const Home = () => {
             <section
                 className="hero"
                 id="home"
+                onMouseMove={handleMouseMove}
+                ref={heroRef}
                 itemScope
                 itemType="https://schema.org/Person"
             >
@@ -59,28 +78,30 @@ const Home = () => {
                 <div className="container">
                     {/* Eyebrow label */}
                     <div className="portfolio-label font-mono" aria-label="Portfolio site">
-                        Portfolio
+                        Portfolio 2024
                     </div>
 
                     {/* Name — clean h1 for SEO */}
-                    <h1 itemProp="name">Bhaskar T</h1>
+                    <h1 itemProp="name">
+                        Bhaskar <span className="highlight">T</span>
+                    </h1>
 
                     {/* Role descriptor */}
                     <p className="subtitle font-mono" itemProp="description">
-                        Software Tester &amp;&nbsp;Problem Solver
+                        Software Tester &amp;&nbsp;Problem Solver. Specialized in Quality Assurance and Automated Testing.
                     </p>
 
                     {/* CTA buttons */}
                     <div className="cta-buttons">
-                        <a href="#contact" className="btn primary">Contact Me</a>
-                        <a href="#projects" className="btn secondary">View Projects</a>
+                        <a href="#contact" className="btn primary">Get in Touch</a>
+                        <a href="#projects" className="btn secondary">Explore Work</a>
                         <a
                             href="/resume.pdf"
                             download="Bhaskar_T_Resume.pdf"
                             className="btn outline"
                             aria-label="Download Bhaskar T resume PDF"
                         >
-                            Download Resume
+                            Résumé
                         </a>
                     </div>
 
@@ -159,21 +180,21 @@ const Home = () => {
 
                     {/* Right column: stats */}
                     <div className="about-stats reveal reveal-delay-2">
-                        <div className="about-stat">
-                            <div className="number">8+</div>
-                            <div className="label">Projects Built</div>
+                        <div className="stat-card">
+                            <span className="stat-value">8+</span>
+                            <span className="stat-label">Projects Built</span>
                         </div>
-                        <div className="about-stat">
-                            <div className="number">3+</div>
-                            <div className="label">Years Coding</div>
+                        <div className="stat-card">
+                            <span className="stat-value">3+</span>
+                            <span className="stat-label">Years Coding</span>
                         </div>
-                        <div className="about-stat">
-                            <div className="number">4</div>
-                            <div className="label">Languages</div>
+                        <div className="stat-card">
+                            <span className="stat-value">4</span>
+                            <span className="stat-label">Languages</span>
                         </div>
-                        <div className="about-stat">
-                            <div className="number">∞</div>
-                            <div className="label">Bugs Squashed</div>
+                        <div className="stat-card">
+                            <span className="stat-value">∞</span>
+                            <span className="stat-label">Bugs Squashed</span>
                         </div>
                     </div>
                 </div>
@@ -193,7 +214,7 @@ const Home = () => {
                     <div className="projects-grid reveal reveal-delay-1">
 
                         {/* #01 */}
-                        <article className="project-card reveal">
+                        <article className="project-card reveal" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><Car size={20} /></div>
                                 <div className="project-meta">
@@ -216,7 +237,7 @@ const Home = () => {
                         </article>
 
                         {/* #02 */}
-                        <article className="project-card reveal reveal-delay-1">
+                        <article className="project-card reveal reveal-delay-1" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><NavigationIcon size={20} /></div>
                                 <div className="project-meta">
@@ -239,7 +260,7 @@ const Home = () => {
                         </article>
 
                         {/* #03 */}
-                        <article className="project-card reveal reveal-delay-2">
+                        <article className="project-card reveal reveal-delay-2" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><CloudRain size={20} /></div>
                                 <div className="project-meta">
@@ -262,7 +283,7 @@ const Home = () => {
                         </article>
 
                         {/* #04 */}
-                        <article className="project-card featured reveal reveal-delay-1">
+                        <article className="project-card featured reveal reveal-delay-1" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><MapPin size={20} /></div>
                                 <div className="project-meta">
@@ -289,7 +310,7 @@ const Home = () => {
                         </article>
 
                         {/* #05 */}
-                        <article className="project-card featured">
+                        <article className="project-card featured" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><HeartPulse size={20} /></div>
                                 <div className="project-meta">
@@ -316,7 +337,7 @@ const Home = () => {
                         </article>
 
                         {/* #06 */}
-                        <article className="project-card featured">
+                        <article className="project-card featured" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><Newspaper size={20} /></div>
                                 <div className="project-meta">
@@ -343,7 +364,7 @@ const Home = () => {
                         </article>
 
                         {/* #07 */}
-                        <article className="project-card featured">
+                        <article className="project-card featured" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><Code2 size={20} /></div>
                                 <div className="project-meta">
@@ -370,7 +391,7 @@ const Home = () => {
                         </article>
 
                         {/* #08 */}
-                        <article className="project-card featured">
+                        <article className="project-card featured" onMouseMove={handleCardMouseMove}>
                             <div className="project-header">
                                 <div className="project-icon"><Calculator size={20} /></div>
                                 <div className="project-meta">

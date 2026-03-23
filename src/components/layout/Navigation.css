@@ -8,33 +8,30 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    height: 68px;
+    height: 72px;
     padding: 0 40px;
-    background: rgba(10, 10, 10, 0.94);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border-bottom: 1px solid rgba(245, 245, 240, 0.08);
-    z-index: 100;
+    background: transparent;
+    z-index: var(--z-navbar);
     display: flex;
     align-items: center;
     gap: 16px;
-    transition: background 0.3s ease, border-color 0.3s ease;
+    transition: all var(--transition-base);
+    border-bottom: 1px solid transparent;
 }
 
 nav.scrolled {
-    background: rgba(10, 10, 10, 0.98);
-    border-color: rgba(245, 245, 240, 0.13);
+    height: 64px;
+    background: var(--color-surface-glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-color: var(--color-border);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
 }
 
 /* Light theme */
-:root[data-theme="light"] nav {
-    background: rgba(245, 245, 240, 0.94);
-    border-color: rgba(10, 10, 10, 0.09);
-}
-
 :root[data-theme="light"] nav.scrolled {
-    background: rgba(245, 245, 240, 0.99);
-    border-color: rgba(10, 10, 10, 0.14);
+    background: rgba(253, 253, 252, 0.8);
+    border-color: rgba(0, 0, 0, 0.05);
 }
 
 /* ── Logo ─────────────────────────────────────────────────── */
@@ -253,38 +250,27 @@ nav.scrolled {
 
     .nav-links {
         position: fixed;
-        top: 68px;
-        left: 0;
+        top: 0;
         right: 0;
-        height: auto;
-        max-height: calc(100vh - 68px);
-        overflow-y: auto;
+        width: 300px;
+        height: 100vh;
         flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: rgba(10, 10, 10, 0.98);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-bottom: 1px solid var(--color-border);
-        padding: 8px 0;
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(-8px);
-        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        background: var(--color-surface);
+        border-left: 1px solid var(--color-border);
+        padding: 80px 40px;
+        transform: translateX(100%);
+        transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
         z-index: 99;
         visibility: hidden;
     }
 
-    :root[data-theme="light"] .nav-links {
-        background: rgba(245, 245, 240, 0.98);
-        border-color: rgba(10, 10, 10, 0.1);
-    }
-
     .nav-links.active {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
+        transform: translateX(0);
         visibility: visible;
+        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
     }
 
     .nav-links li {

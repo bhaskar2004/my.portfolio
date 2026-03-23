@@ -76,14 +76,29 @@ const ParticleCanvas = () => {
 
             draw() {
                 /* Uber green on dark; near-invisible on light */
-                const alpha = isDark()
+                const dx = mouseX - this.x
+                const dy = mouseY - this.y
+                const dist = Math.sqrt(dx * dx + dy * dy)
+                const glowR = 150
+
+                let alpha = isDark()
                     ? this.opacity
                     : this.opacity * 0.5
+
+                if (dist < glowR) {
+                    const glowFactor = (1 - dist / glowR) * 0.5
+                    alpha += glowFactor
+                    ctx.shadowBlur = 10 * glowFactor
+                    ctx.shadowColor = 'rgba(6, 193, 103, 0.8)'
+                } else {
+                    ctx.shadowBlur = 0
+                }
 
                 ctx.fillStyle = `rgba(6, 193, 103, ${alpha})`
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
                 ctx.fill()
+                ctx.shadowBlur = 0 // reset
             }
         }
 
