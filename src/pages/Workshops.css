@@ -86,6 +86,12 @@
     -webkit-text-fill-color: transparent;
 }
 
+:root[data-theme="light"] .ws-hero__title {
+    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
 .ws-hero__subtitle {
     font-family: var(--font-mono);
     font-size: 0.9rem;

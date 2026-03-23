@@ -38,6 +38,12 @@
     font-weight: 800;
 }
 
+:root[data-theme="light"] .hero h1 {
+    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
 /* Subtitle / descriptor */
 .hero .subtitle {
     font-size: clamp(1rem, 2vw, 1.4rem);
@@ -125,6 +131,12 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme="light"] .stat-value {
+    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .stat-label {

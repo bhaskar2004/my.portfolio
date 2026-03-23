@@ -53,9 +53,12 @@ nav.scrolled {
     height: 36px;
     object-fit: cover;
     border-radius: 4px;
-    /* Square Uber style — not circle */
     border: 1px solid rgba(6, 193, 103, 0.25);
     transition: border-color 0.2s ease;
+}
+
+:root[data-theme="light"] .logo-img {
+    border-color: rgba(6, 193, 103, 0.4);
 }
 
 .logo:hover .logo-img {

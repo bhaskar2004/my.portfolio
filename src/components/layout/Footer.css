@@ -8,7 +8,11 @@ footer {
     border-top: 1px solid var(--color-border);
     position: relative;
     z-index: 1;
-    margin-top: 0;
+    transition: background var(--transition-base);
+}
+
+:root[data-theme="light"] footer {
+    background: #fdfdfc;
 }
 
 /* ── Main content row ─────────────────────────────────────── */
@@ -82,11 +86,13 @@ footer {
     letter-spacing: 0.16em;
     color: var(--color-text-dark);
     margin-bottom: 4px;
-    /* Remove gradient — Uber uses flat text */
     background: none;
-    -webkit-text-fill-color: var(--color-text-dark);
-    -webkit-background-clip: unset;
-    background-clip: unset;
+    -webkit-text-fill-color: unset;
+    color: var(--color-text-dark);
+}
+
+:root[data-theme="light"] .footer-section-title {
+    color: var(--color-text-muted);
 }
 
 .footer-link {

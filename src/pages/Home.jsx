@@ -51,7 +51,7 @@ const Home = () => {
                 isHome
                 title="Software Tester & Problem Solver"
                 description={
-                    'Bhaskar T (bhaskar2004) – Software Tester and Problem Solver based in India. ' +
+                    'Bhaskar T – Software Tester and Problem Solver based in India. ' +
                     'Official portfolio of Bhaskar at bhaskar.xyz. Explore projects, skills, and the tech journey of Bhaskar T.'
                 }
                 keywords="Bhaskar T portfolio, bhaskar2004, Bhaskar software tester India, bhaskar.xyz"
@@ -83,7 +83,7 @@ const Home = () => {
 
                     {/* Name — clean h1 for SEO */}
                     <h1 itemProp="name">
-                        Bhaskar <span className="highlight">T</span>
+                        Bhaskar T<span className="highlight"></span>
                     </h1>
 
                     {/* Role descriptor */}
