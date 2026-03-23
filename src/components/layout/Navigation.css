@@ -15,9 +15,10 @@ nav {
     display: flex;
     align-items: center;
     gap: 16px;
-    transition: all var(--transition-base);
+    transition: height var(--transition-base), background var(--transition-base), border-color var(--transition-base), backdrop-filter var(--transition-base);
     border-bottom: 1px solid transparent;
 }
+
 
 nav.scrolled {
     height: 64px;
@@ -96,8 +97,9 @@ nav.scrolled {
     text-transform: uppercase;
     padding: 0 18px;
     position: relative;
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast), transform var(--transition-fast);
     white-space: nowrap;
+    transform: translate3d(0, 0, 0);
 }
 
 /* Bottom green indicator bar — Uber tab style */
@@ -116,6 +118,7 @@ nav.scrolled {
 
 .nav-links a:hover {
     color: var(--color-text);
+    transform: translate3d(0, -1px, 0);
 }
 
 .nav-links a:hover::after {

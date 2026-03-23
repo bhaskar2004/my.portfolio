@@ -45,8 +45,16 @@ const Home = () => {
         },
     ]
 
+    const splitText = (text) => {
+        return text.split('').map((char, index) => (
+            <span key={index} className="char-fade" style={{ transitionDelay: `${index * 0.03}s` }}>
+                {char === ' ' ? '\u00A0' : char}
+            </span>
+        ));
+    };
+
     return (
-        <>
+        <div className="page-transition-wrapper">
             <SEO
                 isHome
                 title="Software Tester & Problem Solver"
@@ -60,7 +68,7 @@ const Home = () => {
 
             {/* ── Hero ────────────────────────────────────────────────── */}
             <section
-                className="hero"
+                className="hero reveal-active"
                 id="home"
                 onMouseMove={handleMouseMove}
                 ref={heroRef}
@@ -77,22 +85,22 @@ const Home = () => {
 
                 <div className="container">
                     {/* Eyebrow label */}
-                    <div className="portfolio-label font-mono" aria-label="Portfolio site">
+                    <div className="portfolio-label font-mono reveal" aria-label="Portfolio site">
                         Portfolio 2024
                     </div>
 
                     {/* Name — clean h1 for SEO */}
-                    <h1 itemProp="name">
-                        Bhaskar T<span className="highlight"></span>
+                    <h1 itemProp="name" className="reveal">
+                        {splitText("Bhaskar T")}
                     </h1>
 
                     {/* Role descriptor */}
-                    <p className="subtitle font-mono" itemProp="description">
+                    <p className="subtitle font-mono reveal reveal-delay-3" itemProp="description">
                         Software Tester &amp;&nbsp;Problem Solver. Specialized in Quality Assurance and Automated Testing.
                     </p>
 
                     {/* CTA buttons */}
-                    <div className="cta-buttons">
+                    <div className="cta-buttons reveal reveal-delay-4">
                         <a href="#contact" className="btn primary">Get in Touch</a>
                         <a href="#projects" className="btn secondary">Explore Work</a>
                         <a
@@ -106,7 +114,7 @@ const Home = () => {
                     </div>
 
                     {/* Social links */}
-                    <div className="social-links" role="list" aria-label="Social media links">
+                    <div className="social-links reveal reveal-delay-5" role="list" aria-label="Social media links">
                         <a
                             href="https://github.com/bhaskar2004"
                             target="_blank"
@@ -138,6 +146,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
 
             {/* ── About ───────────────────────────────────────────────── */}
             <section className="about" id="about" ref={useScrollReveal()}>
@@ -179,20 +188,20 @@ const Home = () => {
                     </div>
 
                     {/* Right column: stats */}
-                    <div className="about-stats reveal reveal-delay-2">
-                        <div className="stat-card">
+                    <div className="about-stats">
+                        <div className="stat-card reveal reveal-delay-1">
                             <span className="stat-value">8+</span>
                             <span className="stat-label">Projects Built</span>
                         </div>
-                        <div className="stat-card">
+                        <div className="stat-card reveal reveal-delay-2">
                             <span className="stat-value">3+</span>
                             <span className="stat-label">Years Coding</span>
                         </div>
-                        <div className="stat-card">
+                        <div className="stat-card reveal reveal-delay-3">
                             <span className="stat-value">4</span>
                             <span className="stat-label">Languages</span>
                         </div>
-                        <div className="stat-card">
+                        <div className="stat-card reveal reveal-delay-4">
                             <span className="stat-value">∞</span>
                             <span className="stat-label">Bugs Squashed</span>
                         </div>
@@ -208,7 +217,7 @@ const Home = () => {
                             <span className="section-eyebrow">Work</span>
                             <h2>Featured Projects</h2>
                         </div>
-                        <span className="projects-count">08 projects</span>
+                        <span className="projects-count reveal reveal-delay-1">08 projects</span>
                     </div>
 
                     <div className="projects-grid reveal reveal-delay-1">
@@ -435,7 +444,7 @@ const Home = () => {
                     <div className="contact-links" role="list">
                         <a
                             href="mailto:bhaskart.dev@gmail.com"
-                            className="contact-item"
+                            className="contact-item reveal reveal-delay-1"
                             role="listitem"
                             aria-label="Email Bhaskar T"
                         >
@@ -446,7 +455,7 @@ const Home = () => {
                             href="https://github.com/bhaskar2004"
                             target="_blank"
                             rel="noopener noreferrer me"
-                            className="contact-item"
+                            className="contact-item reveal reveal-delay-2"
                             role="listitem"
                             aria-label="Bhaskar T on GitHub"
                         >
@@ -457,7 +466,7 @@ const Home = () => {
                             href="https://www.linkedin.com/in/bhaskart2004/"
                             target="_blank"
                             rel="noopener noreferrer me"
-                            className="contact-item"
+                            className="contact-item reveal reveal-delay-3"
                             role="listitem"
                             aria-label="Bhaskar T on LinkedIn"
                         >
@@ -467,7 +476,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     )
 }
 

@@ -38,6 +38,10 @@
     font-weight: 800;
 }
 
+.hero h1 .char-fade {
+    display: inline-block;
+}
+
 :root[data-theme="light"] .hero h1 {
     background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
     -webkit-background-clip: text;
