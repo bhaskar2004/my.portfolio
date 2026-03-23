@@ -17,35 +17,6 @@
     overflow-x: hidden;
 }
 
-/* Subtle corner accents */
-.ws-orb {
-    position: fixed;
-    border-radius: 0;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-    will-change: transform;
-}
-
-.ws-orb--1 {
-    width: 500px;
-    height: 500px;
-    top: -200px;
-    right: -150px;
-    background: radial-gradient(circle at 60% 40%, rgba(6, 193, 103, 0.09), transparent 65%);
-    animation: wsOrbFloat 24s ease-in-out infinite;
-}
-
-.ws-orb--2 {
-    width: 400px;
-    height: 400px;
-    bottom: -150px;
-    left: -100px;
-    background: radial-gradient(circle at 40% 60%, rgba(6, 193, 103, 0.06), transparent 65%);
-    animation: wsOrbFloat 30s ease-in-out infinite reverse;
-    animation-delay: -8s;
-}
-
 @keyframes wsOrbFloat {
 
     0%,
@@ -69,11 +40,14 @@
 
 /* ── Hero ─────────────────────────────────────────────────────── */
 .ws-hero {
-    padding: 120px 0 60px;
+    padding: 140px 0 60px;
     border-bottom: 1px solid var(--color-border);
 }
 
-/* Missing label style */
+.ws-hero__content {
+    max-width: 800px;
+}
+
 .ws-hero__label {
     display: inline-flex;
     align-items: center;
@@ -114,6 +88,11 @@
     color: #000000;
 }
 
+.ws-hero__title-accent {
+    font-style: italic;
+    font-weight: 400;
+}
+
 .ws-hero__subtitle {
     font-family: var(--font-mono);
     font-size: 0.9rem;
@@ -133,6 +112,7 @@
     padding: 0;
     overflow: hidden;
     gap: 0;
+    margin-top: 48px;
 }
 
 .ws-stat {
@@ -172,8 +152,8 @@
 .ws-filters {
     display: flex;
     justify-content: flex-start;
-    gap: 8px;
-    margin: 32px 0 10px;
+    gap: 12px;
+    margin: 48px 0 16px;
     flex-wrap: wrap;
 }
 

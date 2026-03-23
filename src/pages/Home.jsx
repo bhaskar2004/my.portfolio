@@ -201,10 +201,10 @@ const Home = () => {
                             <span className="stat-value">4</span>
                             <span className="stat-label">Languages</span>
                         </div>
-                        <div className="stat-card reveal reveal-delay-4">
+                        {/* <div className="stat-card reveal reveal-delay-4">
                             <span className="stat-value">∞</span>
                             <span className="stat-label">Bugs Squashed</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>

@@ -360,12 +360,6 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
 const Workshops = () => {
     const [activeFilter, setActiveFilter] = useState('all')
     const [selectedId, setSelectedId] = useState(null)
-    const [revealed, setRevealed] = useState(false)
-
-    useEffect(() => {
-        const t = setTimeout(() => setRevealed(true), 80)
-        return () => clearTimeout(t)
-    }, [])
 
     const filtered = workshops.filter(
         (w) => activeFilter === 'all' || w.type === activeFilter
@@ -387,15 +381,11 @@ const Workshops = () => {
                 url="/workshops"
             />
 
-            {/* Background blobs */}
-            <div className="ws-orb ws-orb--1" aria-hidden="true" />
-            <div className="ws-orb ws-orb--2" aria-hidden="true" />
-
             <div className="container">
 
                 {/* Hero */}
-                <header className={`ws-hero reveal-active${revealed ? ' ws-hero--revealed' : ''}`} ref={useScrollReveal()}>
-                    <div className="reveal">
+                <header className="ws-hero">
+                    <div className="ws-hero__content">
                         <span className="ws-hero__label">Portfolio · Community</span>
                         <h1 className="ws-hero__title">
                             Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
@@ -406,7 +396,7 @@ const Workshops = () => {
                     </div>
 
                     {/* Stats row */}
-                    <div className="ws-stats reveal reveal-delay-2">
+                    <div className="ws-stats">
                         {[
                             { num: workshops.length, label: 'Total' },
                             { num: workshops.filter(w => w.type === 'workshop').length, label: 'Workshops' },
@@ -442,7 +432,7 @@ const Workshops = () => {
                 <p className="ws-hint font-mono">Click any card to view full details</p>
 
                 {/* Card grid */}
-                <div className="ws-grid reveal reveal-delay-1" ref={useScrollReveal()}>
+                <div className="ws-grid">
                     {filtered.length > 0 ? (
                         filtered.map((workshop, index) => (
                             <WorkshopCard
