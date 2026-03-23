@@ -1,459 +1,230 @@
 /* ============================================================
-   HOME PAGE — Mobile UI/UX Improvements
-   Desktop styles unchanged.
-   Breakpoints: 768px · 480px · 375px
+   HOME PAGE — Uber-inspired
    ============================================================ */
 
-/* ── Light theme fixes (all screen sizes) ─────────────────── */
-:root[data-theme="light"] .subtitle {
-    background: linear-gradient(135deg, #000 0%, #333 50%, #000 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
+/* ── Hero ───────────────────────────────────────────────────── */
+.hero {
+    min-height: 100vh;
+    padding-top: 68px;
+    /* nav height */
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle radial accent — bottom-right green halo */
+.hero::before {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(6, 193, 103, 0.07) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+/* Top-left faint gradient */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -8%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(245, 245, 240, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    animation: heroReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes heroReveal {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger children */
+.hero .container>* {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.hero .container>*:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.hero .container>*:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.hero .container>*:nth-child(3) {
+    animation-delay: 0.25s;
+}
+
+.hero .container>*:nth-child(4) {
+    animation-delay: 0.35s;
+}
+
+.hero .container>*:nth-child(5) {
+    animation-delay: 0.45s;
+}
+
+/* meta items (schema) don't count as visible children */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hero name */
+.hero h1 {
+    font-size: clamp(4rem, 10vw, 8.5rem);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Green highlight on name */
+.hero h1 .highlight {
+    color: var(--color-primary);
+}
+
+/* Subtitle / descriptor */
+.hero .subtitle {
+    margin-bottom: 40px;
+    max-width: 520px;
+}
+
+/* CTA group */
+.hero .cta-buttons {
+    margin-bottom: 48px;
+}
+
+/* Light theme hero adjustments */
+:root[data-theme="light"] .hero::before {
+    background: radial-gradient(circle, rgba(6, 193, 103, 0.06) 0%, transparent 65%);
+}
+
+:root[data-theme="light"] .hero::after {
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.02) 0%, transparent 70%);
 }
 
 :root[data-theme="light"] .portfolio-label {
+    color: var(--color-primary);
+}
+
+:root[data-theme="light"] .subtitle {
+    background: none;
+    -webkit-text-fill-color: unset;
     color: var(--color-text-muted);
 }
 
-:root[data-theme="light"] .hero {
-    background: radial-gradient(ellipse at center, rgba(120, 80, 255, 0.05) 0%, transparent 70%);
+/* ── Divider ────────────────────────────────────────────────── */
+.section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--color-border);
 }
 
-:root[data-theme="light"] .hero::before {
-    background: radial-gradient(circle, rgba(120, 80, 255, 0.08) 0%, transparent 70%);
+/* ── About ──────────────────────────────────────────────────── */
+.about {
+    padding: 80px 0;
+    border-top: 1px solid var(--color-border);
 }
 
-/* ============================================================
-   TABLET — max-width: 768px
-   ============================================================ */
+/* ── Projects ───────────────────────────────────────────────── */
+.projects {
+    padding: 80px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+/* ── Contact ────────────────────────────────────────────────── */
+.contact {
+    padding: 80px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
-
-    /* ── Hero ──────────────────────────────────────────────── */
     .hero {
-        padding-top: 88px;
-        min-height: 100svh;
-        padding-bottom: 40px;
-        align-items: flex-start;
-        text-align: left;
+        padding-top: 68px;
     }
 
     .hero .container {
-        padding: 0 24px;
-        align-items: flex-start;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        align-items: center !important;
+        text-align: center !important;
     }
 
     .portfolio-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.14em;
-        margin-bottom: 16px;
-        text-align: left;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        justify-content: center;
     }
 
-    h1 {
-        font-size: clamp(2.6rem, 11vw, 3.8rem);
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-        margin-bottom: 14px;
-        text-align: left;
+    .hero h1 {
+        text-align: center !important;
+        width: 100%;
     }
 
-    .subtitle {
-        font-size: 0.9rem;
-        text-align: left;
-        margin-bottom: 28px;
-        line-height: 1.6;
-        letter-spacing: 0.02em;
-        max-width: 320px;
+    .hero .subtitle {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
     }
 
-    /* ── CTA buttons: stack vertically, full-width feel ────── */
     .cta-buttons {
-        flex-direction: column;
-        gap: 10px;
+        justify-content: center !important;
         width: 100%;
-        max-width: 280px;
-        margin-bottom: 36px;
-        align-items: flex-start;
     }
 
-    .btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 13px 20px;
-        font-size: 0.78rem;
-        letter-spacing: 0.06em;
-        justify-content: center;
-        border-radius: 6px;
-    }
-
-    .btn.primary {
-        padding: 15px 20px;
-        font-size: 0.82rem;
-    }
-
-    /* ── Social links row ──────────────────────────────────── */
     .social-links {
-        gap: 12px;
-        justify-content: flex-start;
-    }
-
-    .social-links a {
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--color-border);
-        border-radius: 6px;
-    }
-
-    .social-links a svg {
-        width: 19px;
-        height: 19px;
-    }
-
-    /* ── About section ─────────────────────────────────────── */
-    .about {
-        padding: 60px 0;
-        min-height: auto;
-    }
-
-    .about .container {
-        padding: 0 24px;
-    }
-
-    .about h2 {
-        font-size: clamp(1.8rem, 7vw, 2.4rem);
-        text-align: left;
-        margin-bottom: 16px;
-    }
-
-    .about-content {
-        font-size: 0.95rem;
-        text-align: left;
-        line-height: 1.75;
-        margin-bottom: 28px;
-        padding: 0;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .timeline-section,
-    .skills-section {
-        padding: 22px 20px;
-        border-radius: 12px;
-    }
-
-    /* Remove hover lift — no hover state on touch */
-    .timeline-section:hover,
-    .skills-section:hover {
-        transform: none;
-    }
-
-    .timeline-item {
-        margin-bottom: 28px;
-    }
-
-    .timeline-content h3 {
-        font-size: 0.95rem;
-    }
-
-    .skill-items {
-        font-size: 0.83rem;
-        line-height: 1.7;
-    }
-
-    /* ── Projects section ──────────────────────────────────── */
-    .projects {
-        padding: 60px 0;
-    }
-
-    .projects .container {
-        padding: 0 24px;
-    }
-
-    .projects h2 {
-        font-size: clamp(1.8rem, 7vw, 2.4rem);
-        text-align: left;
-        margin-bottom: 8px;
-    }
-
-    .section-subtitle {
-        text-align: left;
-        font-size: 0.88rem;
-    }
-
-    .projects-grid {
-        gap: 12px;
-    }
-
-    .project-card {
-        padding: 20px 18px;
-        border-radius: 12px;
-        text-align: left;
-    }
-
-    .project-title {
-        font-size: 1rem;
-    }
-
-    .project-description {
-        font-size: 0.85rem;
-        line-height: 1.6;
-    }
-
-    .project-footer {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .project-link {
-        padding: 9px 14px;
-        font-size: 0.75rem;
-        min-height: 40px;
-        flex: 1;
-        justify-content: center;
-    }
-
-    /* ── Contact section ───────────────────────────────────── */
-    .contact {
-        padding: 60px 0;
-    }
-
-    .contact .container {
-        padding: 0 24px;
-    }
-
-    .contact h2 {
-        font-size: clamp(1.8rem, 7vw, 2.4rem);
-        text-align: left;
-        margin-bottom: 12px;
-    }
-
-    .contact-description {
-        font-size: 0.92rem;
-        text-align: left;
-        margin-bottom: 28px;
-    }
-
-    .contact-links {
-        gap: 10px;
-        align-items: flex-start;
-    }
-
-    .contact-item {
+        justify-content: center !important;
         width: 100%;
-        max-width: 320px;
-        padding: 14px 16px;
-        min-height: 52px;
-        border-radius: 8px;
+    }
+
+    .about,
+    .projects,
+    .contact {
+        padding: 80px 0;
     }
 }
 
-/* ============================================================
-   SMALL MOBILE — max-width: 480px
-   ============================================================ */
 @media (max-width: 480px) {
-
-    .hero {
-        padding-top: 80px;
-        padding-bottom: 32px;
+    .hero h1 {
+        font-size: clamp(3rem, 15vw, 4.5rem);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
     }
 
-    .hero .container {
-        padding: 0 20px;
-    }
-
-    h1 {
-        font-size: clamp(2.2rem, 12vw, 3rem);
-        letter-spacing: -0.02em;
-        margin-bottom: 12px;
-    }
-
-    .subtitle {
-        font-size: 0.84rem;
-        max-width: 260px;
-        margin-bottom: 24px;
-    }
-
-    .cta-buttons {
-        max-width: 100%;
-        gap: 9px;
-        margin-bottom: 28px;
-    }
-
-    .btn {
-        max-width: 100%;
-        padding: 13px 18px;
-        font-size: 0.75rem;
-        border-radius: 6px;
-    }
-
-    .btn.primary {
-        padding: 14px 18px;
-    }
-
-    .about {
-        padding: 50px 0;
-    }
-
-    .about h2,
-    .projects h2,
-    .contact h2 {
-        font-size: clamp(1.6rem, 9vw, 2rem);
-        text-align: left;
-    }
-
-    .about .container,
-    .projects .container,
-    .contact .container {
-        padding: 0 20px;
-    }
-
-    .about-content {
+    .hero .subtitle {
         font-size: 0.9rem;
-    }
-
-    .timeline-section,
-    .skills-section {
-        padding: 18px 16px;
-    }
-
-    .projects {
-        padding: 50px 0;
-    }
-
-    .project-card {
-        padding: 18px 16px;
-    }
-
-    .project-icon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .project-icon svg {
-        width: 17px;
-        height: 17px;
-    }
-
-    .tech-stack {
-        gap: 5px;
-    }
-
-    .tech-tag {
-        padding: 3px 9px;
-        font-size: 0.68rem;
-    }
-
-    .contact {
-        padding: 50px 0;
-    }
-
-    .contact-item {
-        padding: 13px 14px;
-        font-size: 0.85rem;
-    }
-}
-
-/* ============================================================
-   EXTRA SMALL — max-width: 375px
-   ============================================================ */
-@media (max-width: 375px) {
-
-    .hero .container,
-    .about .container,
-    .projects .container,
-    .contact .container {
-        padding: 0 16px;
-    }
-
-    h1 {
-        font-size: clamp(1.9rem, 13vw, 2.6rem);
-    }
-
-    .subtitle {
-        font-size: 0.8rem;
-        max-width: 220px;
-    }
-
-    .btn {
-        font-size: 0.72rem;
-        padding: 12px 16px;
-    }
-
-    .project-card {
-        padding: 16px 14px;
-    }
-
-    .project-title {
-        font-size: 0.92rem;
-    }
-
-    .project-description {
-        font-size: 0.8rem;
-    }
-
-    .contact-item {
-        font-size: 0.8rem;
-        padding: 12px 12px;
-    }
-}
-
-/* ============================================================
-   LANDSCAPE MOBILE — short viewport
-   ============================================================ */
-@media (max-height: 500px) and (orientation: landscape) {
-
-    .hero {
-        min-height: auto;
-        padding-top: 80px;
-        padding-bottom: 48px;
-    }
-
-    h1 {
-        font-size: clamp(1.8rem, 6vw, 2.4rem);
-        margin-bottom: 8px;
-    }
-
-    .subtitle {
-        margin-bottom: 18px;
-    }
-
-    /* Row layout again in landscape — there's horizontal space */
-    .cta-buttons {
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .btn {
-        width: auto;
-        flex: 1;
-        min-width: 130px;
-    }
-}
-
-/* ============================================================
-   REDUCED MOTION — disable hero entrance animations
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-
-    .hero,
-    h1,
-    .subtitle,
-    .portfolio-label,
-    .cta-buttons,
-    .social-links {
-        animation: none;
-        opacity: 1;
-        transform: none;
-        transition: none;
+        line-height: 1.6;
+        margin-bottom: 32px;
     }
 }
