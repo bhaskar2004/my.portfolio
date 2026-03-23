@@ -1315,7 +1315,7 @@ footer {
     }
 
     .about-stat .number {
-        font-size: 1.8rem;
+        font-size: 1.4rem; /* Even smaller for better fit */
         margin-bottom: 0;
     }
 
