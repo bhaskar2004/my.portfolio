@@ -31,20 +31,9 @@
     line-height: 1.1;
     letter-spacing: -0.05em;
     margin-bottom: 24px;
-    color: var(--color-text); /* Fallback */
-    background: linear-gradient(
-        90deg,
-        #ffffff 0%,
-        var(--color-primary) 50%,
-        #ffffff 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-text); /* Fallback and primary */
     font-weight: 800;
     white-space: normal;
-    animation: heroShimmer 6s linear infinite;
     position: relative;
     z-index: 10;
 }
@@ -53,6 +42,12 @@
     display: inline-block;
     color: inherit;
     -webkit-text-fill-color: inherit;
+}
+
+/* Optional shimmer effect using text-shadow or a different layer if needed, 
+   but ensuring base visibility first. */
+:root[data-theme="dark"] .hero h1 {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 @keyframes heroShimmer {
