@@ -48,7 +48,7 @@ const ParticleCanvas = () => {
                 this.size = Math.random() * 1.4 + 0.4   // 0.4 – 1.8px
                 this.speedX = (Math.random() - 0.5) * 0.22
                 this.speedY = (Math.random() - 0.5) * 0.22
-                this.opacity = Math.random() * 0.4 + 0.2  // 0.20 – 0.60
+                this.opacity = Math.random() * 0.5 + 0.4  // 0.40 – 0.90
             }
 
             update() {
@@ -83,7 +83,7 @@ const ParticleCanvas = () => {
 
                 let alpha = isDark()
                     ? this.opacity
-                    : this.opacity * 0.5
+                    : this.opacity * 0.8
 
                 if (dist < glowR) {
                     const glowFactor = (1 - dist / glowR) * 0.5
@@ -133,7 +133,7 @@ const ParticleCanvas = () => {
                     const d = Math.sqrt(dx * dx + dy * dy)
 
                     if (d < connectDistance) {
-                        const baseAlpha = dark ? 0.25 : 0.1
+                        const baseAlpha = dark ? 0.5 : 0.25
                         const alpha = baseAlpha * (1 - d / connectDistance)
                         ctx.strokeStyle = `rgba(6, 193, 103, ${alpha})`
                         ctx.lineWidth = 0.6

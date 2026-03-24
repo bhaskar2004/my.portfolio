@@ -1,11 +1,24 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
-    ArrowLeft, MapPin, Calendar, Users, Clock,
-    Briefcase, Star, X, Code2, Layers, Camera, ArrowUpRight
-} from 'lucide-react'
+    ArrowLeftIcon,
+    SewingPinIcon,
+    CalendarIcon,
+    PersonIcon,
+    ClockIcon,
+    IdCardIcon,
+    StarIcon,
+    Cross2Icon,
+    CodeIcon,
+    LayersIcon,
+    CameraIcon,
+    ArrowTopRightIcon
+} from '@radix-ui/react-icons'
 import SEO from '../components/SEO'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import Typewriter from '../components/animations/Typewriter'
+import HighlightSwipe from '../components/animations/HighlightSwipe'
+import NumberCounter from '../components/animations/NumberCounter'
 import './Workshops.css'
 
 /* ─────────────────────────────────────────────────────────────
@@ -16,17 +29,17 @@ const workshops = [
         id: 1,
         type: 'workshop',
         number: '01',
-        icon: Code2,
+        icon: CodeIcon,
         title: 'SUI Move 101',
         subtitle: 'Workshop Contribution',
         tagline: 'Blockchain & Smart Contracts with Sui Move',
         badges: ['Blockchain', 'Community', 'Event Management'],
         color: '#06C167',
         meta: [
-            { icon: Star, label: 'Event', value: 'Build on Sui Move 101' },
-            { icon: MapPin, label: 'Location', value: 'SJC Institute of Technology' },
-            { icon: Calendar, label: 'Date', value: 'Nov 10–12, 2025' },
-            { icon: Users, label: 'Participants', value: '38+ Students' },
+            { icon: StarIcon, label: 'Event', value: 'Build on Sui Move 101' },
+            { icon: SewingPinIcon, label: 'Location', value: 'SJC Institute of Technology' },
+            { icon: CalendarIcon, label: 'Date', value: 'Nov 10–12, 2025' },
+            { icon: PersonIcon, label: 'Participants', value: '38+ Students' },
         ],
         sections: [
             {
@@ -61,17 +74,17 @@ const workshops = [
         id: 2,
         type: 'workshop',
         number: '02',
-        icon: Layers,
+        icon: LayersIcon,
         title: 'Rust × Hifly',
         subtitle: 'Workshop Contribution',
         tagline: 'Systems Programming — Memory Safety & Ownership',
         badges: ['Rust Programming', 'Community', 'Event Management'],
         color: '#06C167',
         meta: [
-            { icon: Star, label: 'Event', value: 'Rust × Hifly Workshop' },
-            { icon: MapPin, label: 'Location', value: 'CSE Seminar Hall, SJCIT' },
-            { icon: Calendar, label: 'Date', value: 'Nov 25–26, 2025' },
-            { icon: Clock, label: 'Duration', value: '2 Days' },
+            { icon: StarIcon, label: 'Event', value: 'Rust × Hifly Workshop' },
+            { icon: SewingPinIcon, label: 'Location', value: 'CSE Seminar Hall, SJCIT' },
+            { icon: CalendarIcon, label: 'Date', value: 'Nov 25–26, 2025' },
+            { icon: ClockIcon, label: 'Duration', value: '2 Days' },
         ],
         sections: [
             {
@@ -107,17 +120,17 @@ const workshops = [
         id: 3,
         type: 'event',
         number: '03',
-        icon: Star,
+        icon: StarIcon,
         title: 'Sambrama 2025',
         subtitle: 'Core Committee Member',
         tagline: 'Cultural Fest — Creative Leadership & Planning',
         badges: ['Graphic Design', 'Core Committee', 'Event Planning'],
         color: '#06C167',
         meta: [
-            { icon: Star, label: 'Event', value: 'Sambrama 2025' },
-            { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
-            { icon: Briefcase, label: 'Role', value: 'Core Committee Member' },
-            { icon: Users, label: 'Type', value: 'Cultural Fest' },
+            { icon: StarIcon, label: 'Event', value: 'Sambrama 2025' },
+            { icon: SewingPinIcon, label: 'Location', value: 'SJCIT Campus' },
+            { icon: IdCardIcon, label: 'Role', value: 'Core Committee Member' },
+            { icon: PersonIcon, label: 'Type', value: 'Cultural Fest' },
         ],
         sections: [
             {
@@ -152,17 +165,17 @@ const workshops = [
         id: 4,
         type: 'event',
         number: '04',
-        icon: Camera,
+        icon: CameraIcon,
         title: 'Technotsava',
         subtitle: 'Event Documentation',
         tagline: 'Tech Fest — Photography & Videography Lead',
         badges: ['Photography', 'Videography', 'Event Coverage'],
         color: '#06C167',
         meta: [
-            { icon: Star, label: 'Event', value: 'Technotsava' },
-            { icon: MapPin, label: 'Location', value: 'SJCIT Campus' },
-            { icon: Briefcase, label: 'Role', value: 'Lead Documentation' },
-            { icon: Users, label: 'Type', value: 'Tech Fest' },
+            { icon: StarIcon, label: 'Event', value: 'Technotsava' },
+            { icon: SewingPinIcon, label: 'Location', value: 'SJCIT Campus' },
+            { icon: IdCardIcon, label: 'Role', value: 'Lead Documentation' },
+            { icon: PersonIcon, label: 'Type', value: 'Tech Fest' },
         ],
         sections: [
             {
@@ -231,10 +244,10 @@ const WorkshopModal = ({ workshop, onClose }) => {
                         onClick={onClose}
                         aria-label="Close modal"
                     >
-                        <X size={18} strokeWidth={2} />
+                        <Cross2Icon width={18} height={18} />
                     </button>
                     <div className="ws-modal__hero-icon">
-                        <Icon size={28} strokeWidth={1.5} />
+                        <Icon width={28} height={28} />
                     </div>
                     <span className="ws-modal__chip font-mono">
                         {workshop.type === 'workshop' ? 'Workshop' : 'Event'}
@@ -248,7 +261,7 @@ const WorkshopModal = ({ workshop, onClose }) => {
                     {workshop.meta.map(({ icon: MetaIcon, label, value }) => (
                         <div key={label} className="ws-modal__meta-item">
                             <div className="ws-modal__meta-icon">
-                                <MetaIcon size={15} strokeWidth={1.8} />
+                                <MetaIcon width={15} height={15} />
                             </div>
                             <div className="ws-modal__meta-text">
                                 <span className="ws-modal__meta-label font-mono">{label}</span>
@@ -312,7 +325,7 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             {/* Top: icon + number/type */}
             <div className="ws-card__top">
                 <div className="ws-card__icon-wrap">
-                    <Icon size={20} strokeWidth={1.5} />
+                    <Icon width={20} height={20} />
                 </div>
                 <div className="ws-card__top-meta">
                     <span className="ws-card__num font-mono">{workshop.number}</span>
@@ -332,7 +345,7 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             <div className="ws-card__meta">
                 {workshop.meta.slice(0, 2).map(({ icon: MIcon, value }) => (
                     <div key={value} className="ws-card__meta-item">
-                        <MIcon size={11} strokeWidth={1.8} />
+                        <MIcon width={11} height={11} />
                         <span>{value}</span>
                     </div>
                 ))}
@@ -348,7 +361,7 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             {/* Footer CTA */}
             <div className="ws-card__footer">
                 <span className="ws-card__cta font-mono">View Details</span>
-                <ArrowUpRight size={14} strokeWidth={2} />
+                <ArrowTopRightIcon width={14} height={14} />
             </div>
         </article>
     )
@@ -388,10 +401,10 @@ const Workshops = () => {
                     <div className="ws-hero__content">
                         <span className="ws-hero__label">Portfolio · Community</span>
                         <h1 className="ws-hero__title">
-                            Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
+                            Workshops &amp;&nbsp;<HighlightSwipe delay={300}><span className="ws-hero__title-accent">Events</span></HighlightSwipe>
                         </h1>
-                        <span className="ws-hero__subtitle font-mono">
-                            Sharing knowledge · Building community · Creating impact
+                        <span className="ws-hero__subtitle font-mono" style={{ minHeight: '27px', display: 'inline-block' }}>
+                            <Typewriter text="Sharing knowledge · Building community · Creating impact" delay={25} startDelay={600} />
                         </span>
                     </div>
 
@@ -405,7 +418,14 @@ const Workshops = () => {
                         ].map((s, i, arr) => (
                             <div key={s.label} style={{ display: 'contents' }}>
                                 <div className="ws-stat">
-                                    <span className="ws-stat__num">{s.num}</span>
+                                    <span className="ws-stat__num">
+                                        <NumberCounter 
+                                            end={typeof s.num === 'number' ? s.num : parseInt(s.num)} 
+                                            suffix={typeof s.num === 'string' ? s.num.replace(/[0-9]/g, '') : ''} 
+                                            duration={2000} 
+                                            delay={i * 200}
+                                        />
+                                    </span>
                                     <span className="ws-stat__label font-mono">{s.label}</span>
                                 </div>
                                 {i < arr.length - 1 && <div className="ws-stat-divider" />}
@@ -452,7 +472,7 @@ const Workshops = () => {
                 {/* Back nav */}
                 <div className="ws-back-nav">
                     <Link to="/" className="btn ws-back-btn">
-                        <ArrowLeft size={14} strokeWidth={2} />
+                        <ArrowLeftIcon width={14} height={14} />
                         <span>Back to Portfolio</span>
                     </Link>
                 </div>

@@ -1,0 +1,36 @@
+.highlight-swipe {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.highlight-swipe::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -4px;
+    right: -4px;
+    bottom: 2px;
+    background-color: var(--highlight-color, var(--color-primary));
+    transform-origin: left center;
+    transform: scaleX(0);
+    z-index: 0;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 2px;
+}
+
+.highlight-swipe.active::before {
+    transform: scaleX(1);
+}
+
+.highlight-swipe-content {
+    position: relative;
+    z-index: 1;
+    color: inherit;
+    transition: color 0.6s ease;
+}
+
+/* Optional: change text color when highlighted on dark */
+.highlight-swipe.active .highlight-swipe-content {
+    color: #000; 
+}

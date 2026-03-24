@@ -17,8 +17,8 @@
     --color-surface-2: #161616;
     --color-surface-glass: rgba(10, 10, 10, 0.75);
     --color-text: #fdfdfc;
-    --color-text-muted: #94948e;
-    --color-text-dark: #52524d;
+    --color-text-muted: #b0b0a8;
+    --color-text-dark: #75756f;
     --color-border: rgba(255, 255, 255, 0.06);
     --color-border-strong: rgba(255, 255, 255, 0.12);
 
@@ -478,8 +478,12 @@ h3 {
 .btn:hover {
     color: var(--color-text);
     border-color: var(--color-text);
-    transform: translate3d(0, -3px, 0);
+    transform: translate3d(0, -3px, 0) scale(1.02);
     box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+.btn:active {
+    transform: translate3d(0, -1px, 0) scale(0.98);
 }
 
 .btn:hover::before {
@@ -552,8 +556,8 @@ h3 {
 
 .glass-card:hover {
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card);
-    transform: translateY(-4px);
+    box-shadow: var(--shadow-card), 0 20px 40px -15px rgba(6, 193, 103, 0.15);
+    transform: translateY(-6px) scale(1.01);
 }
 
 /* ============================================
@@ -608,13 +612,14 @@ h3 {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     color: var(--color-text-muted);
-    transition: all var(--transition-base);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .social-links a:hover {
     color: var(--color-primary);
     border-color: var(--color-primary);
     background: var(--color-primary-dim);
+    transform: translateY(-4px) scale(1.05);
 }
 
 /* Scroll indicator */
@@ -806,10 +811,10 @@ h3 {
 }
 
 .projects-count {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
     color: var(--color-text-dark);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     padding-bottom: 8px;
 }
 
@@ -839,10 +844,11 @@ h3 {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6, 193, 103, 0.1) 0%, transparent 70%);
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6, 193, 103, 0.15) 0%, transparent 40%);
     opacity: 0;
     transition: opacity var(--transition-base);
     pointer-events: none;
+    z-index: 1;
 }
 
 .project-card:hover {
@@ -892,10 +898,10 @@ h3 {
 }
 
 .project-number {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
     color: var(--color-text-dark);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
 }
 
 .project-badge {

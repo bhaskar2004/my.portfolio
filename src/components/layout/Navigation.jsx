@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Sun, Moon } from 'lucide-react'
+import {
+    SunIcon,
+    MoonIcon
+} from '@radix-ui/react-icons'
 import { useTheme } from '../../context/ThemeContext'
 import './Navigation.css'
 
@@ -92,8 +95,8 @@ const Navigation = () => {
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
                 {theme === 'dark'
-                    ? <Sun size={18} strokeWidth={1.8} />
-                    : <Moon size={18} strokeWidth={1.8} />
+                    ? <SunIcon width={18} height={18} />
+                    : <MoonIcon width={18} height={18} />
                 }
             </button>
 

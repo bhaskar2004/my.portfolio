@@ -112,8 +112,9 @@ nav.scrolled {
     height: 2px;
     background: var(--color-primary);
     transform: scaleX(0);
-    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 0;
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 2px;
 }
 
 .nav-links a:hover {
@@ -172,8 +173,7 @@ nav.scrolled {
     background: var(--color-primary-dim);
     border-color: rgba(6, 193, 103, 0.3);
     color: var(--color-primary);
-    transform: none;
-    /* remove spin — cleaner Uber style */
+    transform: scale(1.05) rotate(5deg);
 }
 
 :root[data-theme="dark"] .theme-toggle svg {

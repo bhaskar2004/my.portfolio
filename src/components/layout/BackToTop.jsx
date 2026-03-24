@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ArrowUp } from 'lucide-react'
+import {
+    ArrowUpIcon
+} from '@radix-ui/react-icons'
 import './BackToTop.css'
 
 const BackToTop = () => {
@@ -38,7 +40,7 @@ const BackToTop = () => {
             onClick={scrollToTop}
             aria-label="Back to top"
         >
-            <ArrowUp size={20} strokeWidth={2} />
+            <ArrowUpIcon width={20} height={20} />
         </button>
     )
 }

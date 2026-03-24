@@ -52,15 +52,13 @@ const CustomCursor = () => {
             <div
                 className="cursor-dot"
                 style={{
-                    left: `${position.x}px`,
-                    top: `${position.y}px`,
+                    transform: `translate3d(calc(${position.x}px - 50%), calc(${position.y}px - 50%), 0)`,
                 }}
             />
             <div
                 className={`cursor-outline ${isHovering ? 'hovering' : ''}`}
                 style={{
-                    left: `${position.x}px`,
-                    top: `${position.y}px`,
+                    transform: `translate3d(calc(${position.x}px - 50%), calc(${position.y}px - 50%), 0)`,
                 }}
             />
         </>

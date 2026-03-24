@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Bug, CheckCircle, RotateCcw, Trophy } from 'lucide-react'
+import {
+    MagnifyingGlassIcon,
+    CheckCircledIcon,
+    ResetIcon,
+    StarFilledIcon
+} from '@radix-ui/react-icons'
 import './BugHunter.css'
 
 const BugHunter = () => {
@@ -12,21 +17,21 @@ const BugHunter = () => {
     const [bestStreak, setBestStreak] = useState(0)
 
     const allBugs = [
-        { id: 1, element: 'button', label: 'Sbumit Form', hint: 'Check the spelling carefully', bugType: 'Typo Bug', difficulty: 'easy' },
-        { id: 2, element: 'price', label: '$99.9', hint: 'Is this price format correct?', bugType: 'Data Format Bug', difficulty: 'medium' },
-        { id: 3, element: 'date', label: '31/02/2024', hint: 'Does this date exist?', bugType: 'Validation Bug', difficulty: 'medium' },
-        { id: 4, element: 'email', label: 'user@gmailcom', hint: 'Look at the email format', bugType: 'Format Bug', difficulty: 'easy' },
-        { id: 5, element: 'password', label: '••••••', hint: 'Password strength shows "Strong" for 6 chars', bugType: 'Logic Bug', difficulty: 'hard' },
-        { id: 6, element: 'phone', label: '(123) 456-78900', hint: 'Count the digits in this phone number', bugType: 'Validation Bug', difficulty: 'medium' },
-        { id: 7, element: 'url', label: 'htps://website.com', hint: 'Protocol looks suspicious', bugType: 'Typo Bug', difficulty: 'easy' },
-        { id: 8, element: 'time', label: '25:30 PM', hint: 'Is this a valid time?', bugType: 'Validation Bug', difficulty: 'medium' },
-        { id: 9, element: 'percentage', label: '110%', hint: 'Can progress exceed 100%?', bugType: 'Logic Bug', difficulty: 'hard' },
-        { id: 10, element: 'zip', label: '1234', hint: 'US ZIP codes have how many digits?', bugType: 'Format Bug', difficulty: 'easy' },
-        { id: 11, element: 'credit-card', label: '4532-1234-5678-901', hint: 'Count the credit card digits', bugType: 'Format Bug', difficulty: 'medium' },
-        { id: 12, element: 'age', label: 'Age: -5', hint: 'Can age be negative?', bugType: 'Validation Bug', difficulty: 'easy' },
-        { id: 13, element: 'username', label: 'user name', hint: "Usernames usually don't have spaces", bugType: 'Format Bug', difficulty: 'medium' },
-        { id: 14, element: 'rating', label: '⭐⭐⭐⭐⭐⭐', hint: 'How many stars is too many?', bugType: 'Logic Bug', difficulty: 'hard' },
-        { id: 15, element: 'discount', label: 'Save 150%!', hint: 'Can you save more than 100%?', bugType: 'Logic Bug', difficulty: 'medium' }
+        { id: 1, element: 'button', label: 'Sbumit Form', hint: 'Check the spelling carefully', bugType: 'Typo MagnifyingGlassIcon', difficulty: 'easy' },
+        { id: 2, element: 'price', label: '$99.9', hint: 'Is this price format correct?', bugType: 'Data Format MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 3, element: 'date', label: '31/02/2024', hint: 'Does this date exist?', bugType: 'Validation MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 4, element: 'email', label: 'user@gmailcom', hint: 'Look at the email format', bugType: 'Format MagnifyingGlassIcon', difficulty: 'easy' },
+        { id: 5, element: 'password', label: '••••••', hint: 'Password strength shows "Strong" for 6 chars', bugType: 'Logic MagnifyingGlassIcon', difficulty: 'hard' },
+        { id: 6, element: 'phone', label: '(123) 456-78900', hint: 'Count the digits in this phone number', bugType: 'Validation MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 7, element: 'url', label: 'htps://website.com', hint: 'Protocol looks suspicious', bugType: 'Typo MagnifyingGlassIcon', difficulty: 'easy' },
+        { id: 8, element: 'time', label: '25:30 PM', hint: 'Is this a valid time?', bugType: 'Validation MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 9, element: 'percentage', label: '110%', hint: 'Can progress exceed 100%?', bugType: 'Logic MagnifyingGlassIcon', difficulty: 'hard' },
+        { id: 10, element: 'zip', label: '1234', hint: 'US ZIP codes have how many digits?', bugType: 'Format MagnifyingGlassIcon', difficulty: 'easy' },
+        { id: 11, element: 'credit-card', label: '4532-1234-5678-901', hint: 'Count the credit card digits', bugType: 'Format MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 12, element: 'age', label: 'Age: -5', hint: 'Can age be negative?', bugType: 'Validation MagnifyingGlassIcon', difficulty: 'easy' },
+        { id: 13, element: 'username', label: 'user name', hint: "Usernames usually don't have spaces", bugType: 'Format MagnifyingGlassIcon', difficulty: 'medium' },
+        { id: 14, element: 'rating', label: '⭐⭐⭐⭐⭐⭐', hint: 'How many stars is too many?', bugType: 'Logic MagnifyingGlassIcon', difficulty: 'hard' },
+        { id: 15, element: 'discount', label: 'Save 150%!', hint: 'Can you save more than 100%?', bugType: 'Logic MagnifyingGlassIcon', difficulty: 'medium' }
     ]
 
     useEffect(() => {
@@ -87,7 +92,7 @@ const BugHunter = () => {
             <div className="container">
                 <div className="bh-header">
                     <div className="bh-title-row">
-                        <Bug className="bh-icon" />
+                        <MagnifyingGlassIcon className="bh-icon" />
                         <h2>Bug Hunter Challenge</h2>
                     </div>
                     <p className="bh-subtitle">
@@ -169,7 +174,7 @@ const BugHunter = () => {
 
                             {foundBugs.includes(bug.id) ? (
                                 <div className="bh-found">
-                                    <CheckCircle className="check-icon" />
+                                    <CheckCircledIcon className="check-icon" />
                                     <span>{bug.bugType}</span>
                                 </div>
                             ) : (
@@ -182,7 +187,7 @@ const BugHunter = () => {
                 {showResult && (
                     <div className="bh-modal-overlay">
                         <div className="bh-modal">
-                            <Trophy className="trophy-icon" style={{ color: getScore().color }} />
+                            <StarFilledIcon className="trophy-icon" style={{ color: getScore().color }} />
                             <h3>Challenge Complete!</h3>
                             <div className="score-grade" style={{ color: getScore().color }}>{getScore().grade}</div>
                             <p className="score-message">{getScore().message}</p>
@@ -190,7 +195,7 @@ const BugHunter = () => {
                             <p className="score-accuracy">Accuracy: {Math.round((currentBugs.length / attempts) * 100)}%</p>
                             {streak > 1 && <p className="score-streak">🔥 {streak} game streak!</p>}
                             <button className="bh-play-btn" onClick={resetGame}>
-                                <RotateCcw size={18} />
+                                <ResetIcon width={18} height={18} />
                                 New Challenge
                             </button>
                         </div>
@@ -200,7 +205,7 @@ const BugHunter = () => {
                 {!showResult && foundBugs.length > 0 && (
                     <div className="bh-reset-wrap">
                         <button className="bh-reset-btn" onClick={resetGame}>
-                            <RotateCcw size={18} />
+                            <ResetIcon width={18} height={18} />
                             Reset Game
                         </button>
                     </div>

@@ -1,0 +1,22 @@
+.typewriter-container {
+    display: inline;
+}
+
+.typewriter-cursor {
+    display: inline-block;
+    color: var(--color-primary);
+    margin-left: 2px;
+    font-weight: 800;
+    opacity: 1;
+    transform: translateY(2px);
+}
+
+.typewriter-cursor.blinking {
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

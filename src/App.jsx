@@ -10,6 +10,7 @@ import GeometricShapes from './components/particles/GeometricShapes'
 import Home from './pages/Home'
 import Workshops from './pages/Workshops'
 import Resume from './pages/Resume'
+import ProjectDetail from './pages/ProjectDetail'
 
 /* ── Minimal 404 page ───────────────────────────────────────────────────
    noindex prevents Google from crawling dead/mistyped URLs and wasting
@@ -47,6 +48,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/workshops" element={<Workshops />} />
                     <Route path="/resume" element={<Resume />} />
+                    <Route path="/project/:id" element={<ProjectDetail />} />
 
                     {/* ADDED: Catch-all 404 — noindex keeps crawl budget clean */}
                     <Route path="*" element={<NotFound />} />

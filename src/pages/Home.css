@@ -11,7 +11,7 @@
     position: relative;
     overflow: hidden;
     background: radial-gradient(circle at 70% 30%, rgba(6, 193, 103, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+        radial-gradient(circle at 20% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
 }
 
 .hero .container {
@@ -133,19 +133,11 @@
 }
 
 .stat-value {
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 800;
     line-height: 1;
-    background: var(--gradient-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-:root[data-theme="light"] .stat-value {
-    background: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: var(--color-primary);
 }
 
 .stat-label {
@@ -160,6 +152,60 @@
 .projects {
     padding: 80px 0;
     border-top: 1px solid var(--color-border);
+}
+
+/* ── Projects Grid: 3 columns on laptop/desktop ── */
+.projects .projects-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1px !important;
+    background-color: var(--color-border) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    grid-auto-flow: row !important;
+}
+
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: contents;
+}
+
+/* Featured cards do NOT span on desktop — clean 3×3 grid */
+.projects .project-card.featured {
+    grid-column: span 1 !important;
+}
+
+/* Ensure cards fill their cell */
+.project-card-link .project-card {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+/* ── Tablet: 2 columns ── */
+@media (max-width: 1024px) and (min-width: 641px) {
+    .projects .projects-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* On 2-col layout, let featured cards span full width */
+    .projects .project-card.featured {
+        grid-column: span 2 !important;
+    }
+}
+
+/* ── Mobile: 1 column ── */
+@media (max-width: 640px) {
+    .projects .projects-grid {
+        grid-template-columns: 1fr !important;
+        border-radius: 8px !important;
+    }
+
+    .projects .project-card.featured {
+        grid-column: span 1 !important;
+    }
 }
 
 /* ── Contact ────────────────────────────────────────────────── */

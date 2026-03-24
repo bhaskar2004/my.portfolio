@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react'
+import {
+    GitHubLogoIcon,
+    LinkedInLogoIcon,
+    EnvelopeClosedIcon,
+    ExternalLinkIcon
+} from '@radix-ui/react-icons'
 import './Footer.css'
 
 const Footer = () => {
@@ -22,7 +27,7 @@ const Footer = () => {
                             rel="noopener noreferrer"
                             className="footer-tagline"
                         >
-                            <ExternalLink size={14} />
+                            <ExternalLinkIcon width={14} height={14} />
                             <span>Photography Portfolio</span>
                         </a>
                     </div>
@@ -50,7 +55,7 @@ const Footer = () => {
                                 className="footer-social"
                                 aria-label="GitHub"
                             >
-                                <Github size={20} />
+                                <GitHubLogoIcon width={20} height={20} />
                             </a>
                             <a
                                 href="https://www.linkedin.com/in/bhaskart2004/"
@@ -59,14 +64,14 @@ const Footer = () => {
                                 className="footer-social"
                                 aria-label="LinkedIn"
                             >
-                                <Linkedin size={20} />
+                                <LinkedInLogoIcon width={20} height={20} />
                             </a>
                             <a
                                 href="mailto:bhaskart.dev@gmail.com"
                                 className="footer-social"
                                 aria-label="Email"
                             >
-                                <Mail size={20} />
+                                <EnvelopeClosedIcon width={20} height={20} />
                             </a>
                         </div>
                     </div>
