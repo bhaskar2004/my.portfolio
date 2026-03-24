@@ -84,8 +84,8 @@
 
 :root[data-theme="light"] .ws-hero__title {
     background: none;
-    -webkit-text-fill-color: #000000;
-    color: #000000;
+    -webkit-text-fill-color: var(--color-text);
+    color: var(--color-text);
 }
 
 .ws-hero__title-accent {
@@ -193,6 +193,8 @@
 .ws-filter-btn:hover {
     border-color: var(--color-primary);
     color: var(--color-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .ws-filter-btn--active {
@@ -292,19 +294,24 @@
 @keyframes wsCardIn {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(24px) scale(0.95);
+        filter: blur(4px);
     }
-
+    60% {
+        filter: blur(0);
+    }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
 .ws-card:hover {
     background: var(--color-surface-2);
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-card), 0 0 24px rgba(6, 193, 103, 0.06);
+    transform: translateY(-4px) scale(1.01);
 }
 
 .ws-card:focus-visible {
@@ -397,6 +404,11 @@
     color: var(--color-text);
     margin-bottom: 8px;
     line-height: 1.25;
+    transition: color 0.2s ease;
+}
+
+.ws-card:hover .ws-card__title {
+    color: var(--color-primary);
 }
 
 .ws-card__tagline {
@@ -485,6 +497,19 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-weight: 500;
+    transition: letter-spacing 0.3s ease;
+}
+
+.ws-card:hover .ws-card__cta {
+    letter-spacing: 0.15em;
+}
+
+.ws-card__footer svg {
+    transition: transform 0.3s ease;
+}
+
+.ws-card:hover .ws-card__footer svg {
+    animation: arrowBounce 0.8s ease-in-out infinite;
 }
 
 /* ── Empty State ──────────────────────────────────────────────── */
@@ -538,10 +563,11 @@
 @keyframes backdropIn {
     from {
         opacity: 0;
+        backdrop-filter: blur(0);
     }
-
     to {
         opacity: 1;
+        backdrop-filter: blur(8px);
     }
 }
 
@@ -558,6 +584,7 @@
     overflow-y: auto;
     position: relative;
     box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+    animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Green top border */
@@ -576,12 +603,13 @@
 @keyframes modalIn {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.98);
+        transform: translateY(30px) scale(0.94);
+        filter: blur(8px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
@@ -903,6 +931,10 @@
         padding: 32px 16px 20px;
     }
 
+    .ws-hero__title {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+    }
+
     .ws-modal__title {
         font-size: 1.6rem;
         line-height: 1.1;
@@ -937,6 +969,117 @@
 
     .ws-filter-btn {
         padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ws-hero {
+        padding: 80px 0 36px;
+    }
+
+    .ws-hero__title {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        line-height: 1;
+    }
+
+    .ws-hero__subtitle {
+        font-size: 0.8rem;
+    }
+
+    .ws-stats {
+        width: 100%;
+    }
+
+    .ws-stat {
+        padding: 10px 14px;
+    }
+
+    .ws-stat__num {
+        font-size: 1.4rem;
+    }
+
+    .ws-stat__label {
+        font-size: 0.55rem;
+    }
+
+    .ws-filters {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+
+    .ws-filter-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .ws-card__body {
+        padding: 10px 16px;
+    }
+
+    .ws-card__top {
+        padding: 16px 16px 0;
+    }
+
+    .ws-card__badges {
+        padding: 0 16px 14px;
+    }
+
+    .ws-card__footer {
+        padding: 14px 16px;
+    }
+
+    .ws-card__title {
+        font-size: 0.95rem;
+    }
+
+    .ws-card__tagline {
+        font-size: 0.8rem;
+    }
+
+    .ws-modal__meta-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-modal__meta-item {
+        border-right: none;
+    }
+
+    .ws-modal__title {
+        font-size: 1.4rem;
+    }
+
+    .ws-back-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .ws-hero__title {
+        font-size: 1.6rem;
+    }
+
+    .ws-stat {
+        padding: 8px 10px;
+    }
+
+    .ws-stat__num {
+        font-size: 1.2rem;
+    }
+
+    .ws-card__icon-wrap {
+        width: 36px;
+        height: 36px;
+    }
+
+    .ws-modal__hero {
+        padding: 24px 12px 16px;
+    }
+
+    .ws-modal__content {
+        padding: 14px 12px 24px;
     }
 }
 

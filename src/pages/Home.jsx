@@ -95,6 +95,9 @@ const Home = () => {
                 itemScope
                 itemType="https://schema.org/Person"
             >
+                {/* Floating gradient orbs */}
+                <div className="floating-orb floating-orb--primary" style={{ width: '500px', height: '500px', top: '10%', right: '-5%' }} aria-hidden="true" />
+                <div className="floating-orb floating-orb--secondary" style={{ width: '350px', height: '350px', bottom: '10%', left: '-8%', animationDelay: '3s' }} aria-hidden="true" />
                 {/* Hidden schema anchors */}
                 <meta itemProp="name" content="Bhaskar T" />
                 <meta itemProp="alternateName" content="bhaskar2004" />
@@ -167,6 +170,8 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Animated divider */}
+            <div className="animated-divider" aria-hidden="true" />
 
             {/* ── About ───────────────────────────────────────────────── */}
             <section className="about" id="about" ref={useScrollReveal()}>
@@ -229,6 +234,9 @@ const Home = () => {
                 </div>
             </section>
 
+            {/* Animated divider */}
+            <div className="animated-divider" aria-hidden="true" />
+
             {/* ── Projects ────────────────────────────────────────────── */}
             <section className="projects" id="projects" ref={useScrollReveal()}>
                 <div className="container">
@@ -240,7 +248,7 @@ const Home = () => {
                         <span className="projects-count reveal reveal-delay-1">{projects.length.toString().padStart(2, '0')} projects</span>
                     </div>
 
-                    <div className="projects-grid reveal reveal-delay-1">
+                    <div className="projects-grid stagger-grid reveal reveal-delay-1">
                         {projects.map((project, index) => (
                             <Link 
                                 to={`/project/${project.id}`} 
@@ -282,6 +290,9 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Animated divider */}
+            <div className="animated-divider" aria-hidden="true" />
 
             {/* ── Contact ─────────────────────────────────────────────── */}
             <section className="contact" id="contact" ref={useScrollReveal()}>

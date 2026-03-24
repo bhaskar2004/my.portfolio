@@ -1,36 +1,81 @@
 .highlight-swipe {
     position: relative;
-    display: inline-block;
-    white-space: nowrap;
+    display: inline;
+    /* 
+     * Avoid nowrap by default — let consumers control wrapping.
+     * Add white-space: nowrap at the usage site if needed.
+     */
 }
 
 .highlight-swipe::before {
     content: '';
     position: absolute;
-    top: 2px;
-    left: -4px;
-    right: -4px;
-    bottom: 2px;
-    background-color: var(--highlight-color, var(--color-primary));
-    transform-origin: left center;
+    inset: 1px -5px;
+    background-color: var(--highlight-color, var(--color-primary, #facc15));
+    border-radius: var(--highlight-radius, 3px);
+
+    /* Animation setup */
+    transform-origin: var(--highlight-origin, left center);
     transform: scaleX(0);
     z-index: 0;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    border-radius: 2px;
+
+    /* Layered transition for a snappier feel */
+    transition:
+        transform var(--highlight-duration, 0.55s) var(--highlight-easing, cubic-bezier(0.16, 1, 0.3, 1)),
+        opacity 0.1s ease;
+
+    will-change: transform;
 }
 
+/* Active state */
 .highlight-swipe.active::before {
     transform: scaleX(1);
 }
 
+/* RTL support — flip origin to right */
+[dir="rtl"] .highlight-swipe::before,
+.highlight-swipe[dir="rtl"]::before {
+    transform-origin: right center;
+}
+
+/* Content layer */
 .highlight-swipe-content {
     position: relative;
     z-index: 1;
     color: inherit;
-    transition: color 0.6s ease;
+    transition: color var(--highlight-duration, 0.55s) var(--highlight-easing, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-/* Optional: change text color when highlighted on dark */
 .highlight-swipe.active .highlight-swipe-content {
-    color: #000; 
+    color: var(--highlight-text-color, inherit);
+}
+
+/* Stagger support for multiple highlights in sequence */
+.highlight-swipe:nth-child(2)::before {
+    transition-delay: var(--highlight-stagger, 0.1s);
+}
+
+.highlight-swipe:nth-child(3)::before {
+    transition-delay: calc(var(--highlight-stagger, 0.1s) * 2);
+}
+
+.highlight-swipe:nth-child(4)::before {
+    transition-delay: calc(var(--highlight-stagger, 0.1s) * 3);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .highlight-swipe::before {
+        transition: opacity 0.2s ease;
+        transform: scaleX(1);
+        opacity: 0;
+    }
+
+    .highlight-swipe.active::before {
+        opacity: 1;
+    }
+
+    .highlight-swipe-content {
+        transition: color 0.2s ease;
+    }
 }

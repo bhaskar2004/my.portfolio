@@ -1,39 +1,75 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, forwardRef } from 'react';
 import './HighlightSwipe.css';
 
-const HighlightSwipe = ({ children, color = "var(--color-primary)", delay = 0, className = "" }) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const elementRef = useRef(null);
+const HighlightSwipe = forwardRef(({
+    as: Tag = 'span',
+    children,
+    color,
+    textColor,
+    delay = 0,
+    duration,
+    threshold = 0.5,
+    triggerOnce = true,
+    className = '',
+    style = {},
+    ...rest
+}, forwardedRef) => {
+    const [isActive, setIsActive] = useState(false);
+    const innerRef = useRef(null);
+
+    // Merge forwarded ref with inner ref
+    const ref = (node) => {
+        innerRef.current = node;
+        if (typeof forwardedRef === 'function') forwardedRef(node);
+        else if (forwardedRef) forwardedRef.current = node;
+    };
 
     useEffect(() => {
+        const el = innerRef.current;
+        if (!el) return;
+
+        let timeoutId;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setIsVisible(true);
-                    }, delay);
-                    observer.disconnect();
+                    timeoutId = setTimeout(() => setIsActive(true), delay);
+                    if (triggerOnce) observer.disconnect();
+                } else if (!triggerOnce) {
+                    clearTimeout(timeoutId);
+                    setIsActive(false);
                 }
             },
-            { threshold: 0.5 }
+            { threshold }
         );
 
-        if (elementRef.current) {
-            observer.observe(elementRef.current);
-        }
+        observer.observe(el);
 
-        return () => observer.disconnect();
-    }, [delay]);
+        return () => {
+            observer.disconnect();
+            clearTimeout(timeoutId);
+        };
+    }, [delay, threshold, triggerOnce]);
+
+    const cssVars = {
+        ...(color && { '--highlight-color': color }),
+        ...(textColor && { '--highlight-text-color': textColor }),
+        ...(duration && { '--highlight-duration': duration }),
+        ...style,
+    };
 
     return (
-        <span 
-            ref={elementRef} 
-            className={`highlight-swipe ${isVisible ? 'active' : ''} ${className}`}
-            style={{ '--highlight-color': color }}
+        <Tag
+            ref={ref}
+            className={`highlight-swipe${isActive ? ' active' : ''}${className ? ` ${className}` : ''}`}
+            style={cssVars}
+            {...rest}
         >
             <span className="highlight-swipe-content">{children}</span>
-        </span>
+        </Tag>
     );
-};
+});
+
+HighlightSwipe.displayName = 'HighlightSwipe';
 
 export default HighlightSwipe;

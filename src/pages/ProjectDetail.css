@@ -94,6 +94,12 @@
     user-select: none;
     z-index: 0;
     letter-spacing: -0.06em;
+    animation: ghostPulse 4s ease-in-out infinite;
+}
+
+@keyframes ghostPulse {
+    0%, 100% { opacity: 0.35; -webkit-text-stroke-color: var(--color-border); }
+    50% { opacity: 0.5; -webkit-text-stroke-color: rgba(6, 193, 103, 0.15); }
 }
 
 .header-eyebrow {
@@ -132,6 +138,20 @@
     letter-spacing: -0.04em;
     margin-bottom: 28px;
     font-family: var(--font-display);
+    animation: detailTitleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+@keyframes detailTitleIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 .detail-brief {
@@ -288,9 +308,23 @@
     position: absolute;
     bottom: -1px;
     left: 0;
-    width: 40px;
-    height: 1px;
+    width: 0;
+    height: 2px;
     background: var(--color-primary);
+    animation: sectionAccentGrow 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+@keyframes sectionAccentGrow {
+    to { width: 60px; }
+}
+
+.section-title svg {
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+}
+
+.section-title:hover svg {
+    transform: rotate(10deg) scale(1.15);
 }
 
 .section-num {
@@ -323,21 +357,24 @@
     border: 1px solid var(--color-border);
     cursor: default;
     opacity: 0;
-    animation: tagAppear 0.35s ease forwards;
+    animation: tagWaveIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     animation-delay: var(--tag-delay, 0ms);
     transition: color 0.2s ease, border-color 0.2s ease,
-        background 0.2s ease, transform 0.2s ease;
+        background 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-@keyframes tagAppear {
-    from {
+@keyframes tagWaveIn {
+    0% {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(12px) scale(0.85);
     }
-
-    to {
+    60% {
+        transform: translateY(-3px) scale(1.03);
+    }
+    100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -345,7 +382,8 @@
     color: var(--color-primary);
     border-color: var(--color-primary);
     background: rgba(6, 193, 103, 0.06);
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 6px 16px rgba(6, 193, 103, 0.15);
 }
 
 /* ══════════════════════════════════════════════════════
@@ -1027,27 +1065,29 @@
     border-radius: 100px;
     cursor: pointer;
     font-family: var(--font-mono);
-    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 100;
-    animation: pillSlideIn 0.5s 1s ease backwards;
+    animation: pillSlideIn 0.6s 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+    backdrop-filter: blur(12px);
 }
 
 @keyframes pillSlideIn {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(24px) scale(0.9);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .next-project-pill:hover {
     border-color: var(--color-primary);
-    background: rgba(6, 193, 103, 0.06);
-    transform: translateY(-2px);
+    background: rgba(6, 193, 103, 0.08);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(6, 193, 103, 0.15);
 }
 
 .next-label {
@@ -1056,12 +1096,22 @@
     letter-spacing: 0.12em;
     color: var(--color-text-dark);
     opacity: 0.45;
+    transition: opacity 0.2s ease;
+}
+
+.next-project-pill:hover .next-label {
+    opacity: 0.7;
 }
 
 .next-sep {
     font-size: 0.75rem;
     color: var(--color-primary);
     opacity: 0.6;
+    transition: transform 0.3s ease;
+}
+
+.next-project-pill:hover .next-sep {
+    animation: arrowBounce 0.8s ease-in-out infinite;
 }
 
 .next-title {
@@ -1072,6 +1122,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.2s ease;
 }
 
 .next-project-pill:hover .next-title {
@@ -1106,15 +1157,15 @@
     }
 
     .detail-header {
-        margin-bottom: 64px;
+        margin-bottom: 48px;
     }
 
     .detail-title {
-        font-size: clamp(2.2rem, 8vw, 3.5rem);
+        font-size: clamp(2rem, 8vw, 3.5rem);
     }
 
     .detail-brief {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .content-visual {
@@ -1128,18 +1179,148 @@
     .next-project-pill {
         bottom: 16px;
         right: 16px;
+        padding: 8px 14px;
+        gap: 8px;
+    }
+
+    .next-label {
+        font-size: 0.55rem;
+    }
+
+    .next-title {
+        font-size: 0.7rem;
+        max-width: 90px;
     }
 
     .stats-strip {
         flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .stat-pill {
+        padding: 8px 14px;
+        font-size: 0.72rem;
     }
 
     .readme-body {
-        padding: 1.4rem 1.25rem;
+        padding: 1.2rem 1rem;
     }
 
     .readme-body pre {
-        padding: 0.9rem 1rem;
-        font-size: 0.78rem;
+        padding: 0.8rem 0.9rem;
+        font-size: 0.75rem;
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .readme-body table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .readme-body img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Action buttons mobile */
+    .detail-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .detail-actions .btn {
+        padding: 10px 16px;
+        font-size: 0.75rem;
+    }
+
+    /* Engineering card mobile */
+    .engineering-card {
+        padding: 24px 20px;
+    }
+
+    .engineering-card:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-detail {
+        padding-top: 80px;
+        padding-bottom: 60px;
+    }
+
+    .detail-header {
+        margin-bottom: 36px;
+    }
+
+    .detail-title {
+        font-size: clamp(1.8rem, 9vw, 2.8rem);
+    }
+
+    .detail-brief {
+        font-size: 0.88rem;
+    }
+
+    .stats-strip {
+        gap: 6px;
+    }
+
+    .stat-pill {
+        padding: 6px 10px;
+        font-size: 0.65rem;
+    }
+
+    .tech-tag.large {
+        padding: 6px 12px;
+        font-size: 0.72rem;
+    }
+
+    .detail-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .next-project-pill {
+        bottom: 12px;
+        right: 12px;
+        padding: 6px 12px;
+    }
+
+    .next-label {
+        display: none;
+    }
+
+    .readme-body {
+        padding: 1rem 0.8rem;
+    }
+
+    .readme-body h1 { font-size: 1.3rem; }
+    .readme-body h2 { font-size: 1.1rem; }
+    .readme-body h3 { font-size: 1rem; }
+}
+
+@media (max-width: 360px) {
+    .detail-title {
+        font-size: 1.6rem;
+    }
+
+    .stats-strip {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stat-pill {
+        text-align: center;
+    }
+
+    .next-project-pill {
+        padding: 6px 10px;
+    }
+
+    .next-title {
+        max-width: 60px;
+        font-size: 0.65rem;
     }
 }

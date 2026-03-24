@@ -22,6 +22,20 @@
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    animation: resumeHeaderIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes resumeHeaderIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 @keyframes fadeInDown {
@@ -72,8 +86,15 @@
     gap: 12px;
     flex-wrap: wrap;
     align-self: flex-end;
-    animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
 }
+
+.resume-page .actions .btn {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.resume-page .actions .btn:nth-child(1) { animation-delay: 0.15s; }
+.resume-page .actions .btn:nth-child(2) { animation-delay: 0.25s; }
+.resume-page .actions .btn:nth-child(3) { animation-delay: 0.35s; }
 
 @keyframes fadeInUp {
     from {
@@ -99,6 +120,20 @@
     box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.6);
     position: relative;
     overflow: hidden;
+    animation: pdfViewerIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+@keyframes pdfViewerIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.97);
+        filter: blur(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 /* Green top rule — Uber accent line */
@@ -243,5 +278,56 @@
     .pdf-container {
         height: 65vh;
         min-height: 420px;
+    }
+
+    .resume-page .header h1 {
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
+    }
+
+    .resume-page .header p {
+        font-size: 0.72rem;
+    }
+
+    .resume-page .actions .btn {
+        padding: 10px 14px;
+        font-size: 0.72rem;
+    }
+
+    .pdf-viewer {
+        padding: 12px;
+        margin: 32px 0 60px;
+    }
+
+    .pdf-fallback {
+        min-height: 360px;
+        padding: 40px 20px;
+    }
+
+    .pdf-fallback h3 {
+        font-size: 1.3rem;
+    }
+
+    .pdf-fallback p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .resume-page .container {
+        padding: 0 12px;
+    }
+
+    .resume-page .header {
+        padding: 40px 0 24px;
+    }
+
+    .pdf-container {
+        height: 55vh;
+        min-height: 360px;
+    }
+
+    .resume-page .actions .btn {
+        padding: 8px 12px;
+        font-size: 0.68rem;
     }
 }
