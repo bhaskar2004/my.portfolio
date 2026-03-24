@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Workshops from './pages/Workshops'
 import Resume from './pages/Resume'
 import ProjectDetail from './pages/ProjectDetail'
+import Scene3D from './components/particles/Scene3D'
 
 /* ── Minimal 404 page ───────────────────────────────────────────────────
    noindex prevents Google from crawling dead/mistyped URLs and wasting
@@ -37,6 +38,7 @@ function App() {
             <ScrollProgress />
             <ParticleCanvas />
             <GeometricShapes />
+            <Scene3D />
             <CustomCursor />
 
             {/* Main Layout */}
