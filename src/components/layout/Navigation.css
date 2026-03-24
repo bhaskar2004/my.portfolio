@@ -33,7 +33,7 @@ nav.scrolled {
 
 :root[data-theme="light"] nav.scrolled {
     background: rgba(253, 253, 252, 0.85);
-    border-color: rgba(0, 0, 0, 0.06);
+    border-color: #000000;
 }
 
 /* ── Logo ─────────────────────────────────────────────────── */
@@ -60,7 +60,7 @@ nav.scrolled {
 }
 
 :root[data-theme="light"] .logo-img {
-    border-color: rgba(6, 193, 103, 0.4);
+    border-color: #000000;
 }
 
 .logo:hover .logo-img {
@@ -198,7 +198,7 @@ nav.scrolled {
 }
 
 :root[data-theme="light"] .theme-toggle {
-    border-color: rgba(10, 10, 10, 0.12);
+    border-color: #000000;
 }
 
 /* ── Hamburger ────────────────────────────────────────────── */

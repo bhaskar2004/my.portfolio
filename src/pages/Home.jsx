@@ -109,7 +109,7 @@ const Home = () => {
                 <div className="container">
                     {/* Eyebrow label */}
                     <div className="portfolio-label font-mono reveal" aria-label="Portfolio site">
-                        Portfolio 2024
+                        Portfolio--
                     </div>
 
                     {/* Name — clean h1 for SEO */}
@@ -177,13 +177,13 @@ const Home = () => {
             <section className="about" id="about" ref={useScrollReveal()}>
                 <div className="container">
                     {/* Left column: bio */}
-                    <div className="reveal">
+                    <div className="reveal reveal-delay-1">
                         <span className="section-eyebrow">About</span>
                         <h2>About Bhaskar T</h2>
                         <p className="about-content">
                             I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
                             I test software until something breaks, then figure out exactly why.
-                            My focus is on <HighlightSwipe delay={300}>making software solid, reliable, and production-ready.</HighlightSwipe>
+                            My focus is on <HighlightSwipe delay={300}>making software solid, reliable, and production-ready.</HighlightSwipe> {" "}
                             Details matter, and I'm kind of obsessed with getting them right.
                         </p>
 
@@ -213,23 +213,47 @@ const Home = () => {
                     </div>
 
                     {/* Right column: stats */}
-                    <div className="about-stats">
-                        <div className="stat-card reveal reveal-delay-1">
-                            <span className="stat-value"><NumberCounter end={9} suffix="+" duration={2000} delay={200} /></span>
-                            <span className="stat-label">Projects Built</span>
+                    <div className="about-stats-container">
+                        <div className="about-stats-grid">
+                            <div className="stat-card reveal reveal-delay-1">
+                                <div className="stat-icon">
+                                    <RocketIcon width={24} height={24} />
+                                </div>
+                                <div className="stat-content">
+                                    <span className="stat-value">
+                                        <NumberCounter end={9} suffix="+" duration={2000} delay={200} />
+                                    </span>
+                                    <span className="stat-label">Projects Built</span>
+                                </div>
+                                <div className="stat-glow" />
+                            </div>
+
+                            <div className="stat-card reveal reveal-delay-2">
+                                <div className="stat-icon">
+                                    <KeyboardIcon width={24} height={24} />
+                                </div>
+                                <div className="stat-content">
+                                    <span className="stat-value">
+                                        <NumberCounter end={3} suffix="+" duration={2000} delay={400} />
+                                    </span>
+                                    <span className="stat-label">Years Coding</span>
+                                </div>
+                                <div className="stat-glow" />
+                            </div>
+
+                            <div className="stat-card reveal reveal-delay-3">
+                                <div className="stat-icon">
+                                    <CodeIcon width={24} height={24} />
+                                </div>
+                                <div className="stat-content">
+                                    <span className="stat-value">
+                                        <NumberCounter end={4} duration={2000} delay={600} />
+                                    </span>
+                                    <span className="stat-label">Languages</span>
+                                </div>
+                                <div className="stat-glow" />
+                            </div>
                         </div>
-                        <div className="stat-card reveal reveal-delay-2">
-                            <span className="stat-value"><NumberCounter end={3} suffix="+" duration={2000} delay={400} /></span>
-                            <span className="stat-label">Years Coding</span>
-                        </div>
-                        <div className="stat-card reveal reveal-delay-3">
-                            <span className="stat-value"><NumberCounter end={4} duration={2000} delay={600} /></span>
-                            <span className="stat-label">Languages</span>
-                        </div>
-                        {/* <div className="stat-card reveal reveal-delay-4">
-                            <span className="stat-value">∞</span>
-                            <span className="stat-label">Bugs Squashed</span>
-                        </div> */}
                     </div>
                 </div>
             </section>
@@ -250,13 +274,13 @@ const Home = () => {
 
                     <div className="projects-grid stagger-grid reveal reveal-delay-1">
                         {projects.map((project, index) => (
-                            <Link 
-                                to={`/project/${project.id}`} 
+                            <Link
+                                to={`/project/${project.id}`}
                                 key={project.id}
                                 className={`project-card-link ${project.featured ? 'featured-link' : ''}`}
                             >
-                                <article 
-                                    className={`project-card ${project.featured ? 'featured' : ''} reveal`} 
+                                <article
+                                    className={`project-card ${project.featured ? 'featured' : ''} reveal`}
                                     style={{ transitionDelay: `${index * 0.1}s` }}
                                     onMouseMove={handleCardMouseMove}
                                 >

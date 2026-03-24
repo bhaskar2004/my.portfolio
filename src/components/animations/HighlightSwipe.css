@@ -7,35 +7,27 @@
      */
 }
 
+.highlight-swipe {
+    position: relative;
+    display: inline;
+    background-image: linear-gradient(
+        var(--highlight-color, var(--color-primary, #facc15)),
+        var(--highlight-color, var(--color-primary, #facc15))
+    );
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: left center;
+    transition: background-size var(--highlight-duration, 0.6s) var(--highlight-easing, cubic-bezier(0.16, 1, 0.3, 1));
+    padding: 2px 0;
+    margin: 0 -2px;
+}
+
+.highlight-swipe.active {
+    background-size: 100% 100%;
+}
+
 .highlight-swipe::before {
-    content: '';
-    position: absolute;
-    inset: 1px -5px;
-    background-color: var(--highlight-color, var(--color-primary, #facc15));
-    border-radius: var(--highlight-radius, 3px);
-
-    /* Animation setup */
-    transform-origin: var(--highlight-origin, left center);
-    transform: scaleX(0);
-    z-index: 0;
-
-    /* Layered transition for a snappier feel */
-    transition:
-        transform var(--highlight-duration, 0.55s) var(--highlight-easing, cubic-bezier(0.16, 1, 0.3, 1)),
-        opacity 0.1s ease;
-
-    will-change: transform;
-}
-
-/* Active state */
-.highlight-swipe.active::before {
-    transform: scaleX(1);
-}
-
-/* RTL support — flip origin to right */
-[dir="rtl"] .highlight-swipe::before,
-.highlight-swipe[dir="rtl"]::before {
-    transform-origin: right center;
+    display: none;
 }
 
 /* Content layer */

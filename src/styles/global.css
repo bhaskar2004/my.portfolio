@@ -19,8 +19,8 @@
     --color-text: #ffffff;
     --color-text-muted: #d1d1cc;
     --color-text-dark: #8c8c87;
-    --color-border: rgba(255, 255, 255, 0.06);
-    --color-border-strong: rgba(255, 255, 255, 0.12);
+    --color-border: #ffffff;
+    --color-border-strong: #ffffff;
 
     /* — Uber Signature Green — */
     --color-primary: #06C167;
@@ -98,8 +98,8 @@
     --color-text: #000000;
     --color-text-muted: #2a2a24;
     --color-text-dark: #5a5a54;
-    --color-border: rgba(0, 0, 0, 0.08);
-    --color-border-strong: rgba(0, 0, 0, 0.15);
+    --color-border: #000000;
+    --color-border-strong: #000000;
     --color-secondary: #e0e0da;
     --gradient-text: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
