@@ -5,7 +5,7 @@
     width: 100vw;
     height: 100vh;
     pointer-events: none; /* Let clicks pass through to the page content */
-    z-index: 10; /* Above background but below interactive UI elements if needed */
+    z-index: 20; /* High enough to be above main-content-wrapper (10) */
     background: transparent;
 }
 
