@@ -141,11 +141,50 @@ pip install torch torchvision opencv-python
         title: 'PG Maga',
         brief: 'Real-time PG accommodation marketplace for Bangalore — live bed availability and owner dashboard.',
         description: 'The ultimate solution for finding PG accommodation in Bangalore. It features a real-time availability tracker, a secure owner portal for listing management, and a seamless search experience for students and professionals.',
-        tech: ['Next.js', 'TypeScript', 'MongoDB'],
+        tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'MongoDB', 'Firebase'],
         github: 'https://github.com/bhaskar2004/pgmaga',
         live: 'https://pgmaga.onrender.com/',
         icon: HomeIcon,
         featured: true,
-        readme: ``
+        readme: `# PG Maga 🏠
+
+> A real-time PG accommodation marketplace built for Bangalore — find, list, and connect with paying guest accommodations instantly.
+
+**Live Demo → [pgmaga.onrender.com](https://pgmaga.onrender.com)**
+
+---
+
+## What is PG Maga?
+
+PG Maga is a full-stack accommodation discovery platform built specifically for Bangalore's paying guest rental market. It bridges the gap between tenants searching for PG accommodations and landlords or property owners — making the entire process faster, more transparent, and accessible in real time.
+
+Whether you're a student relocating for college, a working professional hunting for a place close to your office, or a property owner looking to get your PG listed — PG Maga is built for you.
+
+---
+
+## Features
+
+- **Real-time listings** — Browse PG accommodations with live data, no stale results
+- **Firebase Authentication** — Secure sign-in with Google or email/password
+- **Search & Filter** — Filter by location, price range, gender preference, and amenities
+- **List your PG** — Property owners can submit and manage their own listings
+- **Responsive design** — Mobile-first, works seamlessly across all screen sizes
+- **Smooth animations** — Framer Motion powered transitions and micro-interactions
+- **Type-safe codebase** — Full TypeScript coverage across frontend and API routes
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 16 (App Router) |
+| **UI Library** | React 19 |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS v4 |
+| **Animations** | Framer Motion |
+| **Database** | MongoDB Atlas |
+| **Authentication** | Firebase Auth |
+| **Deployment** | Render |`
     }
 ];
