@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { HelmetProvider, Helmet } from 'react-helmet-async'
+import { lazy, Suspense } from 'react'
 import Navigation from './components/layout/Navigation'
 import Footer from './components/layout/Footer'
 import CustomCursor from './components/layout/CustomCursor'
@@ -7,10 +8,13 @@ import BackToTop from './components/layout/BackToTop'
 import ScrollProgress from './components/layout/ScrollProgress'
 import ParticleCanvas from './components/particles/ParticleCanvas'
 import GeometricShapes from './components/particles/GeometricShapes'
-import Home from './pages/Home'
-import Workshops from './pages/Workshops'
-import Resume from './pages/Resume'
-import ProjectDetail from './pages/ProjectDetail'
+import ScrollToHash from './components/utils/ScrollToHash'
+
+// Lazy load pages for performance
+const Home = lazy(() => import('./pages/Home'))
+const Workshops = lazy(() => import('./pages/Workshops'))
+const Resume = lazy(() => import('./pages/Resume'))
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 
 
 /* ── Minimal 404 page ───────────────────────────────────────────────────
@@ -36,6 +40,7 @@ function App() {
         <HelmetProvider>
             {/* Global UI Elements */}
             <ScrollProgress />
+            <ScrollToHash />
             <ParticleCanvas />
             <GeometricShapes />
 
@@ -45,16 +50,28 @@ function App() {
             <div className="main-content-wrapper" style={{ position: 'relative', zIndex: 'var(--z-content)' }}>
                 <Navigation />
 
-                {/* Routes */}
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/workshops" element={<Workshops />} />
-                    <Route path="/resume" element={<Resume />} />
-                    <Route path="/project/:id" element={<ProjectDetail />} />
+                {/* Routes with Suspense for code-splitting */}
+                <Suspense fallback={
+                    <div style={{ 
+                        height: '100vh', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        color: 'var(--color-primary)',
+                        fontFamily: 'var(--font-mono)'
+                    }}>
+                        Loading Experience...
+                    </div>
+                }>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/workshops" element={<Workshops />} />
+                        <Route path="/resume" element={<Resume />} />
+                        <Route path="/project/:id" element={<ProjectDetail />} />
 
-                    {/* ADDED: Catch-all 404 — noindex keeps crawl budget clean */}
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Suspense>
 
                 <Footer />
             </div>

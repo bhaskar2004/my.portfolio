@@ -14,6 +14,16 @@ export default defineConfig({
         outDir: 'dist',
         assetsDir: 'assets',
         sourcemap: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
+                    'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+                    'vendor-markdown': ['react-markdown', 'remark-gfm']
+                }
+            }
+        },
+        chunkSizeWarningLimit: 1000,
     },
     server: {
         port: 5173,

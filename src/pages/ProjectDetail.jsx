@@ -109,7 +109,7 @@ const ProjectDetail = () => {
             {/* Scroll progress */}
             <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }} />
 
-            <SEO title={`${project.title} | Projects`} description={project.brief} />
+            <SEO title={project.title} description={project.brief} />
 
             <div className="project-detail" ref={useScrollReveal()}>
                 <div className="container">

@@ -27,12 +27,12 @@
 
 /* Hero name - with shimmer */
 .hero h1 {
-    font-size: clamp(3.2rem, 11vw, 7.5rem);
-    line-height: 1.1;
-    letter-spacing: -0.05em;
+    font-size: clamp(3rem, 10vw, var(--font-giant));
+    line-height: 1.05;
+    letter-spacing: -0.04em;
     margin-bottom: 24px;
-    color: var(--color-text); /* Fallback and primary */
-    font-weight: 800;
+    color: var(--color-text);
+    font-weight: 700;
     white-space: normal;
     position: relative;
     z-index: 10;
@@ -68,12 +68,12 @@
 
 /* Subtitle / descriptor */
 .hero .subtitle {
-    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+    font-size: var(--font-md);
     margin-bottom: 48px;
-    max-width: 600px;
+    max-width: 60ch;
     color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    line-height: 1.5;
+    font-family: var(--font-sans);
+    line-height: 1.6;
 }
 
 /* CTA group */
@@ -177,7 +177,9 @@
     border: 1px solid var(--color-border);
     padding: 32px 24px;
     border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+    transition: transform 0.1s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -208,7 +210,7 @@
 
 .stat-card:hover {
     border-color: rgba(var(--color-primary-rgb), 0.3);
-    transform: translateY(-5px);
+    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateY(-5px);
     box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5),
                 0 0 20px rgba(var(--color-primary-rgb), 0.1);
 }
@@ -240,8 +242,8 @@
 
 .stat-value {
     font-family: var(--font-display);
-    font-size: 2.8rem;
-    font-weight: 800;
+    font-size: var(--font-2xl);
+    font-weight: 700;
     line-height: 1;
     color: var(--color-text);
     letter-spacing: -0.02em;
@@ -249,7 +251,7 @@
 
 .stat-label {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--font-xs);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--color-text-muted);
@@ -364,7 +366,16 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    transition: all var(--transition-base), box-shadow 0.4s ease !important;
+    transition: transform 0.1s ease-out, box-shadow 0.4s ease, border-color 0.4s ease !important;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.project-card:hover {
+    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateY(-5px);
+    border-color: rgba(var(--color-primary-rgb), 0.3);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(var(--color-primary-rgb), 0.1);
 }
 
 .project-card:hover .project-title {

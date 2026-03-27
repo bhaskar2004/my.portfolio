@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import {
     ArrowTopRightIcon,
     RocketIcon,
@@ -24,22 +24,91 @@ import HighlightSwipe from '../components/animations/HighlightSwipe'
 import NumberCounter from '../components/animations/NumberCounter'
 import { projects } from '../data/projects'
 
-const Home = () => {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const heroRef = useRef(null);
+// Extracting memoized components for performance
+const StatCard = memo(({ icon: Icon, value, label, delay, onMouseMove, onMouseLeave }) => (
+    <div
+        className={`stat-card reveal reveal-delay-${delay}`}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+    >
+        <div className="stat-icon">
+            <Icon width={24} height={24} />
+        </div>
+        <div className="stat-content">
+            <span className="stat-value">
+                <NumberCounter end={value} suffix="+" duration={2000} delay={delay * 200} />
+            </span>
+            <span className="stat-label">{label}</span>
+        </div>
+        <div className="stat-glow" />
+    </div>
+));
 
-    const handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        setMousePos({ x: clientX, y: clientY });
-    };
+const ProjectCard = memo(({ project, index, onMouseMove, onMouseLeave }) => (
+    <Link
+        to={`/project/${project.id}`}
+        className={`project-card-link ${project.featured ? 'featured-link' : ''}`}
+    >
+        <article
+            className={`project-card ${project.featured ? 'featured' : ''} reveal`}
+            style={{ transitionDelay: `${index * 0.1}s` }}
+            onMouseMove={onMouseMove}
+            onMouseLeave={onMouseLeave}
+        >
+            <div className="project-header">
+                <div className="project-icon">
+                    <project.icon width={20} height={20} />
+                </div>
+                <div className="project-meta">
+                    <span className="project-number">#{project.number}</span>
+                    {project.featured && <span className="project-badge">Live</span>}
+                </div>
+            </div>
+            <div className="project-body">
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.brief}</p>
+                <div className="tech-stack">
+                    {project.tech.map(t => (
+                        <span key={t} className="tech-tag">{t}</span>
+                    ))}
+                </div>
+            </div>
+            <div className="project-footer">
+                <div className="project-link primary">
+                    <span>View Details</span>
+                    <ArrowTopRightIcon width={13} height={13} />
+                </div>
+            </div>
+        </article>
+    </Link>
+));
+
+const Home = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const heroRef = useRef(null);
 
     const handleCardMouseMove = (e) => {
         const card = e.currentTarget;
         const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        card.style.setProperty('--mouse-x', `${x}%`);
-        card.style.setProperty('--mouse-y', `${y}%`);
+        const x = ((e.clientX - rect.left) / rect.width);
+        const y = ((e.clientY - rect.top) / rect.height);
+
+        const rotateX = (0.5 - y) * 15;
+        const rotateY = (x - 0.5) * 15;
+
+        card.style.setProperty('--mouse-x', `${x * 100}%`);
+        card.style.setProperty('--mouse-y', `${y * 100}%`);
+        card.style.setProperty('--rotate-x', `${rotateX}deg`);
+        card.style.setProperty('--rotate-y', `${rotateY}deg`);
+    };
+
+    const handleCardMouseLeave = (e) => {
+        const card = e.currentTarget;
+        card.style.setProperty('--rotate-x', `0deg`);
+        card.style.setProperty('--rotate-y', `0deg`);
     };
     const homeFaq = [
         {
@@ -77,12 +146,9 @@ const Home = () => {
         <div className="page-transition-wrapper">
             <SEO
                 isHome
-                title="Software Tester & Problem Solver"
-                description={
-                    'Bhaskar T – Software Tester and Problem Solver based in India. ' +
-                    'Official portfolio of Bhaskar at bhaskar.xyz. Explore projects, skills, and the tech journey of Bhaskar T.'
-                }
-                keywords="Bhaskar T portfolio, bhaskar2004, Bhaskar software tester India, bhaskar.xyz"
+                title="Software Tester Portfolio"
+                description="Explore the professional portfolio of Bhaskar T, a specialized Software Tester & QA Engineer. View projects, certifications, and technical expertise."
+                keywords="Software Tester Portfolio, QA Engineer India, Bhaskar T, Test Automation, bhaskar2004"
                 faq={homeFaq}
             />
 
@@ -90,7 +156,6 @@ const Home = () => {
             <section
                 className="hero reveal-active"
                 id="home"
-                onMouseMove={handleMouseMove}
                 ref={heroRef}
                 itemScope
                 itemType="https://schema.org/Person"
@@ -215,44 +280,30 @@ const Home = () => {
                     {/* Right column: stats */}
                     <div className="about-stats-container">
                         <div className="about-stats-grid">
-                            <div className="stat-card reveal reveal-delay-1">
-                                <div className="stat-icon">
-                                    <RocketIcon width={24} height={24} />
-                                </div>
-                                <div className="stat-content">
-                                    <span className="stat-value">
-                                        <NumberCounter end={9} suffix="+" duration={2000} delay={200} />
-                                    </span>
-                                    <span className="stat-label">Projects Built</span>
-                                </div>
-                                <div className="stat-glow" />
-                            </div>
-
-                            <div className="stat-card reveal reveal-delay-2">
-                                <div className="stat-icon">
-                                    <KeyboardIcon width={24} height={24} />
-                                </div>
-                                <div className="stat-content">
-                                    <span className="stat-value">
-                                        <NumberCounter end={3} suffix="+" duration={2000} delay={400} />
-                                    </span>
-                                    <span className="stat-label">Years Coding</span>
-                                </div>
-                                <div className="stat-glow" />
-                            </div>
-
-                            <div className="stat-card reveal reveal-delay-3">
-                                <div className="stat-icon">
-                                    <CodeIcon width={24} height={24} />
-                                </div>
-                                <div className="stat-content">
-                                    <span className="stat-value">
-                                        <NumberCounter end={4} duration={2000} delay={600} />
-                                    </span>
-                                    <span className="stat-label">Languages</span>
-                                </div>
-                                <div className="stat-glow" />
-                            </div>
+                            <StatCard
+                                icon={RocketIcon}
+                                value={9}
+                                label="Projects Built"
+                                delay={1}
+                                onMouseMove={handleCardMouseMove}
+                                onMouseLeave={handleCardMouseLeave}
+                            />
+                            <StatCard
+                                icon={KeyboardIcon}
+                                value={3}
+                                label="Years Coding"
+                                delay={2}
+                                onMouseMove={handleCardMouseMove}
+                                onMouseLeave={handleCardMouseLeave}
+                            />
+                            <StatCard
+                                icon={CodeIcon}
+                                value={4}
+                                label="Languages"
+                                delay={3}
+                                onMouseMove={handleCardMouseMove}
+                                onMouseLeave={handleCardMouseLeave}
+                            />
                         </div>
                     </div>
                 </div>
@@ -274,42 +325,13 @@ const Home = () => {
 
                     <div className="projects-grid stagger-grid reveal reveal-delay-1">
                         {projects.map((project, index) => (
-                            <Link
-                                to={`/project/${project.id}`}
+                            <ProjectCard
                                 key={project.id}
-                                className={`project-card-link ${project.featured ? 'featured-link' : ''}`}
-                            >
-                                <article
-                                    className={`project-card ${project.featured ? 'featured' : ''} reveal`}
-                                    style={{ transitionDelay: `${index * 0.1}s` }}
-                                    onMouseMove={handleCardMouseMove}
-                                >
-                                    <div className="project-header">
-                                        <div className="project-icon">
-                                            <project.icon width={20} height={20} />
-                                        </div>
-                                        <div className="project-meta">
-                                            <span className="project-number">#{project.number}</span>
-                                            {project.featured && <span className="project-badge">Live</span>}
-                                        </div>
-                                    </div>
-                                    <div className="project-body">
-                                        <h3 className="project-title">{project.title}</h3>
-                                        <p className="project-description">{project.brief}</p>
-                                        <div className="tech-stack">
-                                            {project.tech.map(t => (
-                                                <span key={t} className="tech-tag">{t}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="project-footer">
-                                        <div className="project-link primary">
-                                            <span>View Details</span>
-                                            <ArrowTopRightIcon width={13} height={13} />
-                                        </div>
-                                    </div>
-                                </article>
-                            </Link>
+                                project={project}
+                                index={index}
+                                onMouseMove={handleCardMouseMove}
+                                onMouseLeave={handleCardMouseLeave}
+                            />
                         ))}
                     </div>
                 </div>
@@ -323,7 +345,7 @@ const Home = () => {
                 <div className="container">
                     <div className="reveal">
                         <span className="section-eyebrow">Contact</span>
-                        <h2>Contact Bhaskar T</h2>
+                        <h2>Contact - Bhaskar T</h2>
                         <p className="contact-description">
                             I'm open to work and collaborations.<br />Let's build something together.
                         </p>

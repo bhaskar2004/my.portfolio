@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { SunIcon, MoonIcon } from '@radix-ui/react-icons'
+import { SunIcon, MoonIcon, GitHubLogoIcon, LinkedInLogoIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
 import { useTheme } from '../../context/ThemeContext'
 import './Navigation.css'
 
@@ -110,37 +110,63 @@ const Navigation = () => {
                 </Link>
 
                 {/* Nav Links */}
-                <ul
-                    id="nav-links"
-                    className={`nav-links${isMobileOpen ? ' active' : ''}`}
-                    role="list"
+                <div 
+                    className={`nav-links-container${isMobileOpen ? ' active' : ''}`}
+                    onClick={(e) => e.stopPropagation()}
                 >
-                    {NAV_LINKS.map(({ label, type, id, path }) =>
-                        type === 'hash' ? (
-                            <li key={id}>
-                                <a
-                                    href={`/#${id}`}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleHashLink(id)
-                                    }}
-                                >
-                                    {label}
-                                </a>
-                            </li>
-                        ) : (
-                            <li key={path}>
-                                <Link
-                                    to={path}
-                                    className={isActive(path) ? 'active' : ''}
-                                    onClick={close}
-                                >
-                                    {label}
-                                </Link>
-                            </li>
-                        )
-                    )}
-                </ul>
+                    <div className="nav-mobile-header">
+                        <span className="nav-mobile-label font-mono">Navigation</span>
+                    </div>
+
+                    <ul
+                        id="nav-links"
+                        className="nav-links"
+                        role="list"
+                    >
+                        {NAV_LINKS.map(({ label, type, id, path }) =>
+                            type === 'hash' ? (
+                                <li key={id}>
+                                    <a
+                                        href={`/#${id}`}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleHashLink(id)
+                                        }}
+                                    >
+                                        <span className="link-num font-mono">0{NAV_LINKS.findIndex(n => n.id === id) + 1}</span>
+                                        <span className="link-text">{label}</span>
+                                    </a>
+                                </li>
+                            ) : (
+                                <li key={path}>
+                                    <Link
+                                        to={path}
+                                        className={isActive(path) ? 'active' : ''}
+                                        onClick={close}
+                                    >
+                                        <span className="link-num font-mono">0{NAV_LINKS.findIndex(n => n.path === path) + 1}</span>
+                                        <span className="link-text">{label}</span>
+                                    </Link>
+                                </li>
+                            )
+                        )}
+                    </ul>
+
+                    <div className="nav-mobile-footer">
+                        <div className="nav-mobile-label font-mono">Social</div>
+                        <div className="nav-mobile-socials">
+                            <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                                <GitHubLogoIcon width={20} height={20} />
+                            </a>
+                            <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                <LinkedInLogoIcon width={20} height={20} />
+                            </a>
+                            <a href="mailto:bhaskart.dev@gmail.com" aria-label="Email">
+                                <EnvelopeClosedIcon width={20} height={20} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <span className="nav-divider" aria-hidden="true" />
 

@@ -13,79 +13,84 @@ const Footer = () => {
     return (
         <footer className="footer-container">
             <div className="container">
-                <div className="footer-content">
-                    {/* Left: brand */}
-                    <div className="footer-left">
-                        <div className="footer-logo">Bhaskar T</div>
-                        <p className="footer-description">
-                            Software Tester & Problem Solver<br />
-                            Helping build reliable, bug-free software.
-                        </p>
+                {/* ── Tier 1: Branding ── */}
+                <div className="footer-upper">
+                    <div className="footer-brand">
+                        <h2 className="footer-logo-massive">Bhaskar T</h2>
+                        <div className="footer-tagline-expanded">
+                            <span>Software Tester & QA Engineer</span>
+                            <span className="dot-separator">•</span>
+                            <span>Problem Solver</span>
+                        </div>
+                    </div>
+                    <div className="footer-cta">
                         <a
                             href="https://fresnel.bhaskar.xyz"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="footer-tagline"
+                            className="footer-external-link"
                         >
-                            <ExternalLinkIcon width={14} height={14} />
-                            <span>Photography Portfolio</span>
+                            <span>Explore Photography Portfolio</span>
+                            <ExternalLinkIcon />
                         </a>
                     </div>
+                </div>
 
-                    {/* Center: navigation */}
-                    <div className="footer-center">
-                        <div className="footer-section-title">Navigation</div>
-                        <nav className="footer-nav">
-                            <a href="#about" className="footer-link">About</a>
-                            <Link to="/#projects" className="footer-link">Projects</Link>
-                            <a href="#contact" className="footer-link">Contact</a>
-                            <Link to="/workshops" className="footer-link">Workshops</Link>
-                            <Link to="/resume" className="footer-link">Resume</Link>
+                {/* ── Tier 2: Links Grid ── */}
+                <div className="footer-middle-grid">
+                    <div className="footer-column">
+                        <h3 className="footer-label">Navigation</h3>
+                        <nav className="footer-nav-list">
+                            <Link to="/" className="footer-nav-link">Home</Link>
+                            <Link to="/#about" className="footer-nav-link">About</Link>
+                            <Link to="/#projects" className="footer-nav-link">Projects</Link>
+                            <Link to="/#contact" className="footer-nav-link">Contact</Link>
+                            <Link to="/workshops" className="footer-nav-link">Workshops</Link>
+                            <Link to="/resume" className="footer-nav-link">Resume</Link>
                         </nav>
                     </div>
 
-                    {/* Right: connect */}
-                    <div className="footer-right">
-                        <div className="footer-section-title">Connect</div>
-                        <div className="footer-social-container">
-                            <a
-                                href="https://github.com/bhaskar2004"
-                                target="_blank"
-                                rel="noopener noreferrer me"
-                                className="footer-social"
-                                aria-label="GitHub"
-                            >
-                                <GitHubLogoIcon width={20} height={20} />
+                    <div className="footer-column">
+                        <h3 className="footer-label">Resources</h3>
+                        <nav className="footer-nav-list">
+                            <a href="https://fresnel.bhaskar.xyz" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Photography Portfolio</a>
+                            <a href="https://github.com/bhaskar2004?tab=repositories" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Source Code (GitHub)</a>
+                            <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Professional Profile</a>
+                            <a href="mailto:bhaskart.dev@gmail.com" className="footer-nav-link">Business Inquiries</a>
+                        </nav>
+                    </div>
+
+                    <div className="footer-column">
+                        <h3 className="footer-label">Connect</h3>
+                        <div className="footer-social-icons">
+                            <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer" className="footer-icon-btn" aria-label="GitHub">
+                                <GitHubLogoIcon />
                             </a>
-                            <a
-                                href="https://www.linkedin.com/in/bhaskart2004/"
-                                target="_blank"
-                                rel="noopener noreferrer me"
-                                className="footer-social"
-                                aria-label="LinkedIn"
-                            >
-                                <LinkedInLogoIcon width={20} height={20} />
+                            <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="footer-icon-btn" aria-label="LinkedIn">
+                                <LinkedInLogoIcon />
                             </a>
-                            <a
-                                href="mailto:bhaskart.dev@gmail.com"
-                                className="footer-social"
-                                aria-label="Email"
-                            >
-                                <EnvelopeClosedIcon width={20} height={20} />
+                            <a href="mailto:bhaskart.dev@gmail.com" className="footer-icon-btn" aria-label="Email">
+                                <EnvelopeClosedIcon />
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* ── Bottom bar ── */}
+            <div className="footer-divider-wrap">
+                <div className="footer-divider-line"></div>
+            </div>
+
+            {/* ── Tier 3: Bottom Bar ── */}
             <div className="footer-bottom">
-                <p>© {year} <span>Bhaskar T</span> — All rights reserved</p>
-                <ul className="footer-bottom-links">
-                    <li><a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-                    <li><a href="mailto:bhaskart.dev@gmail.com">Email</a></li>
-                </ul>
+                <div className="container footer-bottom-inner">
+                    <div className="footer-copyright">
+                        © {year} Bhaskar T. <span>Crafted with Precision.</span>
+                    </div>
+                    <div className="footer-legal">
+                        <span className="font-mono">INDIA / GLOBAL</span>
+                    </div>
+                </div>
             </div>
         </footer>
     )

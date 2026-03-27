@@ -126,8 +126,8 @@
 .detail-title {
     position: relative;
     z-index: 1;
-    font-size: clamp(2.6rem, 6.5vw, 5rem);
-    font-weight: 800;
+    font-size: clamp(2.6rem, 6.5vw, var(--font-huge));
+    font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.04em;
     margin-bottom: 24px;
@@ -150,10 +150,10 @@
 .detail-brief {
     position: relative;
     z-index: 1;
-    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    font-size: var(--font-md);
     color: var(--color-text-muted);
-    max-width: 600px;
-    line-height: 1.75;
+    max-width: 60ch;
+    line-height: 1.6;
     margin-bottom: 32px;
 }
 
@@ -185,15 +185,15 @@
 }
 
 .stat-label {
-    font-size: 0.6rem;
+    font-size: var(--font-xs);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-text-dark);
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .stat-value {
-    font-size: 0.78rem;
+    font-size: var(--font-sm);
     color: var(--color-text);
     letter-spacing: 0.03em;
 }
@@ -304,8 +304,8 @@
 }
 
 .description-text {
-    font-size: 1.05rem;
-    line-height: 1.9;
+    font-size: var(--font-base);
+    line-height: 1.7;
     color: var(--color-text);
     opacity: 0.85;
 }
@@ -393,7 +393,7 @@
 /* Headings */
 .readme-body h1 {
     font-family: var(--font-display);
-    font-size: 1.55rem;
+    font-size: var(--font-lg);
     font-weight: 700;
     color: var(--color-text);
     letter-spacing: -0.025em;

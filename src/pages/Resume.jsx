@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { Link } from 'react-router-dom'
 import {
     ArrowLeftIcon,
@@ -13,6 +14,10 @@ import HighlightSwipe from '../components/animations/HighlightSwipe'
 import './Resume.css'
 
 const Resume = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const [pdfError, setPdfError] = useState(false)
 
     useEffect(() => {
@@ -39,6 +44,11 @@ const Resume = () => {
 
     return (
         <div className="page-transition-wrapper">
+            <SEO 
+                title="Interactive Resume" 
+                description="Download the professional resume of Bhaskar T, a Software Tester specializing in QA, Java, and Automation."
+                url="/resume"
+            />
             <div className="resume-page">
                 <div className="container" ref={useScrollReveal()}>
 

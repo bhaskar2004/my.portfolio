@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { Link } from 'react-router-dom'
 import {
     ArrowLeftIcon,
@@ -211,7 +211,7 @@ const workshops = [
 /* ─────────────────────────────────────────────────────────────
    MODAL
 ───────────────────────────────────────────────────────────── */
-const WorkshopModal = ({ workshop, onClose }) => {
+const WorkshopModal = memo(({ workshop, onClose }) => {
     const Icon = workshop.icon
 
     useEffect(() => {
@@ -224,6 +224,27 @@ const WorkshopModal = ({ workshop, onClose }) => {
         }
     }, [onClose])
 
+    const handleCardMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width);
+        const y = ((e.clientY - rect.top) / rect.height);
+        
+        const rotateX = (0.5 - y) * 10;
+        const rotateY = (x - 0.5) * 10;
+
+        card.style.setProperty('--mouse-x', `${x * 100}%`);
+        card.style.setProperty('--mouse-y', `${y * 100}%`);
+        card.style.setProperty('--rotate-x', `${rotateX}deg`);
+        card.style.setProperty('--rotate-y', `${rotateY}deg`);
+    };
+
+    const handleCardMouseLeave = (e) => {
+        const card = e.currentTarget;
+        card.style.setProperty('--rotate-x', `0deg`);
+        card.style.setProperty('--rotate-y', `0deg`);
+    };
+
     return (
         <div
             className="ws-modal-backdrop"
@@ -235,6 +256,8 @@ const WorkshopModal = ({ workshop, onClose }) => {
             <div
                 className="ws-modal"
                 onClick={(e) => e.stopPropagation()}
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
             >
                 {/* Hero banner */}
                 <div className="ws-modal__hero">
@@ -302,13 +325,35 @@ const WorkshopModal = ({ workshop, onClose }) => {
             </div>
         </div>
     )
-}
+})
 
 /* ─────────────────────────────────────────────────────────────
    CARD
 ───────────────────────────────────────────────────────────── */
-const WorkshopCard = ({ workshop, index, onClick }) => {
+const WorkshopCard = memo(({ workshop, index, onClick }) => {
     const Icon = workshop.icon
+
+    const handleCardMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width);
+        const y = ((e.clientY - rect.top) / rect.height);
+        
+        const rotateX = (0.5 - y) * 15;
+        const rotateY = (x - 0.5) * 15;
+
+        card.style.setProperty('--mouse-x', `${x * 100}%`);
+        card.style.setProperty('--mouse-y', `${y * 100}%`);
+        card.style.setProperty('--rotate-x', `${rotateX}deg`);
+        card.style.setProperty('--rotate-y', `${rotateY}deg`);
+    };
+
+    const handleCardMouseLeave = (e) => {
+        const card = e.currentTarget;
+        card.style.setProperty('--rotate-x', `0deg`);
+        card.style.setProperty('--rotate-y', `0deg`);
+    };
+
     return (
         <article
             className="ws-card"
@@ -318,6 +363,8 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             tabIndex={0}
             aria-label={`Open ${workshop.title} details`}
             onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
         >
             {/* Green top bar on hover */}
             <div className="ws-card__shimmer" aria-hidden="true" />
@@ -365,12 +412,16 @@ const WorkshopCard = ({ workshop, index, onClick }) => {
             </div>
         </article>
     )
-}
+})
 
 /* ─────────────────────────────────────────────────────────────
    PAGE
 ───────────────────────────────────────────────────────────── */
 const Workshops = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const [activeFilter, setActiveFilter] = useState('all')
     const [selectedId, setSelectedId] = useState(null)
 
@@ -389,8 +440,8 @@ const Workshops = () => {
         <div className="page-transition-wrapper">
             <div className="workshops-page">
             <SEO
-                title="Workshops & Events"
-                description="Workshops and events Bhaskar T has contributed to or organized — SUI Move, Rust × Hifly, Sambrama 2025, and more."
+                title="Tech Workshops & Events"
+                description="Browse technical workshops and community events led by Bhaskar T. Focused on Sui Move, Rust programming, and technical event management."
                 url="/workshops"
             />
 

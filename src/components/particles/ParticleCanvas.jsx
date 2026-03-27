@@ -24,14 +24,7 @@ const ParticleCanvas = () => {
         let animationFrameId
         let mouseX = -9999
         let mouseY = -9999
-
-        /* ── Resize ─────────────────────────────────────────── */
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
-        }
-        resizeCanvas()
-        window.addEventListener('resize', resizeCanvas)
+        const connectDistance = 100 // Define missing connectDistance
 
         /* ── Theme detection ────────────────────────────────── */
         const isDark = () =>
@@ -83,7 +76,7 @@ const ParticleCanvas = () => {
 
                 let alpha = isDark()
                     ? this.opacity
-                    : this.opacity * 0.8
+                    : this.opacity * 1
 
                 if (dist < glowR) {
                     const glowFactor = (1 - dist / glowR) * 0.5
@@ -113,10 +106,35 @@ const ParticleCanvas = () => {
             for (let i = 0; i < count; i++) particles.push(new Particle())
         }
 
+        /* ── Resize ─────────────────────────────────────────── */
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+            initParticles()
+        }
+
+        let resizeTimeout
+        const handleResize = () => {
+            clearTimeout(resizeTimeout)
+            resizeTimeout = setTimeout(resizeCanvas, 150)
+        }
+
+        resizeCanvas()
+        window.addEventListener('resize', handleResize)
+
         /* ── Animate ────────────────────────────────────────── */
-        const connectDistance = 90
+        let isVisible = true
+        const handleVisibilityChange = () => {
+            isVisible = !document.hidden
+            if (isVisible) {
+                cancelAnimationFrame(animationFrameId)
+                animate()
+            }
+        }
+        document.addEventListener('visibilitychange', handleVisibilityChange)
 
         const animate = () => {
+            if (!isVisible) return
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             const dark = isDark()
@@ -160,9 +178,10 @@ const ParticleCanvas = () => {
 
         /* ── Cleanup ─────────────────────────────────────────── */
         return () => {
-            window.removeEventListener('resize', resizeCanvas)
+            window.removeEventListener('resize', handleResize)
             window.removeEventListener('mousemove', onMouseMove)
             window.removeEventListener('mouseleave', onMouseLeave)
+            document.removeEventListener('visibilitychange', handleVisibilityChange)
             cancelAnimationFrame(animationFrameId)
         }
     }, [])
