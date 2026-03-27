@@ -1,22 +1,26 @@
 /**
- * Scene3D.jsx — ring already works correctly at RING_X=2.5
- * Only PortfolioModel needed fixing.
+ * Scene3D.jsx
+ *
+ * RING_X / RING_Y imported from PortfolioModel so they are
+ * always in sync — no more "model at X=2.5, ring at X=2.4" drift.
+ *
+ * LIGHT SETUP  (model hero centre ≈ world [2.4, −0.30, 0])
+ *   Key:   front-left-above  → warm white, casts shadow
+ *   Fill:  front-right       → cool blue, no shadow
+ *   Rim:   behind model      → #06C167 to separate silhouette
+ *   Glow:  platform up-light → green bouncing off feet/legs
  */
 
 import { Suspense, useState, useEffect, useRef } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, Environment, Html } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
-import PortfolioModel from './PortfolioModel';
+import PortfolioModel, { RING_X, RING_Y } from './PortfolioModel';
 import './Scene3D.css';
 
-// Must match HERO_X in PortfolioModel.jsx
-const RING_X = 2.5;
-const RING_Y = -2.05;
-
-// ── Holographic Platform ───────────────────────────────────────────────────────
+// ── Holographic Platform ──────────────────────────────────────────────────────
 const HoloPlatform = ({ scrollOffset }) => {
     const outerRef = useRef(null);
     const midRef = useRef(null);
@@ -25,32 +29,47 @@ const HoloPlatform = ({ scrollOffset }) => {
     const smoothScroll = useRef(0);
 
     useFrame(() => {
-        smoothScroll.current = THREE.MathUtils.lerp(smoothScroll.current, scrollOffset, 0.055);
-        const vis = THREE.MathUtils.clamp(1 - (smoothScroll.current - 0.28) / 0.18, 0, 1);
+        smoothScroll.current = THREE.MathUtils.lerp(
+            smoothScroll.current, scrollOffset, 0.055
+        );
+        // Fade in sync with model's scroll-out
+        const vis = THREE.MathUtils.clamp(
+            1 - (smoothScroll.current - 0.22) / 0.22, 0, 1
+        );
 
-        if (outerRef.current) { outerRef.current.material.opacity = 0.72 * vis; outerRef.current.rotation.y += 0.007; }
-        if (midRef.current) { midRef.current.material.opacity = 0.38 * vis; midRef.current.rotation.y -= 0.004; }
-        if (innerRef.current) { innerRef.current.material.opacity = 0.22 * vis; }
-        if (discRef.current) { discRef.current.material.opacity = 0.12 * vis; }
+        if (outerRef.current) {
+            outerRef.current.material.opacity = 0.75 * vis;
+            outerRef.current.rotation.y += 0.007;
+        }
+        if (midRef.current) {
+            midRef.current.material.opacity = 0.40 * vis;
+            midRef.current.rotation.y -= 0.004;
+        }
+        if (innerRef.current) innerRef.current.material.opacity = 0.24 * vis;
+        if (discRef.current) discRef.current.material.opacity = 0.13 * vis;
     });
 
     return (
         <group position={[RING_X, RING_Y, 0]}>
+            {/* Outer ring */}
             <mesh ref={outerRef} rotation-x={-Math.PI / 2}>
                 <ringGeometry args={[1.55, 1.72, 80]} />
-                <meshBasicMaterial color="#06C167" transparent opacity={0.72} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#06C167" transparent opacity={0.75} side={THREE.DoubleSide} />
             </mesh>
+            {/* Mid ring */}
             <mesh ref={midRef} rotation-x={-Math.PI / 2} position-y={0.012}>
                 <ringGeometry args={[1.00, 1.10, 80]} />
-                <meshBasicMaterial color="#06C167" transparent opacity={0.38} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#06C167" transparent opacity={0.40} side={THREE.DoubleSide} />
             </mesh>
+            {/* Inner ring */}
             <mesh ref={innerRef} rotation-x={-Math.PI / 2} position-y={0.024}>
                 <ringGeometry args={[0.48, 0.54, 80]} />
-                <meshBasicMaterial color="#06C167" transparent opacity={0.22} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#06C167" transparent opacity={0.24} side={THREE.DoubleSide} />
             </mesh>
+            {/* Disc fill */}
             <mesh ref={discRef} rotation-x={-Math.PI / 2} position-y={-0.02}>
                 <circleGeometry args={[1.72, 80]} />
-                <meshBasicMaterial color="#06C167" transparent opacity={0.12} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#06C167" transparent opacity={0.13} side={THREE.DoubleSide} />
             </mesh>
         </group>
     );
@@ -86,30 +105,88 @@ const Scene3D = () => {
                 shadows
                 dpr={[1, 2]}
                 gl={{
-                    antialias: true, alpha: true,
+                    antialias: true,
+                    alpha: true,
                     toneMapping: THREE.ACESFilmicToneMapping,
-                    toneMappingExposure: 1.25,
+                    toneMappingExposure: 1.35,
                 }}
             >
                 <PerspectiveCamera makeDefault position={[0, 0.5, 6]} fov={50} />
-                <fog attach="fog" args={['#000000', 9, 22]} />
 
                 <Suspense fallback={<Loader />}>
-                    <ambientLight intensity={1.2} color="#ffffff" />
-                    <hemisphereLight intensity={0.8} color="#c8d8ff" groundColor="#06C167" />
-                    <directionalLight position={[10, 20, 10]} intensity={4.5} color="#fff4df" castShadow shadow-mapSize={[2048, 2048]} />
-                    <directionalLight position={[-10, 10, -5]} intensity={2.0} color="#aabfff" />
-                    <pointLight position={[RING_X, RING_Y - 1, -4]} intensity={120} color="#06C167" distance={14} decay={2} />
-                    <pointLight position={[RING_X, RING_Y, 3]} intensity={80} color="#06C167" distance={10} decay={2} />
-                    <pointLight position={[0, 10, 5]} intensity={50} color="#ffffff" distance={20} decay={2} />
-                    <Environment preset="city" environmentIntensity={1.2} />
+                    {/* ── Ambient fill ── */}
+                    <ambientLight intensity={1.8} color="#ffffff" />
+                    <hemisphereLight intensity={0.9} color="#d8e8ff" groundColor="#06C167" />
+
+                    {/*
+                     * KEY LIGHT — front-left-above
+                     * Model hero centre ≈ [2.4, −0.30, 0].
+                     * Position [-0.5, 6, 8] casts a flattering top-left rim.
+                     */}
+                    <directionalLight
+                        position={[-0.5, 6, 8]}
+                        intensity={5.5}
+                        color="#fff8ec"
+                        castShadow
+                        shadow-mapSize={[2048, 2048]}
+                    />
+
+                    {/* FILL — front-right, softer and cooler */}
+                    <directionalLight
+                        position={[6, 3, 5]}
+                        intensity={2.5}
+                        color="#c8ddff"
+                    />
+
+                    {/* RIM — behind model, green for silhouette separation */}
+                    <directionalLight
+                        position={[RING_X, 0, -8]}
+                        intensity={2.2}
+                        color="#06C167"
+                    />
+
+                    {/*
+                     * PLATFORM UP-GLOW
+                     * Positioned just above the ring, bounces green light
+                     * upward onto the model's lower body.
+                     */}
+                    <pointLight
+                        position={[RING_X, RING_Y + 0.9, 2.5]}
+                        intensity={70}
+                        color="#06C167"
+                        distance={9}
+                        decay={2}
+                    />
+                    <pointLight
+                        position={[RING_X - 1.0, RING_Y + 1.0, 1]}
+                        intensity={40}
+                        color="#06C167"
+                        distance={7}
+                        decay={2}
+                    />
+
+                    {/* Overhead white for head / shoulders */}
+                    <pointLight
+                        position={[RING_X, 4.5, 4]}
+                        intensity={50}
+                        color="#ffffff"
+                        distance={14}
+                        decay={2}
+                    />
+
+                    <Environment preset="city" environmentIntensity={1.4} />
 
                     <PortfolioModel scrollOffset={scrollOffset} />
                     <HoloPlatform scrollOffset={scrollOffset} />
                 </Suspense>
 
                 <EffectComposer>
-                    <Bloom intensity={0.75} luminanceThreshold={0.55} luminanceSmoothing={0.85} mipmapBlur />
+                    <Bloom
+                        intensity={0.85}
+                        luminanceThreshold={0.45}
+                        luminanceSmoothing={0.85}
+                        mipmapBlur
+                    />
                 </EffectComposer>
             </Canvas>
         </div>
