@@ -1,4 +1,5 @@
 import { useState, useEffect, memo } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import {
     ArrowLeftIcon,
@@ -245,7 +246,7 @@ const WorkshopModal = memo(({ workshop, onClose }) => {
         card.style.setProperty('--rotate-y', `0deg`);
     };
 
-    return (
+    return createPortal(
         <div
             className="ws-modal-backdrop"
             onClick={onClose}
@@ -323,7 +324,8 @@ const WorkshopModal = memo(({ workshop, onClose }) => {
                     ))}
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     )
 })
 

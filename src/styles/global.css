@@ -11,40 +11,52 @@
    CSS CUSTOM PROPERTIES
    ============================================ */
 :root {
-    /* — Core Palette — */
-    --color-bg: #050505;
-    --color-surface: #0f0f0f;
-    --color-surface-2: #161616;
-    --color-surface-glass: rgba(10, 10, 10, 0.75);
-    --color-text: #ffffff;
-    --color-text-muted: #d1d1cc;
-    --color-text-dark: #8c8c87;
-    --color-border: #ffffff;
-    --color-border-strong: #ffffff;
+    /* — Neumorphism Lite Core Palette (Dark Mode Default) — */
+    --color-bg: #121212;
+    --color-surface: #181818;
+    --color-surface-2: #222222;
+    --color-surface-glass: rgba(18, 18, 18, 0.75);
+    --color-text: #e0e0e0;
+    --color-text-muted: #a0a0a0;
+    --color-text-dark: #666666;
+    --color-border: rgba(255, 255, 255, 0.05);
+    --color-border-strong: rgba(255, 255, 255, 0.1);
 
-    /* — Uber Signature Green — */
+    /* — Accent Colors — */
     --color-primary: #06C167;
     --color-primary-rgb: 6, 193, 103;
-    --color-primary-dim: rgba(6, 193, 103, 0.08);
+    --color-primary-dim: rgba(6, 193, 103, 0.1);
     --color-primary-glow: rgba(6, 193, 103, 0.25);
+    --color-accent: #ffffff;
+    --color-secondary: #2a2a2a;
 
-    /* — Secondary / White Accent — */
-    --color-accent: #fdfdfc;
-    --color-secondary: #222222;
-
+    /* — Neumorphic Shadows (Dark) — */
+    --shadow-neu-out: 8px 8px 16px rgba(0, 0, 0, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.02);
+    --shadow-neu-in: inset 6px 6px 12px rgba(0, 0, 0, 0.4), inset -6px -6px 12px rgba(255, 255, 255, 0.02);
+    --shadow-sm: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    --shadow-md: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 12px 12px 24px rgba(0, 0, 0, 0.5);
+    
     /* — Gradients — */
     --gradient-primary: linear-gradient(135deg, #06C167 0%, #029a50 100%);
-    --gradient-text: linear-gradient(135deg, #ffffff 0%, #a1a19a 100%);
-    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-    --color-particle-rgb: 6, 193, 103;
+    --gradient-text: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
 
-    /* — Spacing — */
+    /* — Spacing & Radius — */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 32px;
-    --spacing-xl: 64px;
-    --spacing-2xl: 128px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+
+    /* — Transitions — */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* — Typography — */
     --font-sans: 'Exo 2', sans-serif;
@@ -59,10 +71,10 @@
     --font-lg: 1.563rem;
     --font-xl: 1.953rem;
     --font-2xl: 2.441rem;
-    --font-huge: 3.052rem;
-    --font-giant: 4.768rem;
+    --font-huge: 3.8rem;
+    --font-giant: 5.5rem;
 
-    /* Compatibility Mappings */
+    /* — Compatibility Mappings — */
     --font-size-xs: var(--font-xs);
     --font-size-sm: var(--font-sm);
     --font-size-base: var(--font-base);
@@ -72,53 +84,35 @@
     --font-size-3xl: var(--font-2xl);
     --font-size-4xl: var(--font-huge);
 
-    /* — Border Radius — */
-    --radius-sm: 2px;
-    --radius-md: 8px;
-    --radius-lg: 16px;
-    --radius-xl: 24px;
-    --radius-full: 9999px;
-
-    /* — Transitions — */
-    --transition-fast: 0.15s cubic-bezier(0.23, 1, 0.32, 1);
-    --transition-base: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    --transition-slow: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-
-    /* — Shadows — */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 20px rgba(6, 193, 103, 0.2);
-    --shadow-card: 0 0 0 1px var(--color-border), 0 12px 32px -8px rgba(0, 0, 0, 0.5);
-
     /* — Z-index — */
     --z-background: 0;
     --z-particles: 1;
-    --z-shapes: 2;
     --z-content: 10;
-    --z-navbar: 100;
-    --z-modal: 1000;
-    --z-loader: 9999;
+    --z-navbar: 1000;
+    --z-modal: 2000;
 }
 
 /* ── Light Mode ─────────────────────────────────────────────── */
 :root[data-theme="light"] {
-    --color-bg: #fdfdfc;
-    --color-surface: #f5f5f0;
-    --color-surface-2: #ebebe5;
-    --color-surface-glass: rgba(253, 253, 252, 0.92);
-    --color-text: #000000;
-    --color-text-muted: #2a2a24;
-    --color-text-dark: #5a5a54;
-    --color-border: #000000;
-    --color-border-strong: #000000;
-    --color-secondary: #e0e0da;
-    --gradient-text: linear-gradient(135deg, #050505 0%, #4a4a44 100%);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 24px rgba(6, 193, 103, 0.15);
-    --shadow-card: 0 0 0 1px rgba(5, 5, 5, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
+    --color-bg: #f0f2f5;
+    --color-surface: #f0f2f5;
+    --color-surface-2: #e6e9ef;
+    --color-surface-glass: rgba(240, 242, 245, 0.85);
+    --color-text: #31344b;
+    --color-text-muted: #44476a;
+    --color-text-dark: #797d9a;
+    --color-border: rgba(255, 255, 255, 0.8);
+    --color-border-strong: rgba(255, 255, 255, 1);
+    --color-secondary: #d1d9e6;
+
+    /* — Neumorphic Shadows (Light) — */
+    --shadow-neu-out: 9px 9px 16px rgba(163, 177, 198, 0.5), -9px -9px 16px rgba(255, 255, 255, 0.8);
+    --shadow-neu-in: inset 6px 6px 12px rgba(163, 177, 198, 0.5), inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+
+    --gradient-text: linear-gradient(135deg, #31344b 0%, #44476a 100%);
+    --shadow-sm: 2px 2px 5px rgba(163, 177, 198, 0.4);
+    --shadow-md: 4px 4px 10px rgba(163, 177, 198, 0.4);
+    --shadow-lg: 10px 10px 20px rgba(163, 177, 198, 0.4);
 }
 
 /* ============================================
@@ -338,7 +332,7 @@ h6 { font-size: var(--font-base); font-weight: 600; text-transform: uppercase; l
 }
 
 /* ============================================
-   BUTTONS
+   BUTTONS (Neumorphic Lite)
    ============================================ */
 .btn {
     display: inline-flex;
@@ -346,125 +340,214 @@ h6 { font-size: var(--font-base); font-weight: 600; text-transform: uppercase; l
     justify-content: center;
     gap: 10px;
     padding: 14px 28px;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     font-family: var(--font-sans);
     font-size: var(--font-size-sm);
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    border: none;
+    border: 1px solid var(--color-border);
     cursor: pointer;
     transition: all var(--transition-base);
     position: relative;
-    overflow: hidden;
     text-decoration: none;
     white-space: nowrap;
     z-index: 1;
 
-    /* Default: ghost style */
-    background: transparent;
+    /* Neumorphic base style */
+    background: var(--color-bg);
     color: var(--color-text-muted);
-    border: 1px solid var(--color-border-strong);
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--color-text);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform var(--transition-base);
-    z-index: -1;
-    opacity: 0.1;
+    box-shadow: var(--shadow-neu-out);
 }
 
 .btn:hover {
     color: var(--color-text);
-    border-color: var(--color-text);
-    transform: translate3d(0, -3px, 0) scale(1.02);
-    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .btn:active {
-    transform: translate3d(0, -1px, 0) scale(0.98);
-}
-
-.btn:hover::before {
-    transform: scaleX(1);
-    transform-origin: left;
+    transform: translateY(0);
+    box-shadow: var(--shadow-neu-in);
 }
 
 .btn.primary {
     background: var(--color-primary);
     color: #000;
     border-color: var(--color-primary);
-}
-
-.btn.primary::before {
-    background: #000;
-    opacity: 0.15;
+    box-shadow: 4px 4px 12px rgba(6, 193, 103, 0.3), 
+                -4px -4px 12px rgba(255, 255, 255, 0.1);
 }
 
 .btn.primary:hover {
     background: #08d972;
-    border-color: #08d972;
-    box-shadow: 0 8px 24px rgba(6, 193, 103, 0.4);
+    box-shadow: 6px 6px 16px rgba(6, 193, 103, 0.4);
+}
+
+/* — Bubble Animation (Uiverse) — */
+.btn:before,
+.btn:after {
+  position: absolute;
+  content: "";
+  width: 150%;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.btn:hover:before {
+  top: -70%;
+  background-image: radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, var(--color-primary) 20%, transparent 30%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, var(--color-primary) 15%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  background-position: 50% 120%;
+  animation: greentopBubbles 0.6s ease;
+}
+
+.btn:hover::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, var(--color-primary) 15%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+    radial-gradient(circle, var(--color-primary) 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  background-position: 50% 0%;
+  animation: greenbottomBubbles 0.6s ease;
+}
+
+@keyframes greentopBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
+  }
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes greenbottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+      70% -10%, 70% 0%;
+  }
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+      105% 0%;
+  }
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+      110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+.btn.primary:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn.secondary {
     background: var(--color-surface-2);
     color: var(--color-text);
-    border-color: var(--color-border-strong);
-}
-
-.btn.secondary:hover {
-    background: var(--color-surface-2);
-    border-color: var(--color-text);
 }
 
 .btn.outline {
     background: transparent;
-    color: var(--color-text);
-    border: 1px solid var(--color-border-strong);
-}
-
-.btn.outline:hover {
-    border-color: var(--color-text);
-    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
 }
 
 /* ============================================
-   GLASS CARDS
+   NEUMORPHIC CARDS (With Corner Burst Effect)
    ============================================ */
-.glass-card {
-    background: var(--color-surface-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+.glass-card, .neu-card {
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     transition: all var(--transition-base);
     position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow-neu-out);
+    overflow: hidden; /* Important for corner containment */
+    display: flex;
+    flex-direction: column;
 }
 
-.glass-card::after {
-    content: '';
+.glass-card::before, .neu-card::before,
+.glass-card::after, .neu-card::after {
     position: absolute;
-    inset: 0;
-    background: var(--gradient-glass);
-    opacity: 0.4;
-    pointer-events: none;
+    content: "";
+    width: 25%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    background: var(--color-primary-dim);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 0;
+    opacity: 0;
 }
 
-.glass-card:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card), 0 20px 40px -15px rgba(6, 193, 103, 0.15);
-    transform: translateY(-6px) scale(1.01);
+.glass-card::before, .neu-card::before {
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 100%;
+}
+
+.glass-card::after, .neu-card::after {
+    bottom: 0;
+    left: 0;
+    border-radius: 0 100% 0 0;
+}
+
+.glass-card:hover::before, .neu-card:hover::before,
+.glass-card:hover::after, .neu-card:hover::after {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    opacity: 1;
+    background: var(--color-primary);
+}
+
+.glass-card:hover::after, .neu-card:hover::after {
+    content: "OPEN";
+    color: #000;
+}
+
+.glass-card:hover::before {
+    z-index: -1;
+}
+
+.glass-card > *, .neu-card > * {
+    position: relative;
+    z-index: 10;
+}
+
+.glass-card:hover, .neu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 /* ============================================

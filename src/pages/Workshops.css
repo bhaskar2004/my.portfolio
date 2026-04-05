@@ -46,11 +46,14 @@
 
 .ws-hero__content {
     max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .ws-hero__label {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     font-family: var(--font-mono);
     font-size: 0.7rem;
@@ -58,7 +61,7 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-primary);
-    margin-bottom: 16px;
+    margin: 0 auto 16px;
 }
 
 .ws-hero__label::before {
@@ -106,13 +109,17 @@
 .ws-stats {
     display: inline-flex;
     align-items: center;
-    background: var(--color-surface);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     padding: 0;
     overflow: hidden;
     gap: 0;
-    margin-top: 48px;
+    margin: 48px auto 0;
+    box-shadow: var(--shadow-neu-out);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .ws-stat {
@@ -151,7 +158,7 @@
 /* ── Filter Bar ───────────────────────────────────────────────── */
 .ws-filters {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 12px;
     margin: 48px 0 16px;
     flex-wrap: wrap;
@@ -168,7 +175,7 @@
     align-items: center;
     gap: 8px;
     padding: 9px 18px;
-    background: var(--color-surface);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     color: var(--color-text-muted);
@@ -179,7 +186,8 @@
     cursor: pointer;
     transition: all var(--transition-base);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Changed for bubble effect */
+    box-shadow: var(--shadow-sm);
 }
 
 .ws-filter-btn::before {
@@ -211,6 +219,50 @@
 
 .ws-filter-btn--active::before {
     opacity: 1;
+}
+
+.ws-filter-btn:hover:after,
+.ws-filter-btn:hover:before {
+    position: absolute;
+    content: "";
+    width: 150%;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: -1;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.ws-filter-btn:hover:before {
+    top: -70%;
+    background-image: radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, transparent 20%, var(--color-primary) 20%, transparent 30%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, var(--color-primary) 15%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%);
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+        10% 10%, 18% 18%;
+    background-position: 50% 120%;
+    animation: greentopBubbles 0.6s ease;
+}
+
+.ws-filter-btn:hover::after {
+    bottom: -70%;
+    background-image: radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, var(--color-primary) 15%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%),
+        radial-gradient(circle, var(--color-primary) 20%, transparent 20%);
+    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+    background-position: 50% 0%;
+    animation: greenbottomBubbles 0.6s ease;
 }
 
 .ws-filter-btn__count {
@@ -249,16 +301,17 @@
 
 /* ── Workshop Card ────────────────────────────────────────────── */
 .ws-card {
-    background: var(--color-surface);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     position: relative;
     display: flex;
     flex-direction: column;
     cursor: pointer;
     outline: none;
+    box-shadow: var(--shadow-neu-out);
     animation: wsCardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0ms) both;
-    transition: transform 0.1s ease-out, background var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    transition: all var(--transition-base);
     transform-style: preserve-3d;
     will-change: transform;
     --card-color: #06C167;
@@ -316,10 +369,8 @@
 }
 
 .ws-card:hover {
-    background: var(--color-surface-2);
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card), 0 0 24px rgba(6, 193, 103, 0.06);
-    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateY(-4px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .ws-card:focus-visible {
@@ -556,16 +607,20 @@
 .ws-modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: var(--z-modal);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 10000; /* Extremely high for portal */
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 24px;
-    animation: backdropIn 0.2s ease both;
+    justify-content: flex-start;
+    padding: 60px 24px;
     overflow-y: auto;
+    animation: backdropIn 0.3s ease both;
+    -webkit-overflow-scrolling: touch;
 }
 
 @keyframes backdropIn {
@@ -581,26 +636,21 @@
 
 /* ── Modal ────────────────────────────────────────────────────── */
 .ws-modal {
-    background: var(--color-surface-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--color-border-strong);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 720px;
-    max-height: 85vh;
-    overflow-y: auto;
     position: relative;
-    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
-    animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-    transform-style: preserve-3d;
-    will-change: transform;
-    transition: transform 0.1s ease-out, box-shadow 0.4s ease, border-color 0.4s ease;
+    box-shadow: var(--shadow-neu-out);
+    animation: modalIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: all var(--transition-base);
+    flex-shrink: 0;
+    margin-bottom: 60px;
 }
 
 .ws-modal:hover {
-    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
-    box-shadow: 0 50px 120px -20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 193, 103, 0.1);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Green top border */
@@ -887,7 +937,7 @@
 /* ── Back Nav ─────────────────────────────────────────────────── */
 .ws-back-nav {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin-top: var(--spacing-xl);
 }
 
@@ -929,13 +979,13 @@
 
     .ws-modal-backdrop {
         padding: 0;
+        display: block;
     }
 
     .ws-modal {
         width: 100%;
-        height: 100%;
+        min-height: 100vh; /* Changed from height: 100% to allow growth */
         max-width: 100vw;
-        max-height: 100vh;
         border-radius: 0;
         border: none;
         margin: 0;
@@ -969,7 +1019,6 @@
     .ws-modal__content {
         padding: 18px 16px 28px;
         flex: 1;
-        overflow-y: auto;
     }
 
     .ws-modal__close {

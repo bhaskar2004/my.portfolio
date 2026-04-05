@@ -4,18 +4,13 @@
    ============================================================= */
 
 .footer-container {
-    background: #000;
-    color: #fff;
-    padding: 80px 0 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: 100px 0 0;
     position: relative;
     z-index: 10;
     border-top: 1px solid var(--color-border);
-    transition: background var(--transition-base);
-}
-
-:root[data-theme="light"] .footer-container {
-    background: #fdfdfc;
-    color: #000;
+    transition: all var(--transition-base);
 }
 
 /* ── Tier 1: Upper Section ────────────────────────────────── */
@@ -41,6 +36,8 @@
     letter-spacing: -0.04em;
     margin-bottom: 24px;
     text-transform: uppercase;
+    color: var(--color-text);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .footer-tagline-expanded {
@@ -72,22 +69,24 @@
     font-size: var(--font-xs);
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 12px 24px;
+    padding: 14px 28px;
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-neu-out);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .footer-external-link:hover {
-    background: var(--color-text);
-    color: var(--color-bg);
-    border-color: var(--color-text);
-    transform: translateY(-4px);
+    box-shadow: var(--shadow-neu-in);
+    transform: translateY(2px);
+    color: var(--color-primary);
 }
 
 /* ── Tier 2: Middle Grid ──────────────────────────────────── */
 .footer-middle-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     margin-bottom: 80px;
 }
@@ -125,7 +124,7 @@
 }
 
 .footer-nav-link:hover {
-    color: var(--color-text);
+    color: var(--color-primary);
     padding-left: 8px;
 }
 
@@ -138,18 +137,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     color: var(--color-text-muted);
+    box-shadow: var(--shadow-neu-out);
     transition: all 0.3s ease;
 }
 
 .footer-icon-btn:hover {
     color: var(--color-primary);
-    border-color: var(--color-primary);
-    transform: translateY(-4px) rotate(8deg);
-    background: var(--color-primary-dim);
+    box-shadow: var(--shadow-neu-in);
+    transform: translateY(2px);
 }
 
 /* ── Divider ─────────────────────────────────────────────── */

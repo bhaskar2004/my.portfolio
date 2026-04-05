@@ -50,15 +50,6 @@ const Footer = () => {
                         </nav>
                     </div>
 
-                    <div className="footer-column">
-                        <h3 className="footer-label">Resources</h3>
-                        <nav className="footer-nav-list">
-                            <a href="https://fresnel.bhaskar.xyz" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Photography Portfolio</a>
-                            <a href="https://github.com/bhaskar2004?tab=repositories" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Source Code (GitHub)</a>
-                            <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="footer-nav-link">Professional Profile</a>
-                            <a href="mailto:bhaskart.dev@gmail.com" className="footer-nav-link">Business Inquiries</a>
-                        </nav>
-                    </div>
 
                     <div className="footer-column">
                         <h3 className="footer-label">Connect</h3>
