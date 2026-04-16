@@ -68,30 +68,33 @@ const ParticleCanvas = () => {
             }
 
             draw() {
-                /* Uber green on dark; near-invisible on light */
+                /* High-contrast green for light mode, vibrant green for dark */
                 const dx = mouseX - this.x
                 const dy = mouseY - this.y
                 const dist = Math.sqrt(dx * dx + dy * dy)
                 const glowR = 150
+                const dark = isDark()
 
-                let alpha = isDark()
+                let alpha = dark
                     ? this.opacity
-                    : this.opacity * 1
+                    : this.opacity * 1.5 // Multiplied for light Mode visibility
+
+                const color = dark ? '6, 193, 103' : '4, 154, 82' // Darker green for light mode
 
                 if (dist < glowR) {
                     const glowFactor = (1 - dist / glowR) * 0.5
                     alpha += glowFactor
                     ctx.shadowBlur = 10 * glowFactor
-                    ctx.shadowColor = 'rgba(6, 193, 103, 0.8)'
+                    ctx.shadowColor = `rgba(${color}, 0.8)`
                 } else {
                     ctx.shadowBlur = 0
                 }
 
-                ctx.fillStyle = `rgba(6, 193, 103, ${alpha})`
+                ctx.fillStyle = `rgba(${color}, ${alpha})`
                 ctx.beginPath()
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
                 ctx.fill()
-                ctx.shadowBlur = 0 // reset
+                ctx.shadowBlur = 0 
             }
         }
 
@@ -138,12 +141,12 @@ const ParticleCanvas = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             const dark = isDark()
+            const color = dark ? '6, 193, 103' : '4, 154, 82'
 
             particles.forEach((p, i) => {
                 p.update()
                 p.draw()
 
-                /* Connection lines — only between nearby pairs */
                 for (let j = i + 1; j < particles.length; j++) {
                     const q = particles[j]
                     const dx = q.x - p.x
@@ -151,10 +154,10 @@ const ParticleCanvas = () => {
                     const d = Math.sqrt(dx * dx + dy * dy)
 
                     if (d < connectDistance) {
-                        const baseAlpha = dark ? 0.5 : 0.25
+                        const baseAlpha = dark ? 0.35 : 0.45 
                         const alpha = baseAlpha * (1 - d / connectDistance)
-                        ctx.strokeStyle = `rgba(6, 193, 103, ${alpha})`
-                        ctx.lineWidth = 0.6
+                        ctx.strokeStyle = `rgba(${color}, ${alpha})`
+                        ctx.lineWidth = dark ? 0.6 : 1.0 
                         ctx.beginPath()
                         ctx.moveTo(p.x, p.y)
                         ctx.lineTo(q.x, q.y)

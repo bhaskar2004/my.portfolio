@@ -23,6 +23,7 @@ import Typewriter from '../components/animations/Typewriter'
 import HighlightSwipe from '../components/animations/HighlightSwipe'
 import NumberCounter from '../components/animations/NumberCounter'
 import { projects } from '../data/projects'
+import ContactForm from '../components/contact/ContactForm'
 
 // Extracting memoized components for performance
 const StatCard = memo(({ icon: Icon, value, label, delay, onMouseMove, onMouseLeave }) => (
@@ -351,38 +352,12 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div className="contact-links" role="list">
-                        <a
-                            href="mailto:bhaskart.dev@gmail.com"
-                            className="contact-item reveal reveal-delay-1"
-                            role="listitem"
-                            aria-label="Email Bhaskar T"
-                        >
-                            <EnvelopeClosedIcon width={18} height={18} />
-                            <span>bhaskart.dev@gmail.com</span>
-                        </a>
-                        <a
-                            href="https://github.com/bhaskar2004"
-                            target="_blank"
-                            rel="noopener noreferrer me"
-                            className="contact-item reveal reveal-delay-2"
-                            role="listitem"
-                            aria-label="Bhaskar T on GitHub"
-                        >
-                            <GitHubLogoIcon width={18} height={18} />
-                            <span>github.com/bhaskar2004</span>
-                        </a>
-                        <a
-                            href="https://www.linkedin.com/in/bhaskart2004/"
-                            target="_blank"
-                            rel="noopener noreferrer me"
-                            className="contact-item reveal reveal-delay-3"
-                            role="listitem"
-                            aria-label="Bhaskar T on LinkedIn"
-                        >
-                            <LinkedInLogoIcon width={18} height={18} />
-                            <span>linkedin.com/in/bhaskart2004</span>
-                        </a>
+                    <ContactForm />
+
+                    <div className="contact-links-minimal" role="list">
+                        <a href="mailto:bhaskart.dev@gmail.com" className="contact-item-small" role="listitem"> bhaskart.dev@gmail.com </a>
+                        <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer" className="contact-item-small" role="listitem"> GitHub </a>
+                        <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="contact-item-small" role="listitem"> LinkedIn </a>
                     </div>
                 </div>
             </section>

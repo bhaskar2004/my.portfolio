@@ -57,22 +57,22 @@
     animation-delay: -14s;
 }
 
-/* Light theme orbs — slightly warmer */
+/* Light theme orbs — high contrast but ambient */
 :root[data-theme="light"] .liquid-orb:nth-child(1) {
     background: radial-gradient(circle at 35% 35%,
-            rgba(6, 193, 103, 0.12) 0%,
-            transparent 45%);
+            rgba(4, 154, 82, 0.18) 0%,
+            transparent 55%);
 }
 
 :root[data-theme="light"] .liquid-orb:nth-child(2) {
     background: radial-gradient(circle at 65% 65%,
-            rgba(4, 154, 82, 0.08) 0%,
+            rgba(4, 154, 82, 0.14) 0%,
             transparent 65%);
 }
 
 :root[data-theme="light"] .liquid-orb:nth-child(3) {
     background: radial-gradient(circle at 50% 50%,
-            rgba(10, 10, 10, 0.04) 0%,
+            rgba(10, 10, 10, 0.08) 0%,
             transparent 65%);
 }
 
@@ -102,16 +102,16 @@
 ─────────────────────────────────────────────────────────────── */
 .shape {
     position: absolute;
-    border: 1px solid rgba(6, 193, 103, 0.08);
+    border: 1px solid rgba(6, 193, 103, 0.1);
     background: transparent;
     animation: shapeFloat 22s infinite ease-in-out;
     will-change: transform;
 }
 
-/* Light theme — slightly more visible */
+/* Light theme — significantly more visible */
 :root[data-theme="light"] .shape {
-    border-color: rgba(6, 193, 103, 0.15);
-    border-width: 1.5px;
+    border-color: rgba(4, 154, 82, 0.25);
+    border-width: 2px;
 }
 
 /* ── Individual shapes ── */
