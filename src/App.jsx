@@ -9,8 +9,6 @@ import ScrollProgress from './components/layout/ScrollProgress'
 import ParticleCanvas from './components/particles/ParticleCanvas'
 import GeometricShapes from './components/particles/GeometricShapes'
 import ScrollToHash from './components/utils/ScrollToHash'
-import AIAssistant from './components/ai/AIAssistant'
-import CommandPalette from './components/ai/CommandPalette'
 
 // Lazy load pages for performance
 const Home = lazy(() => import('./pages/Home'))
@@ -77,8 +75,6 @@ function App() {
 
                 <Footer />
             </div>
-            <CommandPalette />
-            <AIAssistant />
             <BackToTop />
         </HelmetProvider>
     )

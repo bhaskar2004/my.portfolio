@@ -80,6 +80,8 @@ const ProjectDetail = () => {
         setCoords({ x: 50, y: 50 });
     }, []);
 
+    const revealRef = useScrollReveal();
+
     if (!project) {
         return (
             <div className="container" style={{ padding: '120px 20px', textAlign: 'center' }}>
@@ -111,7 +113,7 @@ const ProjectDetail = () => {
 
             <SEO title={project.title} description={project.brief} />
 
-            <div className="project-detail" ref={useScrollReveal()}>
+            <div className="project-detail" ref={revealRef}>
                 <div className="container">
 
                     {/* Back nav */}
@@ -136,7 +138,7 @@ const ProjectDetail = () => {
                         </div>
 
                         <h1 className="detail-title reveal">
-                            <HighlightSwipe delay={300}>{project.title}</HighlightSwipe>
+                            <HighlightSwipe delay={300} textColor="#000">{project.title}</HighlightSwipe>
                         </h1>
 
                         <p className="detail-brief font-mono reveal reveal-delay-1" style={{ minHeight: '40px' }}>
@@ -178,16 +180,9 @@ const ProjectDetail = () => {
 
                         {/* CTAs */}
                         <div className="detail-ctas reveal reveal-delay-2">
-                            {project.github && (
-                                <a href={project.github} target="_blank" rel="noopener noreferrer"
-                                    className="btn primary">
-                                    <GitHubLogoIcon width={14} height={14} />
-                                    View Source
-                                </a>
-                            )}
                             {project.live && (
                                 <a href={project.live} target="_blank" rel="noopener noreferrer"
-                                    className="btn secondary">
+                                    className="btn primary">
                                     <ExternalLinkIcon width={14} height={14} />
                                     Live Demo
                                 </a>
@@ -304,17 +299,6 @@ const ProjectDetail = () => {
                                     <span className="meta-dot" />
                                     {project.tech.length} technologies
                                 </span>
-                                {project.github && (
-                                    <a
-                                        href={project.github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="meta-item meta-link"
-                                    >
-                                        <GitHubLogoIcon width={10} height={10} />
-                                        Source
-                                    </a>
-                                )}
                             </div>
                         </aside>
 

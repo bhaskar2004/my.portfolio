@@ -16,9 +16,9 @@
     --color-surface: #181818;
     --color-surface-2: #222222;
     --color-surface-glass: rgba(18, 18, 18, 0.75);
-    --color-text: #e0e0e0;
-    --color-text-muted: #a0a0a0;
-    --color-text-dark: #666666;
+    --color-text: #f0f0f0;
+    --color-text-muted: #b0b0b0;
+    --color-text-dark: #7a7a7a;
     --color-border: rgba(255, 255, 255, 0.05);
     --color-border-strong: rgba(255, 255, 255, 0.1);
 
@@ -132,7 +132,7 @@ body {
     color: var(--color-text);
     overflow-x: hidden;
     scroll-behavior: smooth;
-    line-height: 1.65;
+    line-height: 1.75;
     font-size: var(--font-size-base);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

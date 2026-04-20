@@ -89,7 +89,10 @@ const Home = () => {
         window.scrollTo(0, 0);
     }, []);
 
-    const heroRef = useRef(null);
+    const heroRef = useScrollReveal();
+    const aboutRef = useScrollReveal();
+    const projectsRef = useScrollReveal();
+    const contactRef = useScrollReveal();
 
     const handleCardMouseMove = (e) => {
         const card = e.currentTarget;
@@ -185,7 +188,7 @@ const Home = () => {
 
                     {/* Role descriptor */}
                     <p className="subtitle font-mono reveal reveal-delay-3" itemProp="description" style={{ minHeight: '48px' }}>
-                        <Typewriter text="Software Tester & Problem Solver. Specialized in Quality Assurance and Automated Testing." delay={25} startDelay={500} />
+                        <Typewriter text="Software Tester & Problem Solver. Specialized in Quality Assurance." delay={25} startDelay={500} />
                     </p>
 
                     {/* CTA buttons */}
@@ -240,7 +243,7 @@ const Home = () => {
             <div className="animated-divider" aria-hidden="true" />
 
             {/* ── About ───────────────────────────────────────────────── */}
-            <section className="about" id="about" ref={useScrollReveal()}>
+            <section className="about" id="about" ref={aboutRef}>
                 <div className="container">
                     {/* Left column: bio */}
                     <div className="reveal reveal-delay-1">
@@ -249,7 +252,7 @@ const Home = () => {
                         <p className="about-content">
                             I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
                             I test software until something breaks, then figure out exactly why.
-                            My focus is on <HighlightSwipe delay={300}>making software solid, reliable, and production-ready.</HighlightSwipe> {" "}
+                            My focus is on <HighlightSwipe delay={300} textColor="#000">making software solid, reliable, and production-ready.</HighlightSwipe> {" "}
                             Details matter, and I'm kind of obsessed with getting them right.
                         </p>
 
@@ -269,7 +272,7 @@ const Home = () => {
                             <div className="skills-section">
                                 <h3>Skills</h3>
                                 <div className="skills-grid">
-                                    {['Java', 'SQL', 'Selenium', 'GitHub', 'IntelliJ', 'VS Code',
+                                    {['Manual-Testing', 'Java', 'GitHub', 'IntelliJ', 'VS Code',
                                         'Python', 'Photography', 'Video Editing'].map(s => (
                                             <span key={s} className="skill-tag">{s}</span>
                                         ))}
@@ -314,7 +317,7 @@ const Home = () => {
             <div className="animated-divider" aria-hidden="true" />
 
             {/* ── Projects ────────────────────────────────────────────── */}
-            <section className="projects" id="projects" ref={useScrollReveal()}>
+            <section className="projects" id="projects" ref={projectsRef}>
                 <div className="container">
                     <div className="projects-header reveal">
                         <div>
@@ -342,22 +345,46 @@ const Home = () => {
             <div className="animated-divider" aria-hidden="true" />
 
             {/* ── Contact ─────────────────────────────────────────────── */}
-            <section className="contact" id="contact" ref={useScrollReveal()}>
+            <section className="contact" id="contact" ref={contactRef}>
                 <div className="container">
-                    <div className="reveal">
-                        <span className="section-eyebrow">Contact</span>
-                        <h2>Contact - Bhaskar T</h2>
-                        <p className="contact-description">
-                            I'm open to work and collaborations.<br />Let's build something together.
-                        </p>
-                    </div>
+                    <div className="contact-grid">
+                        <div className="contact-sidebar reveal reveal-delay-1">
+                            <div className="contact-header-side">
+                                <span className="section-eyebrow">Contact</span>
+                                <h2 className="contact-title-side">Contact - Bhaskar T</h2>
+                                <p className="contact-description">
+                                    I'm open to work and collaborations.<br />Let's build something together.
+                                </p>
+                            </div>
 
-                    <ContactForm />
+                            <div className="contact-info-list" role="list">
+                                <a href="mailto:bhaskart.dev@gmail.com" className="contact-info-item">
+                                    <div className="info-icon"><EnvelopeClosedIcon /></div>
+                                    <div className="info-text">
+                                        <span className="info-label">Email</span>
+                                        <span className="info-value">bhaskart.dev@gmail.com</span>
+                                    </div>
+                                </a>
+                                <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer" className="contact-info-item">
+                                    <div className="info-icon"><GitHubLogoIcon /></div>
+                                    <div className="info-text">
+                                        <span className="info-label">GitHub</span>
+                                        <span className="info-value">bhaskar2004</span>
+                                    </div>
+                                </a>
+                                <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="contact-info-item">
+                                    <div className="info-icon"><LinkedInLogoIcon /></div>
+                                    <div className="info-text">
+                                        <span className="info-label">LinkedIn</span>
+                                        <span className="info-value">bhaskart2004</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
 
-                    <div className="contact-links-minimal" role="list">
-                        <a href="mailto:bhaskart.dev@gmail.com" className="contact-item-small" role="listitem"> bhaskart.dev@gmail.com </a>
-                        <a href="https://github.com/bhaskar2004" target="_blank" rel="noopener noreferrer" className="contact-item-small" role="listitem"> GitHub </a>
-                        <a href="https://www.linkedin.com/in/bhaskart2004/" target="_blank" rel="noopener noreferrer" className="contact-item-small" role="listitem"> LinkedIn </a>
+                        <div className="contact-form-wrapper reveal reveal-delay-2">
+                            <ContactForm />
+                        </div>
                     </div>
                 </div>
             </section>

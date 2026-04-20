@@ -34,22 +34,24 @@
     align-items: center;
     gap: 8px;
     font-family: var(--font-mono);
-    font-size: 0.75rem; /* Slightly larger */
-    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    color: var(--color-primary); /* Use primary for labels to make them pop */
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-weight: 500;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    opacity: 0.85;
 }
 
 .form-group input, 
 .form-group textarea {
     background: var(--color-surface-2);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md); /* More modern rounding */
-    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
     color: var(--color-text);
     font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
     transition: all var(--transition-base);
     outline: none;
     width: 100%;
@@ -59,7 +61,9 @@
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: var(--color-text-dark);
-    opacity: 0.7;
+    font-style: italic;
+    opacity: 0.6;
+    letter-spacing: 0.02em;
 }
 
 .form-group input:focus, 
@@ -69,54 +73,26 @@
     box-shadow: 0 0 0 4px var(--color-primary-dim);
 }
 
+/* Message group specific styling */
 .message-group label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 100%;
-}
-
-.magic-btn {
-    background: transparent;
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    padding: 6px 12px;
-    border-radius: var(--radius-full);
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all var(--transition-base);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.magic-btn:hover {
-    background: var(--ai-green-dim);
-    color: var(--ai-green);
-    border-color: var(--ai-green);
-    transform: translateY(-1px);
-}
-
-.magic-btn.loading {
-    opacity: 0.5;
-    cursor: wait;
 }
 
 .submit-btn {
     align-self: flex-start;
-    padding: 18px 40px;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    min-width: 200px;
+    padding: 20px 48px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    min-width: 240px;
 }
 
 .form-status {
-    padding: 16px 24px;
+    padding: 20px 28px;
     border-radius: var(--radius-md);
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
     text-align: left;
     border: 1px solid var(--color-border);
     animation: slideUpFade 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);

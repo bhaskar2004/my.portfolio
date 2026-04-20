@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { 
     PaperPlaneIcon, 
-    MagicWandIcon, 
     EnvelopeClosedIcon,
     PersonIcon,
     Pencil1Icon
 } from '@radix-ui/react-icons';
-import { generateSmartDraft } from '../../services/ai';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -16,24 +14,12 @@ const ContactForm = () => {
         subject: '',
         message: ''
     });
-    const [isPolishing, setIsPolishing] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [status, setStatus] = useState(null); // 'success' | 'error'
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleMagicDraft = async () => {
-        if (!formData.message.trim() || isPolishing) return;
-        
-        setIsPolishing(true);
-        const polished = await generateSmartDraft(formData.message);
-        if (polished) {
-            setFormData(prev => ({ ...prev, message: polished.trim() }));
-        }
-        setIsPolishing(false);
     };
 
     const handleSubmit = async (e) => {
@@ -94,18 +80,7 @@ const ContactForm = () => {
                 </div>
 
                 <div className="form-group message-group">
-                    <label htmlFor="message">
-                        <span>MESSAGE</span>
-                        <button 
-                            type="button" 
-                            className={`magic-btn ${isPolishing ? 'loading' : ''}`}
-                            onClick={handleMagicDraft}
-                            title="AI Polish Draft"
-                        >
-                            <MagicWandIcon /> 
-                            {isPolishing ? 'POLISHING...' : 'AI REFINE'}
-                        </button>
-                    </label>
+                    <label htmlFor="message">MESSAGE</label>
                     <textarea 
                         id="message" 
                         name="message"

@@ -5,16 +5,12 @@ import {
     Component1Icon,
     DownloadIcon,
     ExternalLinkIcon,
-    FileTextIcon,
-    MagicWandIcon,
-    TargetIcon,
-    StarIcon
+    FileTextIcon
 } from '@radix-ui/react-icons'
 import { useState, useEffect } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Typewriter from '../components/animations/Typewriter'
 import HighlightSwipe from '../components/animations/HighlightSwipe'
-import { generateJobMatch } from '../services/ai'
 import './Resume.css'
 
 const Resume = () => {
@@ -23,28 +19,8 @@ const Resume = () => {
     }, []);
 
     const [pdfError, setPdfError] = useState(false)
-    const [jdText, setJdText] = useState('')
-    const [matchResult, setMatchResult] = useState(null)
-    const [isMatching, setIsMatching] = useState(false)
-
-    useEffect(() => {
-        fetch('/resume.pdf', { method: 'HEAD' })
-            .then(response => { if (!response.ok) setPdfError(true) })
-            .catch(() => setPdfError(true))
-    }, [])
-
-    const handleMatch = async () => {
-        if (!jdText.trim() || isMatching) return;
-        setIsMatching(true);
-        try {
-            const result = await generateJobMatch(jdText);
-            setMatchResult(result);
-        } catch (err) {
-            console.error("Match error:", err);
-        } finally {
-            setIsMatching(false);
-        }
-    }
+    const headerRef = useScrollReveal();
+    const pdfRef = useScrollReveal({ delay: 200 });
 
     const handlePrint = () => {
         const printWindow = window.open('/resume.pdf', '_blank')
@@ -70,13 +46,13 @@ const Resume = () => {
                 url="/resume"
             />
             <div className="resume-page">
-                <div className="container" ref={useScrollReveal()}>
+                <div className="container">
 
                     {/* ── Header ── */}
-                    <div className="header reveal">
+                    <div className="header reveal" ref={headerRef}>
                         <div className="header-text">
                             <span className="section-eyebrow">Document</span>
-                            <h1><HighlightSwipe delay={300}>Resume</HighlightSwipe></h1>
+                            <h1><HighlightSwipe delay={300} textColor="black">Resume</HighlightSwipe></h1>
                             <p style={{ minHeight: '27px' }}>
                                 <Typewriter text="Bhaskar T · Software Tester & Problem Solver" delay={30} startDelay={600} />
                             </p>
@@ -98,74 +74,8 @@ const Resume = () => {
                         </div>
                     </div>
 
-                    {/* ── AI Spotlight Matcher ── */}
-                    <div className="ai-spotlight reveal reveal-delay-1" ref={useScrollReveal()}>
-                        <div className="spotlight-card">
-                            <div className="spotlight-header">
-                                <MagicWandIcon className="wand-icon" />
-                                <h3>AI Resume Spotlight</h3>
-                                <span className="beta-badge">BETA</span>
-                            </div>
-                            <p className="spotlight-desc">Paste a Job Description below to instantly see how my skills and projects match the role.</p>
-
-                            <div className="matcher-input-group">
-                                <textarea
-                                    placeholder="Paste job description here..."
-                                    value={jdText}
-                                    onChange={(e) => setJdText(e.target.value)}
-                                    disabled={isMatching}
-                                />
-                                <button
-                                    className={`btn primary match-btn ${isMatching ? 'loading' : ''}`}
-                                    onClick={handleMatch}
-                                    disabled={!jdText.trim() || isMatching}
-                                >
-                                    {isMatching ? (
-                                        <div className="bouncing-loader">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </div>
-                                    ) : 'Analyze Match'}
-                                </button>
-                            </div>
-
-                            {matchResult && (
-                                <div className="match-result-container animate-in">
-                                    <div className="match-score-card">
-                                        <div className="score-ring">
-                                            <span className="score-val">{matchResult.score}%</span>
-                                            <span className="score-lbl">Match</span>
-                                        </div>
-                                        <div className="match-summary">
-                                            <h4>Recruiter Insight</h4>
-                                            <p>{matchResult.summary}</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="match-details-grid">
-                                        <div className="match-item">
-                                            <div className="item-label"><TargetIcon /> Matching Skills</div>
-                                            <div className="skill-pills-row">
-                                                {matchResult.matchingSkills.map((skill, i) => (
-                                                    <span key={i} className="skill-pill-highlight">{skill}</span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="match-item">
-                                            <div className="item-label"><StarIcon /> Top Relevant Project</div>
-                                            <div className="project-highlight-box">
-                                                {matchResult.topProject}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
                     {/* ── PDF Viewer ── */}
-                    <div className="pdf-viewer reveal reveal-delay-2" ref={useScrollReveal()}>
+                    <div className="pdf-viewer reveal" ref={pdfRef}>
                         {pdfError ? (
                             <div className="pdf-fallback">
                                 <FileTextIcon width={72} height={72} />
