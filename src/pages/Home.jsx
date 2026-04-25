@@ -245,22 +245,39 @@ const Home = () => {
             {/* ── About ───────────────────────────────────────────────── */}
             <section className="about" id="about" ref={aboutRef}>
                 <div className="container">
-                    {/* Left column: bio */}
-                    <div className="reveal reveal-delay-1">
+                    {/* Section header — full width */}
+                    <div className="about-header reveal">
                         <span className="section-eyebrow">About</span>
                         <h2>About Bhaskar T</h2>
-                        <p className="about-content">
-                            I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
-                            I test software until something breaks, then figure out exactly why.
-                            My focus is on <HighlightSwipe delay={300} textColor="#000">making software solid, reliable, and production-ready.</HighlightSwipe> {" "}
-                            Details matter, and I'm kind of obsessed with getting them right.
+                        <p className="about-subtitle">
+                            CS student. Bug hunter. Quality obsessed.
                         </p>
+                    </div>
 
-                        {/* Education & Skills */}
-                        <div className="education-skills-grid">
-                            {/* Education */}
-                            <div className="education-section">
-                                <h3>Education</h3>
+                    {/* Two-column content area */}
+                    <div className="about-content-grid">
+                        {/* Left: Bio card */}
+                        <div className="about-bio-card reveal reveal-delay-2">
+                            <div className="about-bio-label">
+                                <span className="bio-dot" />
+                                Who I Am
+                            </div>
+                            <p className="about-content">
+                                I'm Bhaskar T (bhaskar2004) — a CS student who loves finding bugs.
+                                I test software until something breaks, then figure out exactly why.
+                                My focus is on <HighlightSwipe delay={300} textColor="#000">making software solid, reliable, and production-ready.</HighlightSwipe>{" "}
+                                Details matter, and I'm kind of obsessed with getting them right.
+                            </p>
+                        </div>
+
+                        {/* Right: Education + Skills stacked */}
+                        <div className="about-details-column">
+                            {/* Education card */}
+                            <div className="about-edu-card reveal reveal-delay-3">
+                                <div className="about-bio-label">
+                                    <span className="bio-dot" />
+                                    Education
+                                </div>
                                 <div className="degree">
                                     <span className="degree-title">SJC Institute of Technology</span>
                                     <span className="institution">Computer Science Engineering</span>
@@ -268,9 +285,12 @@ const Home = () => {
                                 </div>
                             </div>
 
-                            {/* Skills */}
-                            <div className="skills-section">
-                                <h3>Skills</h3>
+                            {/* Skills card */}
+                            <div className="about-skills-card reveal reveal-delay-4">
+                                <div className="about-bio-label">
+                                    <span className="bio-dot" />
+                                    Tech Stack
+                                </div>
                                 <div className="skills-grid">
                                     {['Manual-Testing', 'Java', 'GitHub', 'IntelliJ', 'VS Code',
                                         'Python', 'Photography', 'Video Editing'].map(s => (
@@ -278,36 +298,6 @@ const Home = () => {
                                         ))}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Right column: stats */}
-                    <div className="about-stats-container">
-                        <div className="about-stats-grid">
-                            <StatCard
-                                icon={RocketIcon}
-                                value={9}
-                                label="Projects Built"
-                                delay={1}
-                                onMouseMove={handleCardMouseMove}
-                                onMouseLeave={handleCardMouseLeave}
-                            />
-                            <StatCard
-                                icon={KeyboardIcon}
-                                value={3}
-                                label="Years Coding"
-                                delay={2}
-                                onMouseMove={handleCardMouseMove}
-                                onMouseLeave={handleCardMouseLeave}
-                            />
-                            <StatCard
-                                icon={CodeIcon}
-                                value={4}
-                                label="Languages"
-                                delay={3}
-                                onMouseMove={handleCardMouseMove}
-                                onMouseLeave={handleCardMouseLeave}
-                            />
                         </div>
                     </div>
                 </div>

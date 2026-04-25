@@ -70,11 +70,17 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 14px 28px;
-    background: var(--color-bg);
+    background: var(--gradient-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-neu-out);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme="light"] .footer-external-link {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(0, 0, 0, 0.06);
 }
 
 .footer-external-link:hover {
@@ -139,7 +145,7 @@
     justify-content: center;
     width: 52px;
     height: 52px;
-    background: var(--color-bg);
+    background: var(--gradient-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
@@ -147,10 +153,17 @@
     transition: all 0.3s ease;
 }
 
+:root[data-theme="light"] .footer-icon-btn {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
 .footer-icon-btn:hover {
     color: var(--color-primary);
-    box-shadow: var(--shadow-neu-in);
-    transform: translateY(2px);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+    transform: translateY(-3px);
+    border-color: rgba(var(--color-primary-rgb), 0.15);
 }
 
 /* ── Divider ─────────────────────────────────────────────── */
@@ -206,7 +219,7 @@
 
 @media (max-width: 768px) {
     .footer-container {
-        padding-top: 40px;
+        padding-top: 48px;
     }
 
     .footer-upper {
@@ -215,8 +228,12 @@
         gap: 24px;
     }
 
+    .footer-brand {
+        min-width: 0; /* Fix overflow on small phones */
+    }
+
     .footer-logo-massive {
-        font-size: 3rem;
+        font-size: clamp(2rem, 10vw, 3rem);
     }
 
     .footer-middle-grid {
@@ -227,5 +244,14 @@
     .footer-bottom-inner {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .footer-bottom {
+        padding-bottom: max(40px, env(safe-area-inset-bottom, 40px));
+    }
+
+    .footer-icon-btn {
+        width: 48px;
+        height: 48px;
     }
 }

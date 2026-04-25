@@ -18,55 +18,63 @@ import Typewriter from '../components/animations/Typewriter';
 import HighlightSwipe from '../components/animations/HighlightSwipe';
 import './ProjectDetail.css';
 
+/* ─── helpers ─────────────────────────────────────────────── */
+const pad = (n, len = 2) => String(n).padStart(len, '0');
+const slug = (s) => s.toLowerCase().replace(/\s+/g, '-');
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/* ─── component ───────────────────────────────────────────── */
 const ProjectDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const revealRef = useScrollReveal();
+
     const projectIndex = projects.findIndex(p => p.id === id);
     const project = projects[projectIndex];
     const nextProject = projects[projectIndex + 1] ?? projects[0];
 
+    /* state */
     const [scrollProgress, setScrollProgress] = useState(0);
     const [coords, setCoords] = useState({ x: 50, y: 50 });
     const [cursorPos, setCursorPos] = useState({ x: -999, y: -999 });
 
+    /* refs */
     const cardRef = useRef(null);
-    const tiltRaf = useRef(null);
+    const tiltRafId = useRef(null);
 
+    /* scroll to top on mount */
     useEffect(() => { window.scrollTo(0, 0); }, []);
 
-    /* ── Scroll progress ── */
+    /* scroll-progress bar */
     useEffect(() => {
         const onScroll = () => {
-            const el = document.documentElement;
-            setScrollProgress(
-                el.scrollHeight > el.clientHeight
-                    ? (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100
-                    : 0
-            );
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            const total = scrollHeight - clientHeight;
+            setScrollProgress(total > 0 ? (scrollTop / total) * 100 : 0);
         };
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    /* ── Page cursor glow ── */
+    /* cursor glow */
     const handlePageMouseMove = useCallback((e) => {
         setCursorPos({ x: e.clientX, y: e.clientY });
     }, []);
 
-    /* ── Card 3D tilt ── */
+    /* card 3-D tilt */
     const handleCardMouseMove = useCallback((e) => {
         const card = cardRef.current;
         if (!card) return;
+
         const rect = card.getBoundingClientRect();
-        const nx = (e.clientX - rect.left) / rect.width;
-        const ny = (e.clientY - rect.top) / rect.height;
+        const nx = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+        const ny = clamp((e.clientY - rect.top) / rect.height, 0, 1);
         const tx = (nx - 0.5) * 2;
         const ty = (ny - 0.5) * 2;
 
-        if (tiltRaf.current) cancelAnimationFrame(tiltRaf.current);
-        tiltRaf.current = requestAnimationFrame(() => {
-            card.style.transform =
-                `perspective(900px) rotateY(${tx * 8}deg) rotateX(${-ty * 6}deg) scale3d(1.02,1.02,1.02)`;
+        cancelAnimationFrame(tiltRafId.current);
+        tiltRafId.current = requestAnimationFrame(() => {
+            card.style.transform = `perspective(900px) rotateY(${tx * 8}deg) rotateX(${-ty * 6}deg) scale3d(1.02,1.02,1.02)`;
             card.style.setProperty('--glare-x', `${nx * 100}%`);
             card.style.setProperty('--glare-y', `${ny * 100}%`);
             setCoords({ x: Math.round(nx * 100), y: Math.round(ny * 100) });
@@ -74,106 +82,98 @@ const ProjectDetail = () => {
     }, []);
 
     const handleCardMouseLeave = useCallback(() => {
+        cancelAnimationFrame(tiltRafId.current);
         const card = cardRef.current;
-        if (!card) return;
-        card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
+        if (card) card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)';
         setCoords({ x: 50, y: 50 });
     }, []);
 
-    const revealRef = useScrollReveal();
-
+    /* ── not found ── */
     if (!project) {
         return (
-            <div className="container" style={{ padding: '120px 20px', textAlign: 'center' }}>
+            <div className="pd-not-found">
                 <h1 className="font-display">Project Not Found</h1>
-                <p className="font-mono" style={{ margin: '24px 0' }}>
-                    The project you're looking for doesn't exist.
-                </p>
+                <p className="font-mono">The project you're looking for doesn't exist.</p>
                 <Link to="/" className="btn primary">Back to Home</Link>
             </div>
         );
     }
 
-    const hasReadme = project.readme && project.readme.trim().length > 0;
+    const hasReadme = Boolean(project.readme?.trim());
+    const sectionCount = hasReadme ? '03' : '02';
 
     return (
         <div
             className="page-transition-wrapper pd-page"
             onMouseMove={handlePageMouseMove}
         >
-            {/* Ambient cursor glow */}
+            {/* ambient cursor glow */}
             <div
                 className="pd-cursor-glow"
                 style={{ '--cx': `${cursorPos.x}px`, '--cy': `${cursorPos.y}px` }}
                 aria-hidden="true"
             />
 
-            {/* Scroll progress */}
-            <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }} />
+            {/* scroll progress */}
+            <div
+                className="scroll-progress-bar"
+                style={{ width: `${scrollProgress}%` }}
+                role="progressbar"
+                aria-valuenow={Math.round(scrollProgress)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Reading progress"
+            />
 
             <SEO title={project.title} description={project.brief} />
 
             <div className="project-detail" ref={revealRef}>
                 <div className="container">
 
-                    {/* Back nav */}
-                    <nav className="detail-nav reveal">
+                    {/* ── back nav ── */}
+                    <nav className="detail-nav reveal" aria-label="Project navigation">
                         <Link to="/#projects" className="back-link font-mono">
-                            <span className="back-arrow"><ArrowLeftIcon width={13} height={13} /></span>
+                            <span className="back-arrow" aria-hidden="true">
+                                <ArrowLeftIcon width={13} height={13} />
+                            </span>
                             Back to Projects
                         </Link>
                     </nav>
 
-                    {/* Hero */}
+                    {/* ── hero header ── */}
                     <header className="detail-header">
                         <span className="hero-ghost-num font-display" aria-hidden="true">
-                            {String(project.number).padStart(2, '0')}
+                            {pad(project.number)}
                         </span>
 
                         <div className="header-eyebrow reveal">
-                            <project.icon width={16} height={16} />
+                            <project.icon width={16} height={16} aria-hidden="true" />
                             <span className="project-num font-mono">#{project.number}</span>
                             <span className="eyebrow-divider" aria-hidden="true">—</span>
                             <span className="eyebrow-label font-mono">Project</span>
                         </div>
 
                         <h1 className="detail-title reveal">
-                            <HighlightSwipe delay={300} textColor="#000">{project.title}</HighlightSwipe>
+                            <HighlightSwipe delay={300} textColor="#000">
+                                {project.title}
+                            </HighlightSwipe>
                         </h1>
 
-                        <p className="detail-brief font-mono reveal reveal-delay-1" style={{ minHeight: '40px' }}>
+                        <p className="detail-brief font-mono reveal reveal-delay-1">
                             <Typewriter text={project.brief} delay={20} startDelay={600} />
                         </p>
 
-                        {/* Stats */}
-                        <div className="stats-strip reveal reveal-delay-1">
-                            <div className="stat-pill">
-                                <span className="stat-label font-mono">Stack</span>
-                                <span className="stat-value font-mono">{project.tech.length} tools</span>
-                            </div>
+                        {/* stats strip */}
+                        <div className="stats-strip reveal reveal-delay-1" role="list">
+                            <StatPill label="Stack" value={`${project.tech.length} tools`} />
                             <span className="stat-sep" aria-hidden="true" />
-                            <div className="stat-pill">
-                                <span className="stat-label font-mono">Status</span>
-                                <span className="stat-value stat-active font-mono">
-                                    <span className="stat-live-dot" />
-                                    Active
-                                </span>
-                            </div>
+                            <StatPill label="Status" value="Active" live />
                             <span className="stat-sep" aria-hidden="true" />
-                            <div className="stat-pill">
-                                <span className="stat-label font-mono">Type</span>
-                                <span className="stat-value font-mono">Web App</span>
-                            </div>
+                            <StatPill label="Type" value="Web App" />
                             {hasReadme && (
                                 <>
                                     <span className="stat-sep" aria-hidden="true" />
-                                    <div className="stat-pill">
-                                        <span className="stat-label font-mono">Docs</span>
-                                        <span className="stat-value stat-active font-mono">
-                                            <span className="stat-live-dot" />
-                                            README
-                                        </span>
-                                    </div>
+                                    <StatPill label="Docs" value="README" live />
                                 </>
                             )}
                         </div>
@@ -181,10 +181,27 @@ const ProjectDetail = () => {
                         {/* CTAs */}
                         <div className="detail-ctas reveal reveal-delay-2">
                             {project.live && (
-                                <a href={project.live} target="_blank" rel="noopener noreferrer"
-                                    className="btn primary">
-                                    <ExternalLinkIcon width={14} height={14} />
+                                <a
+                                    href={project.live}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn primary"
+                                    aria-label={`Open live demo for ${project.title}`}
+                                >
+                                    <ExternalLinkIcon width={14} height={14} aria-hidden="true" />
                                     Live Demo
+                                </a>
+                            )}
+                            {project.github && (
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn secondary"
+                                    aria-label={`View source code for ${project.title} on GitHub`}
+                                >
+                                    <GitHubLogoIcon width={14} height={14} aria-hidden="true" />
+                                    Source Code
                                 </a>
                             )}
                         </div>
@@ -196,32 +213,29 @@ const ProjectDetail = () => {
                         </div>
                     </header>
 
-                    {/* Content grid */}
+                    {/* ── content grid ── */}
                     <div className="detail-content reveal reveal-delay-2">
 
-                        {/* Main column */}
-                        <div className="content-main">
-                            <section className="detail-section">
-                                <h2 className="section-title">
-                                    <span className="section-num font-mono">01</span>
-                                    <CodeIcon width={12} height={12} />
+                        {/* main column */}
+                        <main className="content-main">
+                            <section className="detail-section" aria-labelledby="section-overview">
+                                <SectionTitle id="section-overview" num="01" icon={<CodeIcon width={12} height={12} />}>
                                     Overview
-                                </h2>
+                                </SectionTitle>
                                 <p className="description-text">{project.description}</p>
                             </section>
 
-                            <section className="detail-section">
-                                <h2 className="section-title">
-                                    <span className="section-num font-mono">02</span>
-                                    <LayersIcon width={12} height={12} />
+                            <section className="detail-section" aria-labelledby="section-stack">
+                                <SectionTitle id="section-stack" num="02" icon={<LayersIcon width={12} height={12} />}>
                                     Tech Stack
-                                </h2>
-                                <div className="detail-tags">
+                                </SectionTitle>
+                                <div className="detail-tags" role="list">
                                     {project.tech.map((t, i) => (
                                         <span
                                             key={t}
                                             className="tech-tag large"
                                             style={{ '--tag-delay': `${i * 50}ms` }}
+                                            role="listitem"
                                         >
                                             {t}
                                         </span>
@@ -230,12 +244,10 @@ const ProjectDetail = () => {
                             </section>
 
                             {hasReadme && (
-                                <section className="detail-section readme-section reveal">
-                                    <h2 className="section-title">
-                                        <span className="section-num font-mono">03</span>
-                                        <ReaderIcon width={12} height={12} />
+                                <section className="detail-section readme-section reveal" aria-labelledby="section-readme">
+                                    <SectionTitle id="section-readme" num="03" icon={<ReaderIcon width={12} height={12} />}>
                                         README
-                                    </h2>
+                                    </SectionTitle>
                                     <div className="readme-body">
                                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                             {project.readme}
@@ -243,60 +255,59 @@ const ProjectDetail = () => {
                                     </div>
                                 </section>
                             )}
-                        </div>
+                        </main>
 
-                        {/* Sidebar card */}
-                        <aside className="content-visual reveal reveal-delay-3">
+                        {/* sidebar card */}
+                        <aside className="content-visual reveal reveal-delay-3" aria-label="Project preview card">
                             <div
                                 className="visual-card-wrap"
                                 ref={cardRef}
                                 onMouseMove={handleCardMouseMove}
                                 onMouseLeave={handleCardMouseLeave}
                             >
-                                <div className="card-glare" />
+                                <div className="card-glare" aria-hidden="true" />
                                 <div className="card-dot-grid" aria-hidden="true" />
 
-                                {/* Top bar */}
+                                {/* top bar */}
                                 <div className="card-header">
                                     <span className="card-title-bar font-mono">
-                                        {project.title.toLowerCase().replace(/\s+/g, '-')}.app
+                                        {slug(project.title)}.app
                                     </span>
                                     <span className="card-status-badge font-mono">
-                                        <span className="card-status-dot" />
+                                        <span className="card-status-dot" aria-hidden="true" />
                                         live
                                     </span>
                                 </div>
 
-                                {/* Corner brackets */}
-                                <span className="bracket bracket--tl" aria-hidden="true" />
-                                <span className="bracket bracket--tr" aria-hidden="true" />
-                                <span className="bracket bracket--bl" aria-hidden="true" />
-                                <span className="bracket bracket--br" aria-hidden="true" />
+                                {/* corner brackets */}
+                                {['tl', 'tr', 'bl', 'br'].map(pos => (
+                                    <span key={pos} className={`bracket bracket--${pos}`} aria-hidden="true" />
+                                ))}
 
-                                {/* Icon */}
+                                {/* icon mockup */}
                                 <div className="card-mockup">
-                                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <div className="mockup-ring-outer" />
+                                    <div className="mockup-ring-container">
+                                        <div className="mockup-ring-outer" aria-hidden="true" />
                                         <div className="mockup-ring">
-                                            <project.icon width={44} height={44} className="mockup-icon" />
+                                            <project.icon width={44} height={44} className="mockup-icon" aria-hidden="true" />
                                         </div>
                                     </div>
                                     <span className="mockup-label font-mono">{project.title}</span>
                                 </div>
 
-                                {/* Coord readout */}
+                                {/* coordinate readout */}
                                 <div className="coord-display font-mono" aria-hidden="true">
-                                    <span>x: {String(coords.x).padStart(3, '0')}</span>
-                                    <span>y: {String(coords.y).padStart(3, '0')}</span>
+                                    <span>x: {pad(coords.x, 3)}</span>
+                                    <span>y: {pad(coords.y, 3)}</span>
                                 </div>
 
                                 <div className="scan-line" aria-hidden="true" />
                             </div>
 
-                            {/* Meta */}
+                            {/* meta */}
                             <div className="card-meta font-mono">
                                 <span className="meta-item">
-                                    <span className="meta-dot" />
+                                    <span className="meta-dot" aria-hidden="true" />
                                     {project.tech.length} technologies
                                 </span>
                             </div>
@@ -306,7 +317,7 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            {/* Next project pill */}
+            {/* next project pill */}
             <button
                 className="next-project-pill font-mono"
                 onClick={() => navigate(`/project/${nextProject.id}`)}
@@ -319,5 +330,27 @@ const ProjectDetail = () => {
         </div>
     );
 };
+
+/* ─── sub-components ──────────────────────────────────────── */
+
+/** Reusable stat pill — avoids repeating the same markup 4×. */
+const StatPill = ({ label, value, live = false }) => (
+    <div className="stat-pill" role="listitem">
+        <span className="stat-label font-mono">{label}</span>
+        <span className={`stat-value font-mono${live ? ' stat-active' : ''}`}>
+            {live && <span className="stat-live-dot" aria-hidden="true" />}
+            {value}
+        </span>
+    </div>
+);
+
+/** Reusable section heading with accessible id prop. */
+const SectionTitle = ({ id, num, icon, children }) => (
+    <h2 id={id} className="section-title">
+        <span className="section-num font-mono">{num}</span>
+        <span aria-hidden="true">{icon}</span>
+        {children}
+    </h2>
+);
 
 export default ProjectDetail;

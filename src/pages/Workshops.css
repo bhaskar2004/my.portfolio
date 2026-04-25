@@ -265,6 +265,14 @@
     animation: greenbottomBubbles 0.6s ease;
 }
 
+/* Disable bubble effect on touch devices for performance */
+@media (hover: none) and (pointer: coarse) {
+    .ws-filter-btn:hover:before,
+    .ws-filter-btn:hover:after {
+        display: none !important;
+    }
+}
+
 .ws-filter-btn__count {
     display: inline-flex;
     align-items: center;
@@ -957,10 +965,12 @@
     .ws-stats {
         border-radius: var(--radius-sm);
         flex-wrap: wrap;
+        width: 100%;
     }
 
     .ws-stat {
         padding: 14px 20px;
+        flex: 1;
     }
 
     .ws-stat-divider {

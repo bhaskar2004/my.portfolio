@@ -257,6 +257,7 @@
     .resume-page .actions .btn {
         width: 100%;
         justify-content: center;
+        min-height: 48px;
     }
 
     .pdf-container {
@@ -286,6 +287,7 @@
     .resume-page .actions .btn {
         padding: 10px 14px;
         font-size: 0.72rem;
+        min-height: 44px;
     }
 
     .pdf-viewer {
@@ -324,5 +326,6 @@
     .resume-page .actions .btn {
         padding: 8px 12px;
         font-size: 0.68rem;
+        min-height: 42px;
     }
 }

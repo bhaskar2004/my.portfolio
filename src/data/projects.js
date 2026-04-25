@@ -34,29 +34,316 @@ export const projects = [
         github: 'https://github.com/bhaskar2004/Innovative-Smart-Navigation-Systems-for-Empowering-the-Blind.git',
         icon: PaperPlaneIcon,
         featured: false,
-        readme: `# Real-Time Object Detection Using YOLOv5  
+        readme: `# 🦯 Blind Assistance Navigation System
 
-This project demonstrates real-time object detection using the YOLOv5 model and a webcam feed. The YOLOv5 algorithm is known for its efficiency and accuracy in detecting and labeling objects in images or videos.  
-
----
-
-## Features  
-- **Real-time Object Detection**: Detect objects in a webcam feed with bounding boxes and labels.  
-- **Lightweight and Fast**: Uses the YOLOv5s model for efficient processing.  
-- **Extensible**: Can be adapted for use cases like surveillance, assistive technology, or research purposes.  
+A real-time assistive navigation system for visually impaired individuals, combining voice interaction, YOLO-based obstacle detection, depth estimation, and turn-by-turn GPS navigation with spoken and haptic feedback.
 
 ---
 
-## Prerequisites  
-Before running the project, ensure you have the following installed:  
-- Python 3.7+  
-- Torch and TorchVision  
-- OpenCV  
+## 📋 Table of Contents
 
-Install the required libraries using:  
+- [Overview](#overview)
+- [System Architecture](#system-architecture)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Module Reference](#module-reference)
+- [Known Issues & Limitations](#known-issues--limitations)
+- [Future Improvements](#future-improvements)
+
+---
+
+## Overview
+
+This system is built to assist visually impaired users in navigating real-world environments. The user speaks a destination, and the system:
+
+1. Geocodes the destination using the GraphHopper API
+2. Calculates a walking route
+3. Navigates step-by-step with spoken turn-by-turn instructions
+4. Continuously monitors the camera feed for obstacles using YOLOv3/YOLOv8
+5. Alerts the user to nearby hazards with directional voice warnings and haptic (audio) feedback
+
+Two implementation variants are provided:
+
+| File | Model | Approach |
+|------|-------|----------|
+| \`MAIN1.py\` | YOLOv8 (Ultralytics) + MiDaS depth | Advanced — includes depth estimation for distance measurement |
+| \`MAIN2.py\` | YOLOv3 (OpenCV DNN) | Standard — uses classic YOLO with \`.weights\`/\`.cfg\` files |
+| \`main3.py\` | YOLOv3 Optimized | Hyper-Optimized — predictive collision risk, intelligent caching, and multi-threaded audio |
+
+---
+
+## System Architecture
+
+\`\`\`
+┌─────────────────────────────────────────────────────────┐
+│                    User (Visually Impaired)              │
+└───────────────┬─────────────────────────┬───────────────┘
+                │ Voice Input             │ Voice / Haptic Output
+                ▼                         ▼
+┌───────────────────────────┐   ┌─────────────────────────┐
+│   MultisensoryInterface   │   │   pyttsx3 TTS Engine     │
+│   (Speech Recognition)    │   │   sounddevice (Haptic)   │
+└──────────────┬────────────┘   └─────────────────────────┘
+               │ Destination Text
+               ▼
+┌───────────────────────────┐
+│     NavigationSystem      │
+│  ┌─────────────────────┐  │
+│  │  GraphHopper API    │  │  ← Geocoding + Route Planning
+│  │  (Geocode + Route)  │  │
+│  └─────────────────────┘  │
+│  ┌─────────────────────┐  │
+│  │  Waypoint Iterator  │  │  ← Step-by-step walking guidance
+│  │  + Bearing Calc     │  │
+│  └─────────────────────┘  │
+└──────────────┬────────────┘
+               │ Per-step frame capture
+               ▼
+┌───────────────────────────┐
+│   AdvancedObstacleDetector│
+│  ┌────────────┐           │
+│  │ YOLOv8 /  │           │  ← Object detection (80 COCO classes)
+│  │ YOLOv3    │           │
+│  └────────────┘           │
+│  ┌────────────┐           │
+│  │ MiDaS     │           │  ← Depth estimation (MAIN1 only)
+│  │ Depth Est.│           │
+│  └────────────┘           │
+└───────────────────────────┘
+\`\`\`
+
+---
+
+## Features
+
+### 🎙️ Voice Interaction
+- Listens for the user's spoken destination using Google Speech Recognition
+- All navigation instructions and warnings are spoken aloud via pyttsx3 TTS
+- Ambient noise adjustment before listening for improved accuracy
+
+### 🗺️ GPS Navigation
+- Geocodes any location name to coordinates via the GraphHopper Geocoding API
+- Calculates pedestrian walking routes via the GraphHopper Routing API
+- Decodes polyline-encoded routes into step-by-step waypoints
+- Computes compass bearing between waypoints and announces directional guidance (North / East / South / West or Turn Left / Right / Straight)
+
+### 🚧 Obstacle Detection
+- Real-time object detection from webcam using YOLOv3 or YOLOv8
+- Detects 80 object classes from the COCO dataset (see \`coco.names\`)
+- High-risk class filtering: \`person\`, \`car\`, \`truck\`, \`bicycle\`, \`motorcycle\`, \`bus\`
+- Classifies obstacle position as **left**, **right**, **front**, or **back** based on bounding box location in frame
+- Announces directional avoidance instructions: *"Warning: car detected on the left. Slightly move right."*
+
+### 📏 Depth Estimation (MAIN1 only)
+- Uses Intel MiDaS (\`MiDaS_small\`) loaded via \`torch.hub\` to estimate object depth
+- Calculates average depth within each detection's bounding box region
+- Filters obstacles within a configurable safety buffer (default: 1.5 meters)
+
+### 📳 Haptic Feedback (MAIN1 only)
+- Generates sinusoidal audio tones via \`sounddevice\` to simulate vibration alerts
+- Intensity-adjustable frequency (default: 50 Hz at 0.5 intensity)
+
+---
+
+## Project Structure
+
+\`\`\`
+blind_assist/
+│
+├── MAIN1.py              # Advanced implementation (YOLOv8 + MiDaS depth)
+├── MAIN2.py              # Standard implementation (YOLOv3 OpenCV DNN)
+├── main3.py              # Hyper-Optimized implementation (Predictive + Caching)
+│
+├── yolov3.weights        # YOLOv3 pretrained weights
+├── yolov3.cfg            # YOLOv3 network architecture config
+├── coco.names            # 80 COCO class labels
+│
+└── README.md
+\`\`\`
+
+---
+
+## Prerequisites
+
+- Python 3.8+
+- A working webcam
+- Microphone access
+- Internet connection (for GraphHopper API and Google Speech Recognition)
+- GraphHopper API key ([get one free at graphhopper.com](https://www.graphhopper.com/))
+
+---
+
+## Installation
+
+### 1. Clone the repository
+
 \`\`\`bash
-pip install torch torchvision opencv-python
-\`\`\``
+git clone https://github.com/your-username/blind-assist-nav.git
+cd blind-assist-nav
+\`\`\`
+
+### 2. Install dependencies
+
+**For MAIN2.py (YOLOv3 / OpenCV DNN):**
+
+\`\`\`bash
+pip install opencv-python numpy requests polyline geopy SpeechRecognition pyttsx3
+\`\`\`
+
+**For MAIN1.py (YOLOv8 + MiDaS):**
+
+\`\`\`bash
+pip install ultralytics torch torchvision timm opencv-python numpy requests \\
+            polyline geopy SpeechRecognition pyttsx3 sounddevice soundfile
+\`\`\`
+
+### 3. Download model weights
+
+**YOLOv3 weights** (required for MAIN2.py):
+
+\`\`\`bash
+wget https://pjreddie.com/media/files/yolov3.weights
+\`\`\`
+
+Place the downloaded file at the path specified in \`MAIN2.py\`:
+\`\`\`python
+YOLO_WEIGHTS = 'path/to/yolov3.weights'
+YOLO_CONFIG  = 'path/to/yolov3.cfg'
+YOLO_NAMES   = 'path/to/coco.names'
+\`\`\`
+
+**YOLOv8** (for MAIN1.py) auto-downloads \`yolov8n.pt\` on first run via the Ultralytics package.
+
+**MiDaS** (for MAIN1.py) auto-downloads via \`torch.hub\` on first run.
+
+---
+
+## Configuration
+
+### MAIN1.py — \`ConfigManager\`
+
+Edit the \`get_config()\` method in \`ConfigManager\`:
+
+\`\`\`python
+{
+    'graphhopper_api_key': 'YOUR_API_KEY_HERE',
+    'yolo_model_path': 'yolov8n.pt',   # or yolov8s.pt for better accuracy
+    'log_level': 'INFO',
+    'debug_mode': False
+}
+\`\`\`
+
+### MAIN2.py — \`main()\` constants
+
+\`\`\`python
+API_KEY      = 'YOUR_API_KEY_HERE'
+YOLO_WEIGHTS = '/path/to/yolov3.weights'
+YOLO_CONFIG  = '/path/to/yolov3.cfg'
+YOLO_NAMES   = '/path/to/coco.names'
+\`\`\`
+
+### Starting location
+
+Both files use a hardcoded starting coordinate. Update this to reflect your actual location or integrate a GPS module:
+
+\`\`\`python
+# MAIN1.py
+current_location = [12.9716, 77.5946]  # Bangalore
+
+# MAIN2.py
+return [13.3957, 77.7270]  # Gauribidanur
+\`\`\`
+
+---
+
+## Usage
+
+### Running MAIN2.py (recommended for first-time setup)
+
+\`\`\`bash
+python MAIN2.py
+\`\`\`
+
+1. The system says: *"Welcome to the Blind Assistance Navigation System"*
+2. It says: *"Listening for your destination"*
+3. Speak your destination (e.g., *"Cubbon Park"*)
+4. Navigation begins — you'll hear step-by-step instructions
+5. At each step, the camera captures a frame and alerts you to any obstacles
+6. On arrival: *"You have reached your destination!"*
+
+### Running MAIN1.py (advanced)
+
+\`\`\`bash
+python MAIN1.py
+\`\`\`
+
+Same flow as above, with additional depth-based distance warnings and haptic audio feedback when obstacles are within 1.5 meters.
+
+---
+
+## Module Reference
+
+### \`ObstacleDetector\` / \`AdvancedObstacleDetector\`
+
+| Method | Description |
+|--------|-------------|
+| \`detect_obstacles(frame)\` | Runs YOLO inference and returns list of detected objects with class, confidence, bbox |
+| \`_estimate_depth(frame)\` | (MAIN1) Runs MiDaS depth estimation, returns depth map |
+| \`_calculate_distance(...)\` | (MAIN1) Estimates distance to object using depth ROI average |
+| \`draw_detections(frame, detections)\` | (MAIN2) Draws bounding boxes on frame for visual debug |
+
+### \`MultisensoryInterface\` / \`NavigationSystem.speak/listen\`
+
+| Method | Description |
+|--------|-------------|
+| \`speak(message)\` | Speaks text aloud using pyttsx3 |
+| \`listen(timeout)\` | Records microphone input and returns recognized text |
+| \`provide_haptic_feedback(intensity)\` | (MAIN1) Plays sinusoidal audio tone for tactile simulation |
+
+### \`NavigationSystem\`
+
+| Method | Description |
+|--------|-------------|
+| \`get_coordinates(name)\` | Geocodes a location name → \`[lat, lng]\` |
+| \`get_route(start, end)\` | Fetches walking route → list of \`(lat, lng)\` waypoints |
+| \`navigate(destination)\` | Main loop: route → waypoints → obstacle check → guidance |
+| \`_handle_obstacles(...)\` | Filters high-risk obstacles and triggers voice/haptic alerts |
+| \`_provide_navigation_guidance(...)\` | Announces distance and compass direction to next waypoint |
+| \`_calculate_bearing(p1, p2)\` | Returns compass bearing (0–360°) between two coordinates |
+| \`calculate_direction(p1, p2)\` | (MAIN2) Returns turn instruction string |
+| \`detect_and_alert_obstacles()\` | (MAIN2) Captures frame, detects obstacles, announces positions |
+
+---
+
+## Known Issues & Limitations
+
+- **Hardcoded start location** — real deployment requires GPS integration (e.g., via \`gpsd\` or a mobile GPS module)
+- **MiDaS depth is uncalibrated** — the \`* 10\` conversion factor is a rough estimate and should be calibrated for real-world use
+- **Single-frame obstacle detection** — (MAIN1/MAIN2) Frame is captured once per waypoint rather than continuously; \`main3.py\` addresses this with a background thread
+- **No offline fallback** — both speech recognition (Google) and routing (GraphHopper) require internet
+
+---
+
+## Future Improvements
+
+- [ ] Integrate real GPS via smartphone or hardware module
+- [x] Integrate background detection thread (implemented in \`main3.py\`)
+- [ ] Calibrate MiDaS depth output against real-world measurements
+- [x] Add \`position\` field to obstacle detection output in MAIN1
+- [ ] Add offline TTS fallback (e.g., \`espeak\`) for no-internet scenarios
+- [ ] Support landmark-based navigation announcements (e.g., "traffic light ahead")
+- [ ] Package as a mobile/Raspberry Pi deployable application
+
+---
+
+## License
+
+MIT License. See \`LICENSE\` for details.
+`
     },
     {
         id: 'weather-bot',
