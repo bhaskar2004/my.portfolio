@@ -7,7 +7,7 @@
     top: 0;
     left: 0;
     height: 2px;
-    background: var(--color-primary, #06C167);
+    background: var(--color-primary);
     z-index: 9999;
     transition: width 0.08s linear;
     /* No glow — clean Uber aesthetic */

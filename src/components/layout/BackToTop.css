@@ -36,8 +36,8 @@
     color: #0a0a0a;
     border-color: transparent;
     transform: translateY(-3px) scale(1.08);
-    box-shadow: 0 6px 16px rgba(6, 193, 103, 0.3),
-                0 0 24px rgba(6, 193, 103, 0.15);
+    box-shadow: 0 6px 16px rgba(var(--color-primary-rgb), 0.3),
+                0 0 24px rgba(var(--color-primary-rgb), 0.15);
 }
 
 .back-to-top:hover svg {

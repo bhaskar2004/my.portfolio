@@ -131,6 +131,21 @@ const ContactForm = () => {
         }
     };
 
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        e.currentTarget.style.setProperty('--mouse-x', `${x * 100}%`);
+        e.currentTarget.style.setProperty('--mouse-y', `${y * 100}%`);
+        e.currentTarget.style.setProperty('--rotate-x', `${(0.5 - y) * 4}deg`);
+        e.currentTarget.style.setProperty('--rotate-y', `${(x - 0.5) * 4}deg`);
+    };
+
+    const handleContainerMouseLeave = (e) => {
+        e.currentTarget.style.setProperty('--rotate-x', '0deg');
+        e.currentTarget.style.setProperty('--rotate-y', '0deg');
+    };
+
     const msgLen = values.message.length;
     const charClass =
         msgLen >= MAX_MESSAGE_LENGTH ? 'char-count at-limit' :
@@ -175,9 +190,14 @@ const ContactForm = () => {
     }
 
     return (
-        <div className="contact-form-container">
+        <div 
+            className="contact-form-container"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleContainerMouseLeave}
+        >
             {/* Animated gradient border */}
             <div className="form-glow-border" aria-hidden="true" />
+            <div className="form-spotlight" aria-hidden="true" />
 
             {/* Progress bar */}
             <div className="form-progress" aria-label={`Form ${Math.round(progress)}% complete`}>

@@ -10,7 +10,6 @@ import {
 import { useState, useEffect } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Typewriter from '../components/animations/Typewriter'
-import HighlightSwipe from '../components/animations/HighlightSwipe'
 import './Resume.css'
 
 const Resume = () => {
@@ -52,7 +51,7 @@ const Resume = () => {
                     <div className="header reveal" ref={headerRef}>
                         <div className="header-text">
                             <span className="section-eyebrow">Document</span>
-                            <h1><HighlightSwipe delay={300} textColor="black">Resume</HighlightSwipe></h1>
+                            <h1>Resume</h1>
                             <p style={{ minHeight: '27px' }}>
                                 <Typewriter text="Bhaskar T · Software Tester & Problem Solver" delay={30} startDelay={600} />
                             </p>

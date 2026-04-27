@@ -5,10 +5,13 @@ import {
     EnvelopeClosedIcon,
     ExternalLinkIcon
 } from '@radix-ui/react-icons'
+import { useTheme } from '../../context/ThemeContext'
+import { FooterIllustration } from '../illustrations/illustrations'
 import './Footer.css'
 
 const Footer = () => {
     const year = new Date().getFullYear()
+    const { theme } = useTheme()
 
     return (
         <footer className="footer-container">
@@ -16,7 +19,12 @@ const Footer = () => {
                 {/* ── Tier 1: Branding ── */}
                 <div className="footer-upper">
                     <div className="footer-brand">
-                        <h2 className="footer-logo-massive">Bhaskar T</h2>
+                        <div className="footer-brand-header">
+                            <h2 className="footer-logo-massive" key={theme}>Bhaskar T</h2>
+                            <div className="footer-illustration-wrap">
+                                <FooterIllustration />
+                            </div>
+                        </div>
                         <div className="footer-tagline-expanded">
                             <span>Software Tester & QA Engineer</span>
                             <span className="dot-separator">•</span>

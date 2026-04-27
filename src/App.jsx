@@ -3,11 +3,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async'
 import { lazy, Suspense } from 'react'
 import Navigation from './components/layout/Navigation'
 import Footer from './components/layout/Footer'
-import CustomCursor from './components/layout/CustomCursor'
 import BackToTop from './components/layout/BackToTop'
 import ScrollProgress from './components/layout/ScrollProgress'
-import ParticleCanvas from './components/particles/ParticleCanvas'
-import GeometricShapes from './components/particles/GeometricShapes'
 import ScrollToHash from './components/utils/ScrollToHash'
 
 // Lazy load pages for performance
@@ -41,10 +38,6 @@ function App() {
             {/* Global UI Elements */}
             <ScrollProgress />
             <ScrollToHash />
-            <ParticleCanvas />
-            <GeometricShapes />
-
-            <CustomCursor />
 
             {/* Main Layout */}
             <div className="main-content-wrapper" style={{ position: 'relative', zIndex: 'var(--z-content)' }}>

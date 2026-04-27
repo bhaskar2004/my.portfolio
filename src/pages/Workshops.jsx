@@ -18,7 +18,6 @@ import {
 import SEO from '../components/SEO'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import Typewriter from '../components/animations/Typewriter'
-import HighlightSwipe from '../components/animations/HighlightSwipe'
 import NumberCounter from '../components/animations/NumberCounter'
 import './Workshops.css'
 
@@ -454,7 +453,7 @@ const Workshops = () => {
                     <div className="ws-hero__content">
                         <span className="ws-hero__label">Portfolio · Community</span>
                         <h1 className="ws-hero__title">
-                            Workshops &amp;&nbsp;<HighlightSwipe delay={300}><span className="ws-hero__title-accent">Events</span></HighlightSwipe>
+                            Workshops &amp;&nbsp;<span className="ws-hero__title-accent">Events</span>
                         </h1>
                         <span className="ws-hero__subtitle font-mono" style={{ minHeight: '27px', display: 'inline-block' }}>
                             <Typewriter text="Sharing knowledge · Building community · Creating impact" delay={25} startDelay={600} />
@@ -468,20 +467,17 @@ const Workshops = () => {
                             { num: workshops.filter(w => w.type === 'workshop').length, label: 'Workshops' },
                             { num: workshops.filter(w => w.type === 'event').length, label: 'Events' },
                             { num: '38+', label: 'Students' },
-                        ].map((s, i, arr) => (
-                            <div key={s.label} style={{ display: 'contents' }}>
-                                <div className="ws-stat">
-                                    <span className="ws-stat__num">
-                                        <NumberCounter 
-                                            end={typeof s.num === 'number' ? s.num : parseInt(s.num)} 
-                                            suffix={typeof s.num === 'string' ? s.num.replace(/[0-9]/g, '') : ''} 
-                                            duration={2000} 
-                                            delay={i * 200}
-                                        />
-                                    </span>
-                                    <span className="ws-stat__label font-mono">{s.label}</span>
-                                </div>
-                                {i < arr.length - 1 && <div className="ws-stat-divider" />}
+                        ].map((s, i) => (
+                            <div key={s.label} className="ws-stat">
+                                <span className="ws-stat__num">
+                                    <NumberCounter 
+                                        end={typeof s.num === 'number' ? s.num : parseInt(s.num)} 
+                                        suffix={typeof s.num === 'string' ? s.num.replace(/[0-9]/g, '') : ''} 
+                                        duration={2000} 
+                                        delay={i * 200}
+                                    />
+                                </span>
+                                <span className="ws-stat__label font-mono">{s.label}</span>
                             </div>
                         ))}
                     </div>

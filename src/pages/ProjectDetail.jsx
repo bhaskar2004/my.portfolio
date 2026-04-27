@@ -15,7 +15,6 @@ import SEO from '../components/SEO';
 import { projects } from '../data/projects';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import Typewriter from '../components/animations/Typewriter';
-import HighlightSwipe from '../components/animations/HighlightSwipe';
 import './ProjectDetail.css';
 
 /* ─── helpers ─────────────────────────────────────────────── */
@@ -154,9 +153,7 @@ const ProjectDetail = () => {
                         </div>
 
                         <h1 className="detail-title reveal">
-                            <HighlightSwipe delay={300} textColor="#000">
-                                {project.title}
-                            </HighlightSwipe>
+                            {project.title}
                         </h1>
 
                         <p className="detail-brief font-mono reveal reveal-delay-1">

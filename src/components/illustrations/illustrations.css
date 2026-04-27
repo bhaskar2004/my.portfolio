@@ -1,0 +1,86 @@
+/* ── Illustration Animations ────────────────────────────────── */
+
+:root {
+    --color-illu-glow: 255, 255, 255;
+    --illu-shadow-base: rgba(0, 0, 0, 0.45);
+    --illu-shadow-hover: rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme="light"] {
+    --color-illu-glow: 74, 144, 226; /* Vibrant blue instead of harsh black */
+    --illu-shadow-base: rgba(0, 0, 0, 0.12); /* Softer shadow in light mode */
+    --illu-shadow-hover: rgba(0, 0, 0, 0.08);
+}
+
+.illustration {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    filter: drop-shadow(0 4px 12px var(--illu-shadow-base));
+    animation: awesome-glow 8s ease-in-out infinite;
+}
+
+@keyframes awesome-glow {
+    0%, 100% { filter: drop-shadow(0 4px 12px var(--illu-shadow-base)) drop-shadow(0 0 10px rgba(var(--color-illu-glow), 0.15)); }
+    50% { filter: drop-shadow(0 12px 24px var(--illu-shadow-hover)) drop-shadow(0 0 30px rgba(var(--color-illu-glow), 0.35)); }
+}
+
+/* Floating animation for elements */
+.illustration__float {
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+/* Sparkle animation */
+.illustration__sparkle {
+    animation: sparkle 2.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 8px var(--color-primary)); }
+}
+
+/* Sizing variants */
+.illustration--hero {
+    max-width: 340px;
+}
+
+.illustration--about {
+    max-width: 180px;
+}
+
+.illustration--contact {
+    max-width: 160px;
+    margin: 0 auto;
+}
+
+.illustration--projects {
+    max-width: 120px;
+}
+
+.illustration--footer {
+    max-width: 80px;
+    opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+    .illustration--hero {
+        max-width: 420px;
+    }
+
+    .illustration--about {
+        max-width: 220px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .illustration__float,
+    .illustration__sparkle {
+        animation: none !important;
+    }
+}

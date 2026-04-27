@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 /**
- * Custom hook to add 'reveal-active' class when element enters the viewport.
  * Uses IntersectionObserver for efficient scroll-based animations.
  *
  * @param {object} options
@@ -15,6 +15,7 @@ export const useScrollReveal = ({
   once = true,
 } = {}) => {
   const elementRef = useRef(null)
+  const { theme } = useTheme()
 
   // Stable callback — won't change between renders
   const handleIntersect = useCallback((entries, observer) => {
@@ -29,6 +30,8 @@ export const useScrollReveal = ({
     const element = elementRef.current
     if (!element) return
 
+    element.classList.remove('reveal-active')
+
     const observer = new IntersectionObserver(handleIntersect, {
       threshold,
       rootMargin,
@@ -42,7 +45,7 @@ export const useScrollReveal = ({
     return () => observer.disconnect()
     //            ↑ disconnect() is safer than unobserve() in cleanup —
     //              it clears all observations, not just this element.
-  }, [handleIntersect, threshold, rootMargin])
+  }, [handleIntersect, threshold, rootMargin, theme])
   //   ↑ Primitive values as deps are stable — no infinite re-render loop.
 
   return elementRef
