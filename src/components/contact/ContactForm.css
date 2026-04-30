@@ -263,7 +263,7 @@
     font-family: var(--font-mono);
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-primary);
+    color: var(--color-accent);
     font-weight: 700;
     left: 42px;
     opacity: 0.9;
@@ -325,9 +325,9 @@
 /* Focus state — glow ring */
 .form-field input:focus,
 .form-field textarea:focus {
-    border-color: var(--color-primary);
+    border-color: var(--color-accent);
     background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 0 0 4px rgba(var(--color-primary-rgb), 0.1), 0 8px 24px -8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.1), 0 8px 24px -8px rgba(0, 0, 0, 0.4);
 }
 
 /* Error state */
@@ -467,9 +467,9 @@
 
 .submit-btn:hover:not(:disabled) {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 30px rgba(var(--color-primary-rgb), 0.25);
-    background: var(--color-primary);
-    color: var(--color-bg);
+    box-shadow: 0 12px 30px rgba(var(--color-accent-rgb), 0.25);
+    background: var(--color-accent);
+    color: #FFFFFF;
 }
 
 .submit-btn:active:not(:disabled) {

@@ -1,15 +1,15 @@
 /* ── Illustration Animations ────────────────────────────────── */
 
 :root {
-    --color-illu-glow: 255, 255, 255;
-    --illu-shadow-base: rgba(0, 0, 0, 0.45);
-    --illu-shadow-hover: rgba(0, 0, 0, 0.35);
+    --color-illu-glow: 129, 140, 248; /* Indigo accent glow */
+    --illu-shadow-base: rgba(0, 0, 0, 0.35);
+    --illu-shadow-hover: rgba(0, 0, 0, 0.25);
 }
 
 :root[data-theme="light"] {
-    --color-illu-glow: 74, 144, 226; /* Vibrant blue instead of harsh black */
-    --illu-shadow-base: rgba(0, 0, 0, 0.12); /* Softer shadow in light mode */
-    --illu-shadow-hover: rgba(0, 0, 0, 0.08);
+    --color-illu-glow: 99, 102, 241;
+    --illu-shadow-base: rgba(0, 0, 0, 0.08);
+    --illu-shadow-hover: rgba(0, 0, 0, 0.05);
 }
 
 .illustration {
@@ -17,70 +17,91 @@
     height: auto;
     max-width: 100%;
     filter: drop-shadow(0 4px 12px var(--illu-shadow-base));
-    animation: awesome-glow 8s ease-in-out infinite;
+    animation: awesome-glow 10s ease-in-out infinite;
 }
 
 @keyframes awesome-glow {
-    0%, 100% { filter: drop-shadow(0 4px 12px var(--illu-shadow-base)) drop-shadow(0 0 10px rgba(var(--color-illu-glow), 0.15)); }
-    50% { filter: drop-shadow(0 12px 24px var(--illu-shadow-hover)) drop-shadow(0 0 30px rgba(var(--color-illu-glow), 0.35)); }
+    0%, 100% {
+        filter: drop-shadow(0 4px 12px var(--illu-shadow-base))
+                drop-shadow(0 0 8px rgba(var(--color-illu-glow), 0.10));
+    }
+    50% {
+        filter: drop-shadow(0 8px 20px var(--illu-shadow-hover))
+                drop-shadow(0 0 24px rgba(var(--color-illu-glow), 0.20));
+    }
 }
 
-/* Floating animation for elements */
+/* Floating animation — slower, subtler */
 .illustration__float {
-    animation: float 4s ease-in-out infinite;
+    animation: illustFloat 5s ease-in-out infinite;
 }
 
-@keyframes float {
+@keyframes illustFloat {
     0%, 100% { transform: translateY(0) rotate(0); }
-    50% { transform: translateY(-12px) rotate(2deg); }
+    50% { transform: translateY(-8px) rotate(1.5deg); }
 }
 
-/* Sparkle animation */
+/* Sparkle animation — refined */
 .illustration__sparkle {
-    animation: sparkle 2.5s ease-in-out infinite;
+    animation: sparkle 3s ease-in-out infinite;
 }
 
 @keyframes sparkle {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.4); opacity: 1; filter: drop-shadow(0 0 8px var(--color-primary)); }
+    0%, 100% { transform: scale(1); opacity: 0.35; }
+    50% { transform: scale(1.3); opacity: 0.9; filter: drop-shadow(0 0 6px rgba(var(--color-illu-glow), 0.4)); }
+}
+
+/* Cursor blink */
+.illustration__cursor {
+    animation: cursorBlink 1.2s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 /* Sizing variants */
 .illustration--hero {
-    max-width: 340px;
+    max-width: 360px;
 }
 
 .illustration--about {
-    max-width: 180px;
+    max-width: 200px;
 }
 
 .illustration--contact {
-    max-width: 160px;
+    max-width: 170px;
     margin: 0 auto;
 }
 
 .illustration--projects {
-    max-width: 120px;
+    max-width: 130px;
 }
 
 .illustration--footer {
     max-width: 80px;
-    opacity: 0.7;
+    opacity: 0.65;
 }
 
 @media (min-width: 768px) {
     .illustration--hero {
-        max-width: 420px;
+        max-width: 440px;
     }
 
     .illustration--about {
-        max-width: 220px;
+        max-width: 240px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .illustration__float,
-    .illustration__sparkle {
+    .illustration__sparkle,
+    .illustration__cursor {
+        animation: none !important;
+    }
+
+    .illustration {
         animation: none !important;
     }
 }

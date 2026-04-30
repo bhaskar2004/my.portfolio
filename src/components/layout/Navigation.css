@@ -66,8 +66,8 @@
 }
 
 .logo:hover .logo-img {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 16px var(--color-primary-dim);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 16px rgba(var(--color-accent-rgb), 0.15);
     transform: scale(1.06) rotate(-4deg);
 }
 
@@ -129,9 +129,9 @@
 }
 
 .nav-links a.active {
-    color: var(--color-primary);
-    background: var(--color-primary-dim);
-    border-color: var(--color-primary);
+    color: var(--color-accent);
+    background: var(--color-accent-dim);
+    border-color: rgba(var(--color-accent-rgb), 0.3);
 }
 
 :root[data-theme="light"] .nav-links a {
@@ -139,10 +139,15 @@
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-:root[data-theme="light"] .nav-links a:hover,
-:root[data-theme="light"] .nav-links a.active {
+:root[data-theme="light"] .nav-links a:hover {
     color: var(--color-text);
-    border-color: #000000;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="light"] .nav-links a.active {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
 }
 
 /* ── Divider ──────────────────────────────────────────────── */

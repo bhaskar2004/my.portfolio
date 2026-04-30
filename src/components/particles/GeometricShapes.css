@@ -30,7 +30,7 @@
     top: -260px;
     left: -220px;
     background: radial-gradient(circle at 35% 35%,
-            rgba(var(--color-primary-rgb), 0.03) 0%,
+            rgba(var(--color-accent-rgb), 0.03) 0%,
             transparent 65%);
     animation-delay: 0s;
 }
@@ -41,7 +41,7 @@
     bottom: -200px;
     right: -180px;
     background: radial-gradient(circle at 65% 65%,
-            rgba(var(--color-primary-rgb), 0.02) 0%,
+            rgba(var(--color-accent-rgb), 0.02) 0%,
             transparent 65%);
     animation-delay: -8s;
 }
@@ -60,19 +60,19 @@
 /* Light theme orbs — high contrast but ambient */
 :root[data-theme="light"] .liquid-orb:nth-child(1) {
     background: radial-gradient(circle at 35% 35%,
-            rgba(4, 154, 82, 0.18) 0%,
+            rgba(var(--color-accent-rgb), 0.08) 0%,
             transparent 55%);
 }
 
 :root[data-theme="light"] .liquid-orb:nth-child(2) {
     background: radial-gradient(circle at 65% 65%,
-            rgba(4, 154, 82, 0.14) 0%,
+            rgba(var(--color-accent-rgb), 0.06) 0%,
             transparent 65%);
 }
 
 :root[data-theme="light"] .liquid-orb:nth-child(3) {
     background: radial-gradient(circle at 50% 50%,
-            rgba(10, 10, 10, 0.08) 0%,
+            rgba(var(--color-accent-rgb), 0.04) 0%,
             transparent 65%);
 }
 
@@ -110,8 +110,8 @@
 
 /* Light theme — significantly more visible */
 :root[data-theme="light"] .shape {
-    border-color: rgba(4, 154, 82, 0.25);
-    border-width: 2px;
+    border-color: rgba(var(--color-accent-rgb), 0.12);
+    border-width: 1px;
 }
 
 /* ── Individual shapes ── */
@@ -171,8 +171,8 @@
 }
 
 :root[data-theme="light"] .hexagon {
-    border-top-color: rgba(var(--color-primary-rgb), 0.18);
-    border-top-width: 1.5px;
+    border-top-color: rgba(var(--color-accent-rgb), 0.10);
+    border-top-width: 1px;
 }
 
 @keyframes shapeFloat {

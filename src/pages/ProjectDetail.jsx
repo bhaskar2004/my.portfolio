@@ -24,13 +24,24 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /* ─── component ───────────────────────────────────────────── */
 const ProjectDetail = () => {
-    const { id } = useParams();
+    const { id = '' } = useParams();
     const navigate = useNavigate();
     const revealRef = useScrollReveal();
 
-    const projectIndex = projects.findIndex(p => p.id === id);
+    // Helper to slugify strings for reliable matching
+    const toSlug = (s) => s?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    // Find project using multiple strategies
+    const tid = String(id).toLowerCase().trim();
+    const projectIndex = projects.findIndex(p => 
+        p.id?.toLowerCase() === tid || 
+        toSlug(p.title) === tid ||
+        String(p.number) === tid ||
+        String(p.number).replace(/^0+/, '') === tid.replace(/^0+/, '')
+    );
+    
     const project = projects[projectIndex];
-    const nextProject = projects[projectIndex + 1] ?? projects[0];
+    const nextProject = projects[(projectIndex + 1) % projects.length] || projects[0];
 
     /* state */
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -41,8 +52,10 @@ const ProjectDetail = () => {
     const cardRef = useRef(null);
     const tiltRafId = useRef(null);
 
-    /* scroll to top on mount */
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+    /* scroll to top on mount or id change */
+    useEffect(() => { 
+        window.scrollTo(0, 0); 
+    }, [id]);
 
     /* scroll-progress bar */
     useEffect(() => {
@@ -92,7 +105,7 @@ const ProjectDetail = () => {
         return (
             <div className="pd-not-found">
                 <h1 className="font-display">Project Not Found</h1>
-                <p className="font-mono">The project you're looking for doesn't exist.</p>
+                <p className="font-mono">ID received: "{id}"</p>
                 <Link to="/" className="btn primary">Back to Home</Link>
             </div>
         );
@@ -126,11 +139,11 @@ const ProjectDetail = () => {
 
             <SEO title={project.title} description={project.brief} />
 
-            <div className="project-detail" ref={revealRef}>
+            <div key={tid} className="project-detail reveal-active" ref={revealRef}>
                 <div className="container">
 
                     {/* ── back nav ── */}
-                    <nav className="detail-nav reveal" aria-label="Project navigation">
+                    <nav className="detail-nav" aria-label="Project navigation">
                         <Link to="/#projects" className="back-link font-mono">
                             <span className="back-arrow" aria-hidden="true">
                                 <ArrowLeftIcon width={13} height={13} />
@@ -145,23 +158,27 @@ const ProjectDetail = () => {
                             {pad(project.number)}
                         </span>
 
-                        <div className="header-eyebrow reveal">
-                            <project.icon width={16} height={16} aria-hidden="true" />
+                        <div className="header-eyebrow">
+                            {project.icon ? (
+                                <project.icon width={16} height={16} aria-hidden="true" />
+                            ) : (
+                                <CodeIcon width={16} height={16} aria-hidden="true" />
+                            )}
                             <span className="project-num font-mono">#{project.number}</span>
                             <span className="eyebrow-divider" aria-hidden="true">—</span>
                             <span className="eyebrow-label font-mono">Project</span>
                         </div>
 
-                        <h1 className="detail-title reveal">
+                        <h1 className="detail-title">
                             {project.title}
                         </h1>
 
-                        <p className="detail-brief font-mono reveal reveal-delay-1">
+                        <p className="detail-brief font-mono">
                             <Typewriter text={project.brief} delay={20} startDelay={600} />
                         </p>
 
                         {/* stats strip */}
-                        <div className="stats-strip reveal reveal-delay-1" role="list">
+                        <div className="stats-strip" role="list">
                             <StatPill label="Stack" value={`${project.tech.length} tools`} />
                             <span className="stat-sep" aria-hidden="true" />
                             <StatPill label="Status" value="Active" live />
@@ -211,7 +228,7 @@ const ProjectDetail = () => {
                     </header>
 
                     {/* ── content grid ── */}
-                    <div className="detail-content reveal reveal-delay-2">
+                    <div className="detail-content">
 
                         {/* main column */}
                         <main className="content-main">
@@ -241,7 +258,7 @@ const ProjectDetail = () => {
                             </section>
 
                             {hasReadme && (
-                                <section className="detail-section readme-section reveal" aria-labelledby="section-readme">
+                                <section className="detail-section readme-section" aria-labelledby="section-readme">
                                     <SectionTitle id="section-readme" num="03" icon={<ReaderIcon width={12} height={12} />}>
                                         README
                                     </SectionTitle>
@@ -255,7 +272,7 @@ const ProjectDetail = () => {
                         </main>
 
                         {/* sidebar card */}
-                        <aside className="content-visual reveal reveal-delay-3" aria-label="Project preview card">
+                        <aside className="content-visual" aria-label="Project preview card">
                             <div
                                 className="visual-card-wrap"
                                 ref={cardRef}

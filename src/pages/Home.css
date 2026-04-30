@@ -97,7 +97,7 @@
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-primary);
+    color: var(--color-accent);
     margin-bottom: 10px;
 }
 
@@ -124,7 +124,7 @@
     height: 60vw;
     max-width: 500px;
     max-height: 500px;
-    background: var(--color-primary-dim);
+    background: var(--color-accent-dim);
 }
 
 .hero-blob--b {
@@ -134,7 +134,7 @@
     height: 50vw;
     max-width: 400px;
     max-height: 400px;
-    background: var(--color-primary-dim);
+    background: var(--color-accent-dim);
     opacity: 0.15;
     animation-delay: -4s;
 }
@@ -205,6 +205,11 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-base);
+}
+
+.hero-eyebrow:hover {
+    border-color: rgba(var(--color-accent-rgb), 0.3);
 }
 
 .hero-eyebrow__wave {
@@ -305,9 +310,9 @@
 }
 
 .btn--primary:hover {
-    box-shadow: 0 8px 24px rgba(var(--color-primary-rgb), 0.25);
-    background: var(--color-primary);
-    color: var(--color-bg);
+    box-shadow: 0 8px 24px rgba(var(--color-accent-rgb), 0.25);
+    background: var(--color-accent);
+    color: #FFFFFF;
 }
 
 .btn--secondary {
@@ -319,8 +324,8 @@
 }
 
 .btn--secondary:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 .btn--ghost {
@@ -388,9 +393,9 @@
 
 .social-link:active {
     transform: scale(0.88);
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-    background: var(--color-primary-dim);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
 }
 
 @keyframes socialPop {
@@ -487,7 +492,7 @@
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-primary);
+    color: var(--color-accent);
     margin-bottom: 14px;
 }
 
@@ -495,8 +500,8 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--color-primary);
-    box-shadow: 0 0 6px rgba(var(--color-primary-rgb), 0.5);
+    background: var(--color-accent);
+    box-shadow: 0 0 6px rgba(var(--color-accent-rgb), 0.5);
     flex-shrink: 0;
 }
 
@@ -528,7 +533,7 @@
 
 .edu-year {
     font-size: 0.7rem;
-    color: var(--color-primary);
+    color: var(--color-accent);
     margin-top: 3px;
 }
 
@@ -593,9 +598,9 @@
 }
 
 .skill-tag:active {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-    background: var(--color-primary-dim);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
     transform: scale(0.94);
 }
 
@@ -668,7 +673,8 @@
 /* Card */
 .project-card {
     background: var(--color-surface);
-    border: 1.5px solid var(--color-border);
+    color: var(--color-text);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-xl);
     padding: 24px;
     height: 100%;
@@ -682,37 +688,51 @@
 }
 
 .project-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-primary-dim);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(var(--color-accent-rgb), 0.2);
 }
 
-/* Fix for featured cards (which have primary background by default) */
-.project-card.featured {
-    background: var(--color-primary);
-    color: var(--color-bg);
+.project-card .project-icon {
+    background: rgba(var(--color-bg-rgb), 0.1);
+    color: var(--color-bg) !important;
+    border-color: rgba(var(--color-bg-rgb), 0.2);
 }
 
-.project-card.featured .project-icon {
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.project-card.featured:hover .project-icon {
+.project-card:hover .project-icon {
     background: var(--color-bg);
     color: var(--color-primary) !important;
 }
 
-.project-card.featured .project-link,
-.project-card.featured:hover .project-link {
-    color: var(--color-bg);
+.project-card .project-link {
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+    background: rgba(var(--color-accent-rgb), 0.05);
 }
 
-:root[data-theme="light"] .project-card {
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
+.project-card .project-link:hover {
+    background: var(--color-accent) !important;
+    color: #FFFFFF !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.3);
 }
+
+.project-card .project-title {
+    color: var(--color-text-emphasis);
+}
+
+.project-card .project-description {
+    color: var(--color-text-muted);
+    opacity: 0.9;
+}
+
+.project-card .tech-tag {
+    background: var(--color-surface-2);
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
+}
+
+/* Removed light mode override to maintain high-contrast "featured" look */
 
 /* Spotlight — desktop only */
 .project-card__spotlight {
@@ -735,26 +755,26 @@
 }
 
 .project-icon {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-accent-dim);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-primary-dim);
-    border-radius: var(--radius-sm);
-    color: var(--color-primary);
+    color: var(--color-accent);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.15);
     flex-shrink: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all var(--transition-spring);
 }
 
 .project-card:hover .project-icon {
-    background: var(--color-primary);
+    background: var(--color-accent);
     color: var(--color-bg) !important;
 }
 
 .project-card:hover .project-icon svg {
     color: var(--color-bg) !important;
-    fill: currentColor !important;
 }
 
 .project-meta {
@@ -771,28 +791,42 @@
 }
 
 /* Badge */
+.project-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: rgba(var(--color-accent-rgb), 0.12);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.25);
+    color: var(--color-accent);
+    border-radius: 9999px;
+}
+
 .project-badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 8px;
-    border-radius: 99px;
-    background: rgba(var(--color-primary-rgb), 0.12);
-    border: 1px solid rgba(var(--color-primary-rgb), 0.25);
-    color: var(--color-primary);
-    font-size: 0.63rem;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(var(--color-bg-rgb), 0.1);
+    border: 1px solid rgba(var(--color-bg-rgb), 0.2);
+    color: var(--color-bg);
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+    border-radius: 9999px;
 }
 
 .badge-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--color-primary);
+    background: var(--color-accent);
     flex-shrink: 0;
     animation: dotPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.4);
 }
 
 /* Body */
@@ -877,9 +911,9 @@
 }
 
 .project-link:hover {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-    background: var(--color-primary-dim);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
 }
 
 /* Touch tap state */
@@ -995,14 +1029,14 @@
 .info-icon {
     width: 38px;
     height: 38px;
-    background: var(--color-primary-dim);
+    background: var(--color-accent-dim);
     border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary);
+    color: var(--color-accent);
     flex-shrink: 0;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: background 0.2s ease, color 0.2s ease, transform var(--transition-spring);
 }
 
 .info-text {
@@ -1474,14 +1508,14 @@
 
     /* Btn hover */
     .btn--primary:hover {
-        background: color-mix(in srgb, var(--color-primary) 85%, #fff);
+        background: var(--color-accent);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(var(--color-primary-rgb), 0.3);
+        box-shadow: 0 8px 24px rgba(var(--color-accent-rgb), 0.3);
     }
 
     .btn--secondary:hover {
         background: var(--color-surface, rgba(255, 255, 255, 0.10));
-        border-color: var(--color-primary);
+        border-color: var(--color-accent);
         transform: translateY(-2px);
     }
 
@@ -1517,7 +1551,7 @@
         inset: 0;
         border-radius: inherit;
         background: radial-gradient(260px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                var(--color-primary-glow),
+                rgba(var(--color-accent-rgb), 0.15),
                 transparent 70%);
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -1532,7 +1566,7 @@
     .project-card:hover {
         transform:
             translateY(-6px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
-        box-shadow: var(--shadow-lg), 0 0 40px rgba(var(--color-primary-rgb), 0.08);
+        box-shadow: var(--shadow-lg), 0 0 40px rgba(var(--color-accent-rgb), 0.08);
     }
 
     .project-icon {
@@ -1609,7 +1643,7 @@
     }
 
     .project-card:hover .project-title {
-        color: var(--color-text) !important;
+        color: var(--color-accent) !important;
     }
 
     .project-card:hover .project-link {
