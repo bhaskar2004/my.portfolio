@@ -693,17 +693,6 @@
     border-color: rgba(var(--color-accent-rgb), 0.2);
 }
 
-.project-card .project-icon {
-    background: rgba(var(--color-bg-rgb), 0.1);
-    color: var(--color-bg) !important;
-    border-color: rgba(var(--color-bg-rgb), 0.2);
-}
-
-.project-card:hover .project-icon {
-    background: var(--color-bg);
-    color: var(--color-primary) !important;
-}
-
 .project-card .project-link {
     color: var(--color-text);
     border-color: var(--color-border-strong);
@@ -902,12 +891,13 @@
     font-size: 0.72rem;
     font-family: var(--font-mono);
     font-weight: 600;
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent-dim);
     border-radius: var(--radius-full);
     transition: all 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    background: var(--color-accent-dim);
 }
 
 .project-link:hover {
