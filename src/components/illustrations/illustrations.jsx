@@ -1,16 +1,252 @@
 /**
- * Inline SVG Illustration Components — Precision Redesign
+ * Illo-style Standing Character Illustrations
+ * Matches existing illustration style: thin blue monoline, oversized hands,
+ * geometric bodies, bubble/afro/bun/ponytail/cap/spiky hair variants.
  *
- * All gradients are namespaced per-component to avoid DOM ID collisions.
- * Physical/character scenes use hardcoded hex (no dark-mode inversion).
- * Animations: float, sparkle, cursor-blink, glow — all CSS class-driven.
+ * Usage:
+ *   import { CharacterGrid, Character1, Character4 } from './IlloCharacters'
+ *
+ *   <CharacterGrid />              — all 7 in a row
+ *   <Character1 className="..." /> — individual character
  */
 
-/* ─────────────────────────────────────────────────────────────
-   HeroIllustration — Developer seated at desk, coding
-   Viewbox: 520 × 420
-   Layers: background → chair → body → neck/head → desk → laptop → accessories
-   ───────────────────────────────────────────────────────────── */
+const S = '#60A5FA'
+const A = '#2563EB'
+const W = 1.8
+
+/** Reusable oversized hand */
+const Hand = ({ x, y, flip = false }) => {
+    const sc = flip ? -1 : 1
+    return (
+        <g transform={`translate(${x},${y}) scale(${sc},1)`}>
+            <ellipse cx="0" cy="0" rx="11" ry="7.5" stroke={S} strokeWidth="1.4" fill={A} fillOpacity="0.08" />
+            <line x1="-7" y1="-6" x2="-12" y2="-11" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+            <line x1="-2" y1="-8" x2="-4" y2="-15" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+            <line x1="5" y1="-8" x2="5" y2="-16" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+            <line x1="11" y1="-6" x2="15" y2="-12" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+        </g>
+    )
+}
+
+/** Shared legs + feet */
+const Legs = ({ yStart = 108 }) => (
+    <>
+        <path d={`M0,${yStart} L-4,${yStart + 67}`} stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d={`M24,${yStart} L28,${yStart + 67}`} stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d={`M-4,${yStart + 67} Q-10,${yStart + 70} -16,${yStart + 67}`} stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        <path d={`M28,${yStart + 67} Q34,${yStart + 70} 40,${yStart + 67}`} stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+    </>
+)
+
+/** Shared standard arms */
+const Arms = ({ raiseRight = false }) => (
+    <>
+        {/* Left arm */}
+        <path d="M-8,22 Q-24,50 -26,82" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+        <Hand x={-27} y={90} flip={false} />
+        {/* Right arm */}
+        {raiseRight ? (
+            <>
+                <path d="M32,22 Q52,0 62,-16" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+                <g transform="translate(68,-22) rotate(-40)">
+                    <ellipse cx="0" cy="0" rx="11" ry="7.5" stroke={S} strokeWidth="1.4" fill={A} fillOpacity="0.08" />
+                    <line x1="-7" y1="-6" x2="-12" y2="-11" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+                    <line x1="-2" y1="-8" x2="-4" y2="-15" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+                    <line x1="5" y1="-8" x2="5" y2="-16" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+                    <line x1="11" y1="-6" x2="15" y2="-12" stroke={S} strokeWidth="1.2" strokeLinecap="round" />
+                </g>
+            </>
+        ) : (
+            <>
+                <path d="M32,22 Q48,50 50,82" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+                <Hand x={51} y={90} flip={true} />
+            </>
+        )}
+    </>
+)
+
+/** Shared neck */
+const Neck = () => (
+    <>
+        <line x1="8" y1="0" x2="8" y2="12" stroke={S} strokeWidth={W} />
+        <line x1="16" y1="0" x2="16" y2="12" stroke={S} strokeWidth={W} />
+    </>
+)
+
+/** Shared face */
+const Face = ({ cx = 12, cy = -18 }) => (
+    <>
+        <circle cx={cx} cy={cy} r="18" stroke={S} strokeWidth={W} fill="none" />
+        <circle cx={cx - 6} cy={cy + 3} r="2" fill={S} />
+        <circle cx={cx + 6} cy={cy + 3} r="2" fill={S} />
+        <path d={`M${cx - 4},${cy + 10} Q${cx},${cy + 13} ${cx + 4},${cy + 10}`} stroke={S} strokeWidth="1.4" fill="none" strokeLinecap="round" />
+    </>
+)
+
+// ─── Individual Characters ───────────────────────────────────────────────────
+
+/** Bubble hair, plain outfit */
+export const Character1 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char1 ${className}`} viewBox="-50 -80 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="-8" cy="-48" r="9" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <circle cx="4" cy="-54" r="10" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <circle cx="18" cy="-48" r="8" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <Face />
+        <Neck />
+        <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,100 Q32,108 12,108 Q-8,108 -8,100Z" stroke={S} strokeWidth={W} fill="none" />
+        <line x1="-8" y1="60" x2="32" y2="60" stroke={S} strokeWidth="1" opacity=".3" />
+        <Arms />
+        <Legs />
+    </svg>
+)
+
+/** Cap hair, wide belt */
+export const Character2 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char2 ${className}`} viewBox="-50 -80 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M-20,-20 Q-22,-36 12,-38 Q46,-36 44,-20" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".08" />
+        <circle cx="12" cy="-46" r="4" fill={S} fillOpacity=".5" />
+        <Face />
+        <Neck />
+        <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,100 Q32,108 12,108 Q-8,108 -8,100Z" stroke={S} strokeWidth={W} fill="none" />
+        <path d="M2,10 L12,26 L22,10" stroke={S} strokeWidth="1.3" fill="none" opacity=".5" />
+        <rect x="-8" y="54" width="40" height="10" rx="2" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".1" />
+        <Arms />
+        <Legs />
+    </svg>
+)
+
+/** Spiky hair, filled blue pants */
+export const Character3 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char3 ${className}`} viewBox="-50 -80 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M-18,-20 Q-20,-36 12,-38 Q44,-36 42,-20" stroke={S} strokeWidth="1.6" fill="none" />
+        <circle cx="12" cy="-42" r="6" stroke={S} strokeWidth="1.4" fill={A} fillOpacity=".15" />
+        <Face />
+        <Neck />
+        {/* Shirt */}
+        <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,64 Q32,68 12,68 Q-8,68 -8,64Z" stroke={S} strokeWidth={W} fill="none" />
+        <rect x="0" y="22" width="10" height="10" rx="1.5" stroke={S} strokeWidth="1" fill="none" opacity=".35" />
+        {/* Filled pants */}
+        <path d="M-8,64 Q-8,72 12,72 Q32,72 32,64 L32,108 Q32,112 12,112 Q-8,112 -8,108Z" stroke={S} strokeWidth={W} fill={S} fillOpacity=".18" />
+        <Arms />
+        <Legs yStart={112} />
+    </svg>
+)
+
+/** Afro hair, long coat */
+export const Character4 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char4 ${className}`} viewBox="-40 -90 120 330" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="-10" cy="-46" r="12" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <circle cx="6" cy="-52" r="13" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <circle cx="22" cy="-46" r="11" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+        <circle cx="-2" cy="-36" r="8" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".07" />
+        <circle cx="16" cy="-36" r="8" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".07" />
+        <Face cx={6} cy={-20} />
+        <line x1="2" y1="0" x2="2" y2="14" stroke={S} strokeWidth={W} />
+        <line x1="10" y1="0" x2="10" y2="14" stroke={S} strokeWidth={W} />
+        <path d="M-10,26 Q-10,18 6,18 Q22,18 22,26 L26,120 Q26,128 6,128 Q-14,128 -10,120Z" stroke={S} strokeWidth={W} fill="none" />
+        <line x1="-10" y1="68" x2="22" y2="68" stroke={S} strokeWidth="1" opacity=".3" />
+        {/* Left arm */}
+        <path d="M-10,30 Q-24,56 -26,86" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+        <Hand x={-27} y={94} flip={false} />
+        {/* Right arm */}
+        <path d="M22,30 Q36,56 38,86" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+        <Hand x={39} y={94} flip={true} />
+        {/* Legs below coat */}
+        <path d="M-6,128 L-10,195" stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d="M18,128 L22,195" stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d="M-10,195 Q-16,198 -22,195" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        <path d="M22,195 Q28,198 34,195" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+    </svg>
+)
+
+/** Curly bob, earrings, waving arm */
+export const Character5 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char5 ${className}`} viewBox="-50 -80 160 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M-20,-16 Q-22,-36 12,-38 Q46,-36 44,-16" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".08" />
+        <circle cx="-14" cy="-22" r="5" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".1" />
+        <circle cx="38" cy="-22" r="5" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".1" />
+        <Face />
+        <circle cx="-6" cy="-12" r="3" stroke={S} strokeWidth="1.2" fill="none" opacity=".6" />
+        <circle cx="30" cy="-12" r="3" stroke={S} strokeWidth="1.2" fill="none" opacity=".6" />
+        <Neck />
+        <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,100 Q32,108 12,108 Q-8,108 -8,100Z" stroke={S} strokeWidth={W} fill="none" />
+        <path d="M2,14 L2,64 Q2,70 12,70 Q22,70 22,64 L22,14" stroke={S} strokeWidth="1" fill={A} fillOpacity=".07" opacity=".5" />
+        <Arms raiseRight={true} />
+        <Legs />
+    </svg>
+)
+
+/** Top bun, filled blue jacket */
+export const Character6 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char6 ${className}`} viewBox="-50 -80 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="-46" r="10" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".2" />
+        <path d="M2,-36 Q12,-28 22,-36" stroke={S} strokeWidth="1.4" fill="none" />
+        <Face />
+        <Neck />
+        {/* Filled jacket */}
+        <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,64 Q32,70 12,70 Q-8,70 -8,64Z" stroke={S} strokeWidth={W} fill={S} fillOpacity=".18" />
+        <path d="M2,10 L12,28 L22,10" stroke={S} strokeWidth="1.3" fill="none" opacity=".6" />
+        {/* Trousers */}
+        <path d="M-8,64 Q-8,72 12,72 Q32,72 32,64 L32,108 Q32,112 12,112 Q-8,112 -8,108Z" stroke={S} strokeWidth={W} fill="none" />
+        <Arms />
+        <Legs yStart={112} />
+    </svg>
+)
+
+/** Ponytail, flared skirt */
+export const Character7 = ({ className = '' }) => (
+    <svg className={`illustration illustration--char7 ${className}`} viewBox="-50 -70 130 310" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M-18,-16 Q-20,-34 12,-36 Q36,-34 36,-16" stroke={S} strokeWidth="1.6" fill="none" />
+        <path d="M36,-16 Q50,-8 44,12" stroke={S} strokeWidth="2" fill="none" strokeLinecap="round" />
+        <Face />
+        <Neck />
+        {/* Top */}
+        <path d="M-4,18 Q-4,10 12,10 Q28,10 28,18 L28,60 Q28,66 12,66 Q-4,66 -4,60Z" stroke={S} strokeWidth={W} fill="none" />
+        {/* Flared skirt */}
+        <path d="M-4,60 Q-14,68 -18,108 Q-18,114 12,114 Q42,114 42,108 Q38,68 28,60Z" stroke={S} strokeWidth={W} fill={S} fillOpacity=".08" />
+        {/* Arms adapted for narrower torso */}
+        <path d="M-4,22 Q-18,46 -20,76" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+        <Hand x={-21} y={84} flip={false} />
+        <path d="M28,22 Q44,46 46,76" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+        <Hand x={47} y={84} flip={true} />
+        {/* Legs */}
+        <path d="M2,114 L-2,185" stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d="M22,114 L26,185" stroke={S} strokeWidth={W} strokeLinecap="round" />
+        <path d="M-2,185 Q-8,188 -14,185" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        <path d="M26,185 Q32,188 38,185" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+    </svg>
+)
+
+// ─── CSS for floating animations (add to your global stylesheet) ─────────────
+//
+// .illustration--char1 { animation: illoFloat 4s ease-in-out infinite; }
+// .illustration--char2 { animation: illoFloat 4.6s ease-in-out infinite 0.4s; }
+// .illustration--char3 { animation: illoFloat 3.8s ease-in-out infinite 0.8s; }
+// .illustration--char4 { animation: illoFloat 5s ease-in-out infinite 1s; }
+// .illustration--char5 { animation: illoFloat 4.2s ease-in-out infinite 0.6s; }
+// .illustration--char6 { animation: illoFloat 4.8s ease-in-out infinite 0.2s; }
+// .illustration--char7 { animation: illoFloat 4.4s ease-in-out infinite 1.2s; }
+//
+// @keyframes illoFloat {
+//   0%, 100% { transform: translateY(0); }
+//   50%       { transform: translateY(-8px); }
+// }
+
+// ─── CharacterGrid — all 7 side by side ──────────────────────────────────────
+export const CharacterGrid = ({ className = '' }) => (
+    <div className={`illustration-grid ${className}`} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <Character1 style={{ width: 80 }} />
+        <Character2 style={{ width: 80 }} />
+        <Character3 style={{ width: 80 }} />
+        <Character4 style={{ width: 80 }} />
+        <Character5 style={{ width: 80 }} />
+        <Character6 style={{ width: 80 }} />
+        <Character7 style={{ width: 80 }} />
+    </div>
+)
+
+/* ─── Modern SaaS-style Illustration Suite ─── */
+
 export const HeroIllustration = ({ className = '' }) => (
     <svg
         className={`illustration illustration--hero ${className}`}
@@ -19,336 +255,86 @@ export const HeroIllustration = ({ className = '' }) => (
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
     >
-        <defs>
-            <linearGradient id="h-wood" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#B8845A" />
-                <stop offset="40%" stopColor="#D4A574" />
-                <stop offset="100%" stopColor="#C09060" />
-            </linearGradient>
-            <linearGradient id="h-laptop" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#D8D8E2" />
-                <stop offset="100%" stopColor="#ACACBA" />
-            </linearGradient>
-            <radialGradient id="h-screenglow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#4361EE" stopOpacity="0.18" />
-                <stop offset="100%" stopColor="#4361EE" stopOpacity="0" />
-            </radialGradient>
-            <radialGradient id="h-bgglow" cx="50%" cy="38%" r="55%">
-                <stop offset="0%" stopColor="#4361EE" stopOpacity="0.05" />
-                <stop offset="100%" stopColor="#4361EE" stopOpacity="0" />
-            </radialGradient>
-            <clipPath id="h-screenclip">
-                <rect x="158" y="193" width="204" height="77" rx="5" />
-            </clipPath>
-        </defs>
+        {/* Background glow and orbit lines */}
+        <circle cx="260" cy="210" r="190" stroke={S} strokeWidth="0.8" strokeDasharray="4 8" opacity="0.2" fill="none" />
+        <circle cx="260" cy="210" r="140" stroke={S} strokeWidth="0.8" strokeDasharray="3 6" opacity="0.15" fill="none" />
+        <circle cx="260" cy="210" r="210" fill={A} fillOpacity="0.02" filter="blur(50px)" />
 
-        {/* Ambient background */}
-        <ellipse cx="260" cy="180" rx="260" ry="210" fill="url(#h-bgglow)" />
-
-        {/* ── Chair back ── */}
-        <rect x="212" y="186" width="96" height="106" rx="13" fill="#18182A" />
-        <rect x="218" y="192" width="84" height="94" rx="10" fill="#21213A" />
-        {/* Backrest stitching lines */}
-        <line x1="218" y1="222" x2="302" y2="222" stroke="#18182A" strokeWidth="1.2" />
-        <line x1="218" y1="252" x2="302" y2="252" stroke="#18182A" strokeWidth="1.2" />
-        <line x1="218" y1="272" x2="302" y2="272" stroke="#18182A" strokeWidth="1.2" />
-        {/* Lumbar bump */}
-        <path d="M218,252 Q260,248 302,252" stroke="#2A2A48" strokeWidth="3" fill="none" />
-
-        {/* Arm rests */}
-        <rect x="196" y="220" width="18" height="38" rx="7" fill="#18182A" />
-        <rect x="306" y="220" width="18" height="38" rx="7" fill="#18182A" />
-        {/* Arm-rest pads */}
-        <rect x="196" y="250" width="18" height="10" rx="5" fill="#28284A" />
-        <rect x="306" y="250" width="18" height="10" rx="5" fill="#28284A" />
-
-        {/* Chair pole + star base */}
-        <rect x="252" y="292" width="16" height="55" rx="5" fill="#2A2A3E" />
-        <ellipse cx="260" cy="350" rx="34" ry="8" fill="#18182A" />
-        <ellipse cx="260" cy="348" rx="30" ry="5" fill="#0A0A14" opacity="0.45" />
-        {/* Star legs */}
-        {[0, 72, 144, 216, 288].map((deg, i) => {
-            const r = deg * Math.PI / 180
-            const x2 = 260 + Math.cos(r) * 30
-            const y2 = 350 + Math.sin(r) * 7
-            return <line key={i} x1="260" y1="348" x2={x2.toFixed(1)} y2={y2.toFixed(1)} stroke="#2A2A3E" strokeWidth="6" strokeLinecap="round" />
-        })}
-
-        {/* ── Shirt / upper body ── */}
-        {/* Main torso shape visible above desk */}
-        <path
-            d="M208,202 Q200,220 202,268 Q204,286 210,294
-         Q234,306 260,307 Q286,306 310,294
-         Q316,286 318,268 Q320,220 312,202
-         Q286,185 260,182 Q234,185 208,202Z"
-            fill="#2D3494"
-        />
-        {/* Shirt collar — crew neck */}
-        <path d="M245,193 L260,214 L275,193 Q270,188 260,186 Q250,188 245,193Z" fill="#252882" />
-        {/* Shirt button placket hint */}
-        <line x1="260" y1="214" x2="260" y2="290" stroke="#252882" strokeWidth="1.5" opacity="0.4" />
-        {/* Shirt shoulder seams */}
-        <path d="M228,194 Q218,202 210,218" stroke="#252882" strokeWidth="1.5" fill="none" opacity="0.5" />
-        <path d="M292,194 Q302,202 310,218" stroke="#252882" strokeWidth="1.5" fill="none" opacity="0.5" />
-        {/* Breast pocket */}
-        <rect x="276" y="220" width="22" height="18" rx="3" fill="#252882" opacity="0.45" />
-        <line x1="276" y1="226" x2="298" y2="226" stroke="#1E1E70" strokeWidth="1" opacity="0.5" />
-
-        {/* ── Arms (shirt sleeve → skin forearm) ── */}
-        {/* Left upper arm */}
-        <path d="M210,208 Q186,250 168,284" stroke="#2D3494" strokeWidth="22" strokeLinecap="round" fill="none" />
-        {/* Left forearm skin */}
-        <path d="M192,264 Q178,276 166,286" stroke="#F0C090" strokeWidth="16" strokeLinecap="round" fill="none" />
-        {/* Left hand */}
-        <ellipse cx="163" cy="288" rx="15" ry="9" fill="#F0C090" />
-        <ellipse cx="155" cy="285" rx="5" ry="3.5" fill="#EAB880" />
-
-        {/* Right upper arm */}
-        <path d="M310,208 Q334,250 352,284" stroke="#2D3494" strokeWidth="22" strokeLinecap="round" fill="none" />
-        {/* Right forearm skin */}
-        <path d="M328,264 Q342,276 354,286" stroke="#F0C090" strokeWidth="16" strokeLinecap="round" fill="none" />
-        {/* Right hand */}
-        <ellipse cx="357" cy="288" rx="15" ry="9" fill="#F0C090" />
-        <ellipse cx="365" cy="285" rx="5" ry="3.5" fill="#EAB880" />
-
-        {/* ── Neck ── */}
-        <rect x="249" y="162" width="22" height="28" rx="9" fill="#F5C5A3" />
-        <rect x="249" y="162" width="7" height="28" rx="4" fill="#E8B08A" opacity="0.4" />
-
-        {/* ── Head ── */}
-        <circle cx="260" cy="136" r="34" fill="#F5C5A3" />
-        {/* Subtle shadow on right side of face */}
-        <path d="M260,103 Q292,107 293,136 Q292,164 260,168" fill="#E8A87C" opacity="0.2" />
-
-        {/* ── Hair ── */}
-        {/* Back hair mass */}
-        <path d="M227,130 Q228,100 260,96 Q292,100 293,130 Q284,108 260,105 Q236,108 227,130Z" fill="#3D2B1F" />
-        {/* Top layer hair */}
-        <path d="M228,130 Q226,112 242,104 Q260,98 278,104 Q294,112 292,130" fill="#4A3328" />
-        {/* Side hair left (covers ear partially) */}
-        <path d="M227,130 Q223,142 226,154 Q230,140 235,132Z" fill="#3D2B1F" />
-        {/* Side hair right */}
-        <path d="M293,130 Q297,142 294,154 Q290,140 285,132Z" fill="#3D2B1F" />
-        {/* Hair highlight */}
-        <path d="M248,100 Q260,96 272,100 Q264,104 256,104Z" fill="#6A4C38" opacity="0.5" />
-
-        {/* ── Ears ── */}
-        <ellipse cx="227" cy="139" rx="5.5" ry="7.5" fill="#F0C090" />
-        <ellipse cx="293" cy="139" rx="5.5" ry="7.5" fill="#F0C090" />
-        {/* Inner ear detail */}
-        <ellipse cx="226" cy="139" rx="2.5" ry="4" fill="#DDA070" opacity="0.5" />
-        <ellipse cx="294" cy="139" rx="2.5" ry="4" fill="#DDA070" opacity="0.5" />
-
-        {/* ── Face details ── */}
-        {/* Eyebrows */}
-        <path d="M242,124 Q249,120 257,122" stroke="#3D2B1F" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-        <path d="M263,122 Q271,120 278,124" stroke="#3D2B1F" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-
-        {/* Left eye */}
-        <ellipse cx="250" cy="133" rx="6.5" ry="5" fill="#FFFFFF" />
-        <circle cx="251" cy="133" r="3.2" fill="#3D2B1F" />
-        <circle cx="252" cy="132" r="1.1" fill="#FFFFFF" opacity="0.9" />
-        {/* Upper lash */}
-        <path d="M243,129 Q250,125 257,129" stroke="#3D2B1F" strokeWidth="1.4" fill="none" />
-
-        {/* Right eye */}
-        <ellipse cx="270" cy="133" rx="6.5" ry="5" fill="#FFFFFF" />
-        <circle cx="271" cy="133" r="3.2" fill="#3D2B1F" />
-        <circle cx="272" cy="132" r="1.1" fill="#FFFFFF" opacity="0.9" />
-        <path d="M263,129 Q270,125 277,129" stroke="#3D2B1F" strokeWidth="1.4" fill="none" />
-
-        {/* Nose */}
-        <path d="M257,144 Q260,150 263,144" stroke="#D4967A" strokeWidth="1.4" fill="none" strokeLinecap="round" />
-        <circle cx="255.5" cy="149" r="1.8" fill="#D4967A" opacity="0.35" />
-        <circle cx="264.5" cy="149" r="1.8" fill="#D4967A" opacity="0.35" />
-
-        {/* Mouth — slight focused smile */}
-        <path d="M251,157 Q260,162 269,157" stroke="#C4846A" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-        <path d="M251,157 Q255,159 260,157" fill="#E08070" opacity="0.25" />
-
-        {/* Chin / jaw definition */}
-        <path d="M232,150 Q228,160 234,168" stroke="#DDA070" strokeWidth="0.8" fill="none" opacity="0.3" />
-
-        {/* ── Desk ── */}
-        {/* Surface */}
-        <rect x="76" y="293" width="368" height="19" rx="9" fill="url(#h-wood)" />
-        {/* Front edge darker strip */}
-        <rect x="76" y="308" width="368" height="5" rx="2" fill="#A07048" opacity="0.35" />
-        {/* Surface sheen */}
-        <rect x="80" y="294" width="360" height="5" rx="2" fill="#F0D0A8" opacity="0.14" />
-        {/* Legs */}
-        <rect x="114" y="312" width="16" height="86" rx="5" fill="#9C7045" />
-        <rect x="390" y="312" width="16" height="86" rx="5" fill="#9C7045" />
-        {/* Feet */}
-        <rect x="100" y="394" width="44" height="9" rx="4" fill="#80583A" />
-        <rect x="376" y="394" width="44" height="9" rx="4" fill="#80583A" />
-
-        {/* ── Laptop ── */}
-        {/* Body/base */}
-        <rect x="140" y="277" width="240" height="18" rx="7" fill="url(#h-laptop)" />
-        {/* Keyboard inset */}
-        <rect x="149" y="280" width="222" height="12" rx="4" fill="#0C0C1C" opacity="0.58" />
-        {/* Key rows (3 rows of subtle rects) */}
-        {[152, 172, 192, 212, 232, 252, 272, 292, 312, 332].map((x, i) => (
-            <rect key={i} x={x} y="281" width="17" height="4" rx="1.5" fill="#FFFFFF" opacity="0.055" />
-        ))}
-        {[155, 178, 202, 228, 254, 278, 302].map((x, i) => (
-            <rect key={i} x={x} y="287" width="20" height="3.5" rx="1.5" fill="#FFFFFF" opacity="0.04" />
-        ))}
-        {/* Trackpad */}
-        <rect x="218" y="282" width="84" height="7" rx="3" fill="#0C0C1C" opacity="0.28" />
-        {/* Hinge */}
-        <rect x="222" y="274" width="76" height="5" rx="2" fill="#ACACBA" />
-
-        {/* Screen outer frame */}
-        <rect x="146" y="182" width="228" height="96" rx="11" fill="#1A1A28" stroke="url(#h-laptop)" strokeWidth="2.5" />
-        {/* Screen inner (dark glass) */}
-        <rect x="155" y="191" width="210" height="80" rx="7" fill="#0D1117" />
-        {/* Screen ambient glow */}
-        <rect x="155" y="191" width="210" height="80" rx="7" fill="url(#h-screenglow)" />
-        {/* Camera */}
-        <circle cx="260" cy="187" r="2.2" fill="#2E2E44" />
-        <circle cx="260" cy="187" r="0.9" fill="#1A1A2E" />
-
-        {/* ── Code on screen ── */}
-        {/* Line-number gutter */}
-        <rect x="157" y="193" width="18" height="76" rx="3" fill="#0A0A12" opacity="0.6" />
-        {[197, 207, 217, 227, 237, 247, 257, 267].map((y, i) => (
-            <rect key={i} x="160" y={y} width="10" height="3" rx="1.5" fill="#3E4462" />
-        ))}
-
-        {/* line 1: import React from 'react' */}
-        <rect x="180" y="196" width="24" height="4" rx="2" fill="#FF7B72" />
-        <rect x="207" y="196" width="28" height="4" rx="2" fill="#CDD9E5" opacity="0.7" />
-        <rect x="238" y="196" width="18" height="4" rx="2" fill="#FF7B72" />
-        <rect x="259" y="196" width="36" height="4" rx="2" fill="#A5D6FF" />
-
-        {/* line 2: const App = () => \{ */}
-        <rect x="180" y="207" width="24" height="4" rx="2" fill="#FF7B72" />
-        <rect x="207" y="207" width="22" height="4" rx="2" fill="#D2A8FF" />
-        <rect x="232" y="207" width="8" height="4" rx="2" fill="#CDD9E5" opacity="0.4" />
-        <rect x="243" y="207" width="26" height="4" rx="2" fill="#FFA657" />
-        <rect x="272" y="207" width="7" height="4" rx="2" fill="#CDD9E5" opacity="0.4" />
-
-        {/* line 3:   return ( */}
-        <rect x="188" y="218" width="28" height="4" rx="2" fill="#FF7B72" />
-        <rect x="219" y="218" width="7" height="4" rx="2" fill="#CDD9E5" opacity="0.35" />
-
-        {/* line 4:     \<div className="app"\> */}
-        <rect x="196" y="229" width="7" height="4" rx="2" fill="#7EE787" />
-        <rect x="205" y="229" width="16" height="4" rx="2" fill="#7EE787" />
-        <rect x="224" y="229" width="38" height="4" rx="2" fill="#D2A8FF" />
-        <rect x="265" y="229" width="32" height="4" rx="2" fill="#A5D6FF" />
-
-        {/* line 5:       \<h1\>Hello World\</h1\> */}
-        <rect x="204" y="240" width="14" height="4" rx="2" fill="#7EE787" />
-        <rect x="221" y="240" width="36" height="4" rx="2" fill="#CDD9E5" opacity="0.8" />
-        <rect x="260" y="240" width="18" height="4" rx="2" fill="#7EE787" />
-
-        {/* line 6:     \</div\> */}
-        <rect x="196" y="251" width="26" height="4" rx="2" fill="#7EE787" />
-
-        {/* line 7:   ) */}
-        <rect x="188" y="262" width="7" height="4" rx="2" fill="#CDD9E5" opacity="0.35" />
-
-        {/* Cursor blink */}
-        <rect x="180" y="262" width="2.5" height="7" rx="1" fill="#58A6FF" className="illustration__cursor" />
-
-        {/* ── Coffee mug ── */}
-        {/* Mug body */}
-        <rect x="390" y="258" width="30" height="34" rx="7" fill="#F8F8FA" />
-        <rect x="390" y="258" width="30" height="7" rx="4" fill="#F8F8FA" />
-        {/* Coffee surface */}
-        <ellipse cx="405" cy="262" rx="12" ry="4" fill="#7C5132" />
-        <ellipse cx="402" cy="262" rx="5" ry="2" fill="#9B6844" opacity="0.5" />
-        {/* Mug handle */}
-        <path d="M420,265 Q432,265 432,275 Q432,285 420,285" stroke="#E0E0E4" strokeWidth="2" fill="none" strokeLinecap="round" />
-        {/* Mug saucer */}
-        <ellipse cx="405" cy="292" rx="18" ry="3" fill="#D0D0D8" opacity="0.4" />
-        {/* Steam */}
-        <path d="M397,255 Q394,245 397,237" stroke="#AAAABC" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity="0.45" className="illustration__float" style={{ animationDelay: '0.3s' }} />
-        <path d="M405,253 Q402,242 405,234" stroke="#AAAABC" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity="0.32" className="illustration__float" style={{ animationDelay: '0.8s' }} />
-        <path d="M413,255 Q410,245 413,237" stroke="#AAAABC" strokeWidth="1.4" fill="none" strokeLinecap="round" opacity="0.38" className="illustration__float" style={{ animationDelay: '1.3s' }} />
-
-        {/* Sticky note on desk */}
-        <rect x="430" y="266" width="42" height="36" rx="4" fill="#FFE27A" />
-        <rect x="430" y="266" width="42" height="6" rx="2" fill="#F0D060" />
-        <line x1="436" y1="278" x2="466" y2="278" stroke="#C8A840" strokeWidth="1.2" opacity="0.6" />
-        <line x1="436" y1="284" x2="460" y2="284" stroke="#C8A840" strokeWidth="1.2" opacity="0.5" />
-        <line x1="436" y1="290" x2="464" y2="290" stroke="#C8A840" strokeWidth="1.2" opacity="0.4" />
-        <line x1="436" y1="296" x2="454" y2="296" stroke="#C8A840" strokeWidth="1.2" opacity="0.3" />
-
-        {/* ── Floating tech badges ── */}
-        {/* React */}
-        <g className="illustration__float" style={{ animationDelay: '0s' }}>
-            <rect x="352" y="92" width="72" height="38" rx="12" fill="#20232A" stroke="#61DAFB" strokeWidth="1.5" opacity="0.94" />
-            {/* React atom icon */}
-            <circle cx="376" cy="111" r="4.5" fill="none" stroke="#61DAFB" strokeWidth="1.8" />
-            <ellipse cx="376" cy="111" rx="12" ry="4.5" fill="none" stroke="#61DAFB" strokeWidth="1" />
-            <ellipse cx="376" cy="111" rx="12" ry="4.5" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 376 111)" />
-            <ellipse cx="376" cy="111" rx="12" ry="4.5" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 376 111)" />
-            {/* Label */}
-            <rect x="393" y="105" width="22" height="4" rx="2" fill="#61DAFB" opacity="0.85" />
-            <rect x="393" y="113" width="16" height="3" rx="1.5" fill="#61DAFB" opacity="0.4" />
+        {/* Floating React Atom (top right) */}
+        <g transform="translate(380, 70)" className="illustration__float">
+            <circle cx="0" cy="0" r="4.5" fill={S} />
+            <ellipse cx="0" cy="0" rx="18" ry="6" stroke={S} strokeWidth="1.2" fill="none" transform="rotate(30)" />
+            <ellipse cx="0" cy="0" rx="18" ry="6" stroke={S} strokeWidth="1.2" fill="none" transform="rotate(90)" />
+            <ellipse cx="0" cy="0" rx="18" ry="6" stroke={S} strokeWidth="1.2" fill="none" transform="rotate(150)" />
         </g>
 
-        {/* Git */}
-        <g className="illustration__float" style={{ animationDelay: '1.5s' }}>
-            <rect x="78" y="122" width="68" height="38" rx="12" fill="#1A1A2E" stroke="#F05032" strokeWidth="1.5" opacity="0.94" />
-            {/* Git icon dots + lines */}
-            <circle cx="97" cy="141" r="4.5" fill="none" stroke="#F05032" strokeWidth="1.8" />
-            <circle cx="110" cy="133" r="3.5" fill="none" stroke="#F05032" strokeWidth="1.5" />
-            <circle cx="110" cy="149" r="3.5" fill="none" stroke="#F05032" strokeWidth="1.5" />
-            <path d="M97,136.5 L110,133" stroke="#F05032" strokeWidth="1.3" fill="none" />
-            <path d="M97,145.5 L110,149" stroke="#F05032" strokeWidth="1.3" fill="none" />
-            <rect x="118" y="137" width="20" height="4" rx="2" fill="#F05032" opacity="0.75" />
-            <rect x="118" y="144" width="14" height="3" rx="1.5" fill="#F05032" opacity="0.4" />
+        {/* Floating Git Branch (top left) */}
+        <g transform="translate(80, 90)" className="illustration__float" style={{ animationDelay: '1s' }}>
+            <path d="M0,-15 L0,15 M0,-2 L15,-2" stroke={S} strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="0" cy="-15" r="4" stroke={S} strokeWidth="1.5" fill={A} />
+            <circle cx="0" cy="15" r="4" stroke={S} strokeWidth="1.5" fill={A} />
+            <circle cx="15" cy="-2" r="4" stroke={S} strokeWidth="1.5" fill={A} />
         </g>
 
-        {/* TypeScript */}
-        <g className="illustration__float" style={{ animationDelay: '2.3s' }}>
-            <rect x="76" y="222" width="68" height="38" rx="12" fill="#007ACC" opacity="0.94" />
-            {/* TS squares */}
-            <rect x="88" y="232" width="18" height="18" rx="3" fill="#FFFFFF" opacity="0.12" />
-            <rect x="91" y="235" width="12" height="3" rx="1.5" fill="#FFFFFF" opacity="0.9" />
-            <rect x="94" y="240" width="6" height="3" rx="1.5" fill="#FFFFFF" opacity="0.8" />
-            <rect x="94" y="244" width="6" height="3" rx="1.5" fill="#FFFFFF" opacity="0.7" />
-            <rect x="110" y="232" width="8" height="18" rx="2" fill="#FFFFFF" opacity="0.12" />
-            <rect x="110" y="235" width="8" height="3" rx="1.5" fill="#FFFFFF" opacity="0.85" />
-            <rect x="113" y="240" width="5" height="3" rx="1.5" fill="#FFFFFF" opacity="0.75" />
-            <rect x="113" y="244" width="5" height="3" rx="1.5" fill="#FFFFFF" opacity="0.65" />
-            <rect x="113" y="248" width="5" height="2" rx="1" fill="#FFFFFF" opacity="0.5" />
-            <rect x="120" y="234" width="18" height="4" rx="2" fill="#FFFFFF" opacity="0.8" />
-            <rect x="120" y="241" width="14" height="3" rx="1.5" fill="#FFFFFF" opacity="0.45" />
+        {/* Floating Bug Badge (bottom right) */}
+        <g transform="translate(420, 290)" className="illustration__float" style={{ animationDelay: '1.5s' }}>
+            <rect x="-16" y="-12" width="32" height="24" rx="6" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
+            <circle cx="0" cy="0" r="4" stroke={S} strokeWidth="1.2" fill="none" />
+            <path d="M-8,-8 L-4,-4 M8,-8 L4,-4 M-10,0 L-4,0 M10,0 L4,0 M-8,8 L-4,4 M8,8 L4,4" stroke={S} strokeWidth="1.2" />
         </g>
 
-        {/* Deploy / CI */}
-        <g className="illustration__float" style={{ animationDelay: '3.2s' }}>
-            <rect x="404" y="190" width="72" height="38" rx="12" fill="#1A1A2E" stroke="#56D364" strokeWidth="1.5" opacity="0.94" />
-            {/* Check circle */}
-            <circle cx="424" cy="209" r="9" fill="none" stroke="#56D364" strokeWidth="1.8" />
-            <path d="M419,209 L423,213 L429,205" stroke="#56D364" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            <rect x="438" y="204" width="28" height="4" rx="2" fill="#56D364" opacity="0.75" />
-            <rect x="438" y="212" width="20" height="3" rx="1.5" fill="#56D364" opacity="0.4" />
+        {/* Floating Checkmark Badge (bottom left) */}
+        <g transform="translate(100, 310)" className="illustration__float" style={{ animationDelay: '0.5s' }}>
+            <circle cx="0" cy="0" r="14" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
+            <path d="M-5,0 L-1,4 L6,-4" stroke={S} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </g>
 
-        {/* ── Sparkles ── */}
-        <circle cx="110" cy="90" r="4.5" fill="#FFD166" className="illustration__sparkle" />
-        <circle cx="438" cy="68" r="5.5" fill="#FF6B6B" className="illustration__sparkle" style={{ animationDelay: '0.7s' }} />
-        <circle cx="476" cy="300" r="4" fill="#4CC9F0" className="illustration__sparkle" style={{ animationDelay: '1.4s' }} />
-        {/* Four-pointed star */}
-        <path d="M456,138 L458,148 L468,150 L458,152 L456,162 L454,152 L444,150 L454,148Z"
-            fill="#FFD166" opacity="0.55" className="illustration__sparkle" style={{ animationDelay: '0.9s' }} />
-        <path d="M46,165 L47.5,171 L54,172.5 L47.5,174 L46,180 L44.5,174 L38,172.5 L44.5,171Z"
-            fill="#4CC9F0" opacity="0.5" className="illustration__sparkle" style={{ animationDelay: '2s' }} />
+        {/* Character 1 standing on the left */}
+        <g transform="translate(110, 180) scale(1.05)">
+            <circle cx="-8" cy="-48" r="9" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+            <circle cx="4" cy="-54" r="10" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+            <circle cx="18" cy="-48" r="8" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".1" />
+            <Face />
+            <Neck />
+            <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,100 Q32,108 12,108 Q-8,108 -8,100Z" stroke={S} strokeWidth={W} fill="none" />
+            <line x1="-8" y1="60" x2="32" y2="60" stroke={S} strokeWidth="1" opacity=".3" />
+            <Arms />
+            <Legs />
+        </g>
+
+        {/* Floating Terminal/Code Panel on the right */}
+        <g transform="translate(250, 120)">
+            {/* Panel border */}
+            <rect x="0" y="0" width="200" height="160" rx="8" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.03" />
+            
+            {/* Header / window bar */}
+            <line x1="0" y1="26" x2="200" y2="26" stroke={S} strokeWidth="1.2" opacity="0.8" />
+            
+            {/* Control dots */}
+            <circle cx="14" cy="13" r="3" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.2" />
+            <circle cx="24" cy="13" r="3" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.2" />
+            <circle cx="34" cy="13" r="3" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.2" />
+            
+            {/* Code Lines */}
+            <g transform="translate(16, 42)">
+                <line x1="0" y1="0" x2="60" y2="0" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.8" />
+                <line x1="0" y1="12" x2="110" y2="12" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+                <line x1="12" y1="24" x2="80" y2="24" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+                <line x1="12" y1="36" x2="50" y2="36" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.5" />
+                
+                <line x1="24" y1="48" x2="90" y2="48" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.85" />
+                <line x1="24" y1="60" x2="70" y2="60" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+                
+                <line x1="12" y1="72" x2="120" y2="72" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.9" />
+                <line x1="0" y1="84" x2="40" y2="84" stroke={S} strokeWidth="2.5" strokeLinecap="round" opacity="0.4" />
+                
+                {/* Cursor blink */}
+                <rect x="44" y="81" width="2" height="6" fill={S} className="illustration__cursor" />
+            </g>
+        </g>
     </svg>
 )
 
-
-/* ─────────────────────────────────────────────────────────────
-   AboutIllustration — Magnifying glass over syntax-highlighted code
-   Viewbox: 240 × 240
-   ───────────────────────────────────────────────────────────── */
 export const AboutIllustration = ({ className = '' }) => (
     <svg
         className={`illustration illustration--about ${className}`}
@@ -357,192 +343,49 @@ export const AboutIllustration = ({ className = '' }) => (
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
     >
-        <defs>
-            <linearGradient id="ab-chrome" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#D8D8E0" />
-                <stop offset="100%" stopColor="#909098" />
-            </linearGradient>
-            <clipPath id="ab-lensclip">
-                <circle cx="152" cy="132" r="36" />
-            </clipPath>
-        </defs>
+        {/* Background elements */}
+        <circle cx="120" cy="120" r="95" stroke={S} strokeWidth="0.8" strokeDasharray="4 6" opacity="0.15" fill="none" />
+        <circle cx="120" cy="120" r="105" fill={A} fillOpacity="0.01" filter="blur(30px)" />
 
-        {/* ── Document ── */}
-        {/* Shadow */}
-        <rect x="36" y="36" width="120" height="158" rx="14" fill="#000000" opacity="0.06" />
-        {/* Body */}
-        <rect x="32" y="32" width="120" height="158" rx="13" fill="#FFFFFF" stroke="#E4E4EE" strokeWidth="1.5" />
-        {/* Header bar (window chrome) */}
-        <rect x="32" y="32" width="120" height="26" rx="13" fill="#F2F2FA" />
-        <rect x="32" y="46" width="120" height="12" fill="#F2F2FA" />
-        {/* Window dots */}
-        <circle cx="48" cy="45" r="4" fill="#FF6058" />
-        <circle cx="60" cy="45" r="4" fill="#FFBD2E" />
-        <circle cx="72" cy="45" r="4" fill="#28C940" />
-        {/* Folded top-right corner */}
-        <path d="M140 32 L152 44 L140 44Z" fill="#E4E4EE" />
-        <path d="M140 32 L152 44" stroke="#D0D0DC" strokeWidth="1" fill="none" />
-
-        {/* Line number gutter */}
-        <rect x="32" y="58" width="20" height="130" rx="0" fill="#F8F8FE" opacity="0.6" />
-        {[68, 80, 92, 104, 116, 128, 140, 152, 164, 176].map((y, i) => (
-            <rect key={i} x="35" y={y} width="12" height="3.5" rx="1.5" fill="#CACADE" />
-        ))}
-
-        {/* Syntax code lines */}
-        {/* Line 1 */}
-        <rect x="57" y="67" width="28" height="4.5" rx="2" fill="#FF7B72" />
-        <rect x="89" y="67" width="42" height="4.5" rx="2" fill="#A5D6FF" />
-        {/* Line 2 */}
-        <rect x="57" y="79" width="24" height="4.5" rx="2" fill="#FF7B72" />
-        <rect x="85" y="79" width="22" height="4.5" rx="2" fill="#D2A8FF" />
-        <rect x="111" y="79" width="30" height="4.5" rx="2" fill="#FFA657" />
-        {/* Line 3 */}
-        <rect x="65" y="91" width="32" height="4.5" rx="2" fill="#7EE787" />
-        <rect x="101" y="91" width="22" height="4.5" rx="2" fill="#FFA657" />
-        {/* Line 4 */}
-        <rect x="65" y="103" width="20" height="4.5" rx="2" fill="#CDD9E5" opacity="0.6" />
-        <rect x="89" y="103" width="44" height="4.5" rx="2" fill="#D2A8FF" />
-        {/* Line 5 */}
-        <rect x="73" y="115" width="14" height="4.5" rx="2" fill="#FF7B72" />
-        <rect x="91" y="115" width="18" height="4.5" rx="2" fill="#7EE787" />
-        <rect x="113" y="115" width="26" height="4.5" rx="2" fill="#A5D6FF" />
-        {/* Line 6 */}
-        <rect x="65" y="127" width="38" height="4.5" rx="2" fill="#FFA657" />
-        <rect x="107" y="127" width="28" height="4.5" rx="2" fill="#CDD9E5" opacity="0.5" />
-        {/* Line 7 */}
-        <rect x="57" y="139" width="10" height="4.5" rx="2" fill="#D2A8FF" />
-        {/* Line 8 */}
-        <rect x="57" y="151" width="22" height="4.5" rx="2" fill="#7EE787" />
-        <rect x="83" y="151" width="36" height="4.5" rx="2" fill="#CDD9E5" opacity="0.55" />
-        {/* Line 9 */}
-        <rect x="57" y="163" width="46" height="4.5" rx="2" fill="#FF7B72" />
-        {/* Line 10 */}
-        <rect x="57" y="175" width="32" height="4.5" rx="2" fill="#A5D6FF" />
-        <rect x="93" y="175" width="16" height="4.5" rx="2" fill="#D2A8FF" />
-
-        {/* ── Magnifying glass ── */}
-        {/* Handle */}
-        <line x1="176" y1="158" x2="208" y2="194" stroke="#4A4A5A" strokeWidth="9" strokeLinecap="round" />
-        <line x1="176" y1="158" x2="208" y2="194" stroke="#6A6A7A" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
-
-        {/* Outer ring */}
-        <circle cx="152" cy="132" r="42" fill="#FFFFFF" stroke="url(#ab-chrome)" strokeWidth="5" />
-        {/* Inner ring detail */}
-        <circle cx="152" cy="132" r="38" fill="none" stroke="#E0E0EC" strokeWidth="1" />
-        {/* Lens glass tint */}
-        <circle cx="152" cy="132" r="36" fill="#4361EE" opacity="0.05" />
-        {/* Glass shine */}
-        <path d="M133,112 Q142,106 152,108 Q148,116 140,118Z" fill="#FFFFFF" opacity="0.45" />
-
-        {/* Magnified code inside lens */}
-        <g clipPath="url(#ab-lensclip)">
-            <rect x="120" y="120" width="64" height="26" rx="0" fill="#0D1117" opacity="0.85" />
-            {/* Magnified tokens */}
-            <rect x="122" y="122" width="20" height="5.5" rx="2" fill="#FF7B72" />
-            <rect x="145" y="122" width="30" height="5.5" rx="2" fill="#D2A8FF" />
-            <rect x="122" y="131" width="16" height="5.5" rx="2" fill="#7EE787" />
-            <rect x="141" y="131" width="24" height="5.5" rx="2" fill="#FFA657" />
-            <rect x="168" y="131" width="12" height="5.5" rx="2" fill="#A5D6FF" />
-            <rect x="122" y="140" width="36" height="5.5" rx="2" fill="#CDD9E5" opacity="0.7" />
+        {/* Character 5 standing on the left */}
+        <g transform="translate(60, 105) scale(0.6)">
+            <path d="M-20,-16 Q-22,-36 12,-38 Q46,-36 44,-16" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".08" />
+            <circle cx="-14" cy="-22" r="5" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".1" />
+            <circle cx="38" cy="-22" r="5" stroke={S} strokeWidth="1.2" fill={A} fillOpacity=".1" />
+            <Face />
+            <circle cx="-6" cy="-12" r="3" stroke={S} strokeWidth="1.2" fill="none" opacity=".6" />
+            <circle cx="30" cy="-12" r="3" stroke={S} strokeWidth="1.2" fill="none" opacity=".6" />
+            <Neck />
+            <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,100 Q32,108 12,108 Q-8,108 -8,100Z" stroke={S} strokeWidth={W} fill="none" />
+            <path d="M2,14 L2,64 Q2,70 12,70 Q22,70 22,64 L22,14" stroke={S} strokeWidth="1" fill={A} fillOpacity=".07" opacity=".5" />
+            <Arms raiseRight={true} />
+            <Legs />
         </g>
 
-        {/* Sparkles */}
-        <circle cx="188" cy="42" r="5" fill="#FFD166" className="illustration__sparkle" />
-        <circle cx="24" cy="92" r="3.5" fill="#4CC9F0" className="illustration__sparkle" style={{ animationDelay: '0.8s' }} />
-        <circle cx="208" cy="84" r="3" fill="#FF6B6B" className="illustration__sparkle" style={{ animationDelay: '1.6s' }} />
+        {/* Magnifying Glass inspecting a bug on the right */}
+        <g transform="translate(145, 115)">
+            {/* Handle */}
+            <line x1="26" y1="26" x2="55" y2="55" stroke={S} strokeWidth="4.5" strokeLinecap="round" />
+            <line x1="26" y1="26" x2="55" y2="55" stroke={A} strokeWidth="2.5" strokeLinecap="round" opacity="0.5" />
+            
+            {/* Glass Lens Rim */}
+            <circle cx="0" cy="0" r="34" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.04" />
+            <circle cx="0" cy="0" r="30" stroke={S} strokeWidth="0.8" opacity="0.3" fill="none" />
+            
+            {/* Lens Reflection highlight */}
+            <path d="M-20,-16 Q-10,-24 0,-20 Q-10,-14 -16,-6" stroke="#FFF" strokeWidth="1" fill="none" opacity="0.3" />
+
+            {/* Magnified Bug Icon */}
+            <g transform="scale(1.1)">
+                <ellipse cx="0" cy="2" rx="6" ry="8" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.1" />
+                <circle cx="0" cy="-8" r="2.5" stroke={S} strokeWidth="1.2" fill="none" />
+                <path d="M-6,0 L-10,-2 M-6,4 L-11,4 M-5,8 L-9,10 M6,0 L10,-2 M6,4 L11,4 M5,8 L9,10" stroke={S} strokeWidth="1.2" />
+                <path d="M-2,-10 Q-4,-14 -6,-13 M2,-10 Q4,-14 6,-13" stroke={S} strokeWidth="1" fill="none" />
+            </g>
+        </g>
     </svg>
 )
 
-
-/* ─────────────────────────────────────────────────────────────
-   ContactIllustration — Paper airplane arcing to envelope
-   Viewbox: 230 × 210
-   ───────────────────────────────────────────────────────────── */
-export const ContactIllustration = ({ className = '' }) => (
-    <svg
-        className={`illustration illustration--contact ${className}`}
-        viewBox="0 0 230 210"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-    >
-        <defs>
-            <linearGradient id="co-env" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="100%" stopColor="#F0F0F8" />
-            </linearGradient>
-        </defs>
-
-        {/* ── Envelope ── */}
-        {/* Shadow */}
-        <rect x="42" y="102" width="146" height="96" rx="14" fill="#000000" opacity="0.06" />
-        {/* Body */}
-        <rect x="38" y="96" width="146" height="96" rx="13" fill="url(#co-env)" stroke="#E0E0EE" strokeWidth="1.5" />
-
-        {/* Envelope back flap (open, slightly lifted) */}
-        <path d="M38,108 Q111,152 184,108 L184,96 Q111,124 38,96Z" fill="#F4F4FC" />
-        <path d="M38,108 Q111,152 184,108" stroke="#D0D0E0" strokeWidth="1.5" fill="none" />
-
-        {/* Bottom-left fold line to center bottom */}
-        <path d="M38,192 L111,148" stroke="#E0E0EE" strokeWidth="1" />
-        {/* Bottom-right fold line */}
-        <path d="M184,192 L111,148" stroke="#E0E0EE" strokeWidth="1" />
-
-        {/* Stamp */}
-        <rect x="156" y="106" width="20" height="26" rx="3" fill="#FF6B6B" opacity="0.25" stroke="#FF6B6B" strokeWidth="0.8" />
-        <rect x="159" y="109" width="14" height="14" rx="2" fill="#FF6B6B" opacity="0.4" />
-        <line x1="159" y1="127" x2="173" y2="127" stroke="#FF6B6B" strokeWidth="0.8" opacity="0.4" />
-        <line x1="159" y1="130" x2="173" y2="130" stroke="#FF6B6B" strokeWidth="0.8" opacity="0.3" />
-
-        {/* Address lines */}
-        <rect x="46" y="148" width="50" height="4" rx="2" fill="#CACADE" opacity="0.7" />
-        <rect x="46" y="156" width="38" height="3" rx="1.5" fill="#CACADE" opacity="0.5" />
-        <rect x="46" y="162" width="44" height="3" rx="1.5" fill="#CACADE" opacity="0.4" />
-
-        {/* ── Arc path (dotted trail) ── */}
-        <path d="M68,72 Q74,44 92,50 Q112,56 118,96"
-            stroke="#4361EE" strokeWidth="1.8" strokeDasharray="5 5" fill="none" opacity="0.45" />
-
-        {/* Motion trail (fading) */}
-        <line x1="22" y1="62" x2="44" y2="66" stroke="#4361EE" strokeWidth="2.5" strokeLinecap="round" opacity="0.18" />
-        <line x1="30" y1="72" x2="46" y2="74" stroke="#4361EE" strokeWidth="1.5" strokeLinecap="round" opacity="0.1" />
-
-        {/* ── Paper airplane ── */}
-        <g className="illustration__float" style={{ animationDelay: '0.4s' }}>
-            {/* Main body */}
-            <path d="M22,64 L70,78 L46,96Z" fill="#FFFFFF" stroke="#D0D0E4" strokeWidth="1" />
-            {/* Bottom fold */}
-            <path d="M22,64 L46,96 L40,76Z" fill="#E8E8F4" />
-            {/* Inner crease fold */}
-            <path d="M40,76 L46,96 L52,80Z" fill="#D8D8EC" />
-            {/* Wing crease line */}
-            <path d="M22,64 L52,80" stroke="#C8C8E0" strokeWidth="0.8" fill="none" />
-            {/* Tip glint */}
-            <circle cx="22" cy="64" r="1.5" fill="#4361EE" opacity="0.5" />
-        </g>
-
-        {/* Heart (floating, top-right) */}
-        <g className="illustration__float illustration__sparkle" style={{ animationDelay: '0.6s' }}>
-            <path d="M196,88 Q196,80 204,80 Q212,80 212,88 Q212,96 204,104 Q196,96 196,88Z"
-                fill="#FF6B6B" opacity="0.85" />
-            {/* Heart shine */}
-            <path d="M199,84 Q202,81 205,82" stroke="#FFFFFF" strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.5" />
-        </g>
-
-        {/* Stars / sparkles */}
-        <circle cx="178" cy="68" r="4" fill="#FFD166" className="illustration__sparkle" />
-        <circle cx="28" cy="120" r="2.5" fill="#4CC9F0" className="illustration__sparkle" style={{ animationDelay: '1.2s' }} />
-        <path d="M200,50 L201.5,56 L208,57.5 L201.5,59 L200,65 L198.5,59 L192,57.5 L198.5,56Z"
-            fill="#FFD166" opacity="0.6" className="illustration__sparkle" style={{ animationDelay: '0.5s' }} />
-    </svg>
-)
-
-
-/* ─────────────────────────────────────────────────────────────
-   ProjectsIllustration — Rocket with orbit ring + stars
-   Viewbox: 240 × 260
-   ───────────────────────────────────────────────────────────── */
 export const ProjectsIllustration = ({ className = '' }) => (
     <svg
         className={`illustration illustration--projects ${className}`}
@@ -551,108 +394,100 @@ export const ProjectsIllustration = ({ className = '' }) => (
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
     >
-        <defs>
-            <linearGradient id="pr-body" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="100%" stopColor="#D4D4E4" />
-            </linearGradient>
-            <linearGradient id="pr-flame" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FFD166" />
-                <stop offset="50%" stopColor="#FF9A3C" />
-                <stop offset="100%" stopColor="#FF6B6B" />
-            </linearGradient>
-            <radialGradient id="pr-exhaust" cx="50%" cy="0%" r="100%">
-                <stop offset="0%" stopColor="#FFD166" stopOpacity="0.7" />
-                <stop offset="100%" stopColor="#FF6B6B" stopOpacity="0" />
-            </radialGradient>
-        </defs>
+        {/* Background stars & orbit line */}
+        <ellipse cx="120" cy="180" rx="75" ry="20" stroke={S} strokeWidth="1" strokeDasharray="4 6" opacity="0.25" fill="none" />
+        <circle cx="120" cy="130" r="105" fill={A} fillOpacity="0.01" filter="blur(30px)" />
+        
+        {/* Decorative sparkles */}
+        <circle cx="35" cy="50" r="2" fill={S} className="illustration__sparkle" />
+        <circle cx="210" cy="80" r="1.5" fill={S} className="illustration__sparkle" style={{ animationDelay: '1.2s' }} />
+        <circle cx="195" cy="220" r="2.5" fill={S} className="illustration__sparkle" style={{ animationDelay: '0.6s' }} />
 
-        {/* Background stars */}
-        {[
-            [30, 30, 1.5], [55, 18, 1], [180, 24, 2], [204, 40, 1], [20, 100, 1.2],
-            [218, 120, 1.5], [24, 188, 1], [214, 200, 1.2], [40, 220, 1.5], [200, 240, 1]
-        ].map(([x, y, r], i) => (
-            <circle key={i} cx={x} cy={y} r={r} fill="#CDD9E5" opacity={0.4 + i * 0.04} />
-        ))}
-
-        {/* Orbit ring */}
-        <ellipse cx="120" cy="195" rx="68" ry="18"
-            stroke="#4361EE" strokeWidth="1.5" strokeDasharray="6 5" fill="none" opacity="0.28" />
-
-        {/* Small satellite on orbit */}
-        <g className="illustration__float" style={{ animationDelay: '1.8s' }}>
-            <rect x="176" y="183" width="14" height="10" rx="3" fill="#4CC9F0" opacity="0.85" />
-            <rect x="168" y="186" width="8" height="4" rx="1" fill="#4CC9F0" opacity="0.6" />
-            <rect x="190" y="186" width="8" height="4" rx="1" fill="#4CC9F0" opacity="0.6" />
+        {/* Character 6 standing on the left */}
+        <g transform="translate(60, 115) scale(0.62)">
+            <circle cx="12" cy="-46" r="10" stroke={S} strokeWidth="1.6" fill={A} fillOpacity=".2" />
+            <path d="M2,-36 Q12,-28 22,-36" stroke={S} strokeWidth="1.4" fill="none" />
+            <Face />
+            <Neck />
+            <path d="M-8,18 Q-8,10 12,10 Q32,10 32,18 L32,64 Q32,70 12,70 Q-8,70 -8,64Z" stroke={S} strokeWidth={W} fill={S} fillOpacity=".18" />
+            <path d="M2,10 L12,28 L22,10" stroke={S} strokeWidth="1.3" fill="none" opacity=".6" />
+            <path d="M-8,64 Q-8,72 12,72 Q32,72 32,64 L32,108 Q32,112 12,112 Q-8,112 -8,108Z" stroke={S} strokeWidth={W} fill="none" />
+            <Arms />
+            <Legs yStart={112} />
         </g>
 
-        {/* ── Rocket (floating) ── */}
-        <g className="illustration__float" style={{ animationDelay: '0.2s' }}>
+        {/* Rocket ship launching on the right */}
+        <g transform="translate(155, 95)" className="illustration__float">
+            {/* Rocket exhaust plume */}
+            <path d="M-6,55 C-8,70 0,90 0,90 C0,90 8,70 6,55 Z" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.2" />
+            <line x1="0" y1="55" x2="0" y2="85" stroke={S} strokeWidth="1" opacity="0.6" strokeDasharray="2 3" />
 
-            {/* Exhaust glow */}
-            <ellipse cx="120" cy="170" rx="18" ry="30" fill="url(#pr-exhaust)" opacity="0.5" />
-
-            {/* Main flame */}
-            <path d="M108,152 Q120,185 132,152 Q126,165 120,168 Q114,165 108,152Z"
-                fill="url(#pr-flame)" />
-            {/* Inner flame (bright core) */}
-            <path d="M113,152 Q120,175 127,152 Q123,162 120,164 Q117,162 113,152Z"
-                fill="#FFFDE4" opacity="0.85" />
-
-            {/* Fins — left */}
-            <path d="M98,120 L72,158 L98,148Z" fill="#D63031" />
-            <path d="M98,120 L72,158 L98,148Z" fill="#FF6B6B" opacity="0.4" />
-            {/* Left fin edge highlight */}
-            <path d="M98,120 L72,158" stroke="#FFFFFF" strokeWidth="0.5" opacity="0.3" />
-
-            {/* Fins — right */}
-            <path d="M142,120 L168,158 L142,148Z" fill="#D63031" />
-            <path d="M142,120 L168,158 L142,148Z" fill="#FF6B6B" opacity="0.4" />
-            <path d="M142,120 L168,158" stroke="#FFFFFF" strokeWidth="0.5" opacity="0.3" />
+            {/* Fins */}
+            <path d="M-14,35 L-24,52 L-14,48 Z" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.1" />
+            <path d="M14,35 L24,52 L14,48 Z" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.1" />
 
             {/* Rocket body */}
-            <path d="M120,18 Q148,52 148,120 L120,134 L92,120 Q92,52 120,18Z"
-                fill="url(#pr-body)" />
-            {/* Body center seam */}
-            <line x1="120" y1="18" x2="120" y2="134" stroke="#C0C0D0" strokeWidth="0.8" opacity="0.4" />
-            {/* Body panels */}
-            <path d="M102,60 Q92,90 92,120 L102,124 Q98,96 102,60Z" fill="#E8E8F4" opacity="0.35" />
-            <path d="M138,60 Q148,90 148,120 L138,124 Q142,96 138,60Z" fill="#D0D0E4" opacity="0.3" />
-
-            {/* Nose cone tint */}
-            <path d="M120,18 Q140,40 148,70 Q134,50 120,40 Q106,50 92,70 Q100,40 120,18Z"
-                fill="#4361EE" opacity="0.08" />
-
+            <path d="M0,-45 C12,-15 14,10 14,48 L-14,48 C-14,10 -12,-15 0,-45 Z" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.04" />
+            
+            {/* Rocket nose cone */}
+            <path d="M0,-45 C4,-30 10,-20 12,-14 L-12,-14 C-10,-20 -4,-30 0,-45 Z" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.2" />
+            
             {/* Porthole */}
-            <circle cx="120" cy="75" r="17" fill="#1A1A2E" stroke="#A0A0B8" strokeWidth="2.5" />
-            <circle cx="120" cy="75" r="13" fill="#0D1117" />
-            <circle cx="120" cy="75" r="13" fill="#4361EE" opacity="0.15" />
-            {/* Porthole shine */}
-            <path d="M112,67 Q118,63 124,66" stroke="#FFFFFF" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.45" />
-            {/* Porthole reflection */}
-            <ellipse cx="115" cy="68" rx="3" ry="2" fill="#FFFFFF" opacity="0.12" />
-
-            {/* Rivet dots */}
-            <circle cx="98" cy="104" r="1.5" fill="#B0B0C8" opacity="0.6" />
-            <circle cx="142" cy="104" r="1.5" fill="#B0B0C8" opacity="0.6" />
-            <circle cx="96" cy="90" r="1.2" fill="#B0B0C8" opacity="0.5" />
-            <circle cx="144" cy="90" r="1.2" fill="#B0B0C8" opacity="0.5" />
+            <circle cx="0" cy="12" r="6" stroke={S} strokeWidth="1.4" fill="none" />
+            <circle cx="0" cy="12" r="3" stroke={S} strokeWidth="0.8" fill={A} />
         </g>
-
-        {/* Sparkles */}
-        <circle cx="44" cy="44" r="4.5" fill="#FFD166" className="illustration__sparkle" />
-        <path d="M185,36 L187,44 L195,46 L187,48 L185,56 L183,48 L175,46 L183,44Z"
-            fill="#4CC9F0" opacity="0.6" className="illustration__sparkle" style={{ animationDelay: '0.6s' }} />
-        <circle cx="204" cy="72" r="3.5" fill="#FF6B6B" className="illustration__sparkle" style={{ animationDelay: '2.2s' }} />
-        <circle cx="30" cy="160" r="2.5" fill="#4361EE" className="illustration__sparkle" style={{ animationDelay: '1.5s' }} />
     </svg>
 )
 
+export const ContactIllustration = ({ className = '' }) => (
+    <svg
+        className={`illustration illustration--contact ${className}`}
+        viewBox="0 0 230 210"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        {/* Background elements */}
+        <circle cx="115" cy="105" r="85" stroke={S} strokeWidth="0.8" strokeDasharray="3 5" opacity="0.15" fill="none" />
+        <circle cx="115" cy="105" r="95" fill={A} fillOpacity="0.01" filter="blur(30px)" />
 
-/* ─────────────────────────────────────────────────────────────
-   FooterIllustration — Botanical plant accent
-   Viewbox: 140 × 80
-   ───────────────────────────────────────────────────────────── */
+        {/* Character 7 standing on the left */}
+        <g transform="translate(60, 95) scale(0.55)">
+            <path d="M-18,-16 Q-20,-34 12,-36 Q36,-34 36,-16" stroke={S} strokeWidth="1.6" fill="none" />
+            <path d="M36,-16 Q50,-8 44,12" stroke={S} strokeWidth="2" fill="none" strokeLinecap="round" />
+            <Face />
+            <Neck />
+            <path d="M-4,18 Q-4,10 12,10 Q28,10 28,18 L28,60 Q28,66 12,66 Q-4,66 -4,60Z" stroke={S} strokeWidth={W} fill="none" />
+            <path d="M-4,60 Q-14,68 -18,108 Q-18,114 12,114 Q42,114 42,108 Q38,68 28,60Z" stroke={S} strokeWidth={W} fill={S} fillOpacity=".08" />
+            <path d="M-4,22 Q-18,46 -20,76" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+            <Hand x={-21} y={84} flip={false} />
+            <path d="M28,22 Q44,46 46,76" stroke={S} strokeWidth={W} fill="none" strokeLinecap="round" />
+            <Hand x={47} y={84} flip={true} />
+            <path d="M2,114 L-2,185" stroke={S} strokeWidth={W} strokeLinecap="round" />
+            <path d="M22,114 L26,185" stroke={S} strokeWidth={W} strokeLinecap="round" />
+            <path d="M-2,185 Q-8,188 -14,185" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <path d="M26,185 Q32,188 38,185" stroke={S} strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        </g>
+
+        {/* Envelope on the right */}
+        <g transform="translate(130, 110)">
+            <rect x="0" y="0" width="70" height="46" rx="4" stroke={S} strokeWidth={W} fill={A} fillOpacity="0.04" />
+            <path d="M0,0 L35,22 L70,0" stroke={S} strokeWidth={W} fill="none" />
+            <path d="M0,46 L26,20 M70,46 L44,20" stroke={S} strokeWidth="1" opacity="0.6" />
+        </g>
+
+        {/* Paper airplane soaring above the envelope */}
+        <g transform="translate(145, 55)" className="illustration__float">
+            {/* Trajectory dot-trail */}
+            <path d="M-35,45 Q-20,30 -5,35" stroke={S} strokeWidth="1.2" strokeDasharray="2 3" opacity="0.5" fill="none" />
+            
+            {/* Airplane shape */}
+            <path d="M0,-10 L30,-2 L12,12 Z" stroke={S} strokeWidth="1.4" fill={A} fillOpacity="0.1" />
+            <path d="M0,-10 L12,12 L8,3 Z" stroke={S} strokeWidth="1" fill={A} fillOpacity="0.2" />
+        </g>
+    </svg>
+)
+
 export const FooterIllustration = ({ className = '' }) => (
     <svg
         className={`illustration illustration--footer ${className}`}
@@ -662,43 +497,38 @@ export const FooterIllustration = ({ className = '' }) => (
         aria-hidden="true"
     >
         {/* Main stem */}
-        <path d="M70,74 Q68,58 64,42 Q61,26 58,12"
-            stroke="#2D6A4F" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+        <path d="M70,74 Q68,58 64,42 Q61,26 58,12" stroke={S} strokeWidth="2.2" strokeLinecap="round" fill="none" />
 
         {/* Secondary stems */}
-        <path d="M66,52 Q76,46 86,50" stroke="#52B788" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-        <path d="M64,38 Q52,32 42,38" stroke="#52B788" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-        <path d="M61,24 Q70,16 80,20" stroke="#52B788" strokeWidth="1.4" strokeLinecap="round" fill="none" />
-        <path d="M59,16 Q50,10 40,14" stroke="#74C69D" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        <path d="M66,52 Q76,46 86,50" stroke={S} strokeWidth="1.4" strokeLinecap="round" fill="none" opacity="0.8" />
+        <path d="M64,38 Q52,32 42,38" stroke={S} strokeWidth="1.4" strokeLinecap="round" fill="none" opacity="0.8" />
+        <path d="M61,24 Q70,16 80,20" stroke={S} strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.7" />
+        <path d="M59,16 Q50,10 40,14" stroke={S} strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.7" />
 
         {/* Leaf 1 — top-left (large) */}
-        <path d="M58,12 Q36,20 42,38 Q56,28 58,12Z" fill="#52B788" opacity="0.45" />
-        <path d="M58,12 Q46,24 42,38" stroke="#2D6A4F" strokeWidth="0.9" fill="none" opacity="0.55" />
-        {/* Leaf vein 1 */}
-        <path d="M53,16 Q47,28 44,36" stroke="#2D6A4F" strokeWidth="0.5" fill="none" opacity="0.3" />
+        <path d="M58,12 Q36,20 42,38 Q56,28 58,12Z" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
+        <path d="M58,12 Q46,24 42,38" stroke={S} strokeWidth="0.8" fill="none" opacity="0.5" />
 
         {/* Leaf 2 — right mid */}
-        <path d="M66,52 Q92,40 86,50 Q80,62 66,52Z" fill="#74C69D" opacity="0.35" />
-        <path d="M66,52 Q78,46 86,50" stroke="#2D6A4F" strokeWidth="0.8" fill="none" opacity="0.45" />
+        <path d="M66,52 Q92,40 86,50 Q80,62 66,52Z" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
+        <path d="M66,52 Q78,46 86,50" stroke={S} strokeWidth="0.8" fill="none" opacity="0.5" />
 
         {/* Leaf 3 — top-right small */}
-        <path d="M61,24 Q82,14 80,20 Q76,32 61,24Z" fill="#95D5B2" opacity="0.3" />
+        <path d="M61,24 Q82,14 80,20 Q76,32 61,24Z" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
 
         {/* Leaf 4 — left small */}
-        <path d="M59,16 Q36,8 40,14 Q44,22 59,16Z" fill="#52B788" opacity="0.28" />
+        <path d="M59,16 Q36,8 40,14 Q44,22 59,16Z" stroke={S} strokeWidth="1.2" fill={A} fillOpacity="0.08" />
 
         {/* Ground / pot base */}
-        <ellipse cx="70" cy="76" rx="10" ry="3" fill="#2D6A4F" opacity="0.18" />
+        <ellipse cx="70" cy="76" rx="10" ry="3" fill={S} opacity="0.18" />
 
-        {/* Berry cluster at tip */}
-        <circle cx="57" cy="11" r="4" fill="#D63031" opacity="0.82" />
-        <circle cx="64" cy="9" r="3" fill="#E04040" opacity="0.65" />
-        <circle cx="52" cy="8" r="2.2" fill="#C02020" opacity="0.55" />
-        {/* Berry shine */}
-        <circle cx="55.5" cy="9.5" r="1.2" fill="#FFFFFF" opacity="0.4" />
+        {/* Berry cluster at tip - blue styled */}
+        <circle cx="57" cy="11" r="3.5" stroke={S} strokeWidth="1" fill={S} />
+        <circle cx="64" cy="9" r="2.8" stroke={S} strokeWidth="1" fill={A} />
+        <circle cx="52" cy="8" r="2" stroke={S} strokeWidth="1" fill={A} />
 
         {/* Sparkle */}
-        <circle cx="40" cy="6" r="2.8" fill="#FFD166" className="illustration__sparkle" />
-        <circle cx="92" cy="44" r="2" fill="#4CC9F0" className="illustration__sparkle" style={{ animationDelay: '1.2s' }} />
+        <circle cx="40" cy="6" r="2" fill={S} className="illustration__sparkle" />
+        <circle cx="92" cy="44" r="1.5" fill={S} className="illustration__sparkle" style={{ animationDelay: '1.2s' }} />
     </svg>
 )

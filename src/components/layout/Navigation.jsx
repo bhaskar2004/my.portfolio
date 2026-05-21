@@ -38,6 +38,7 @@ const useScrolled = (threshold = 20) => {
 const Navigation = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
     const navRef = useRef(null)
+    const menuToggleRef = useRef(null)
     const isScrolled = useScrolled()
     const { theme, toggleTheme } = useTheme()
     const location = useLocation()
@@ -69,7 +70,13 @@ const Navigation = () => {
         return () => window.removeEventListener('keydown', onKey)
     }, [isMobileOpen])
 
-    const close = useCallback(() => setIsMobileOpen(false), [])
+    const close = useCallback(() => {
+        setIsMobileOpen(false)
+        // Return focus to the hamburger button so keyboard users aren't lost
+        requestAnimationFrame(() => {
+            menuToggleRef.current?.focus()
+        })
+    }, [])
 
     const handleHashLink = useCallback((id) => {
         close()
@@ -184,6 +191,7 @@ const Navigation = () => {
 
                 {/* Mobile Menu Toggle */}
                 <button
+                    ref={menuToggleRef}
                     className={`menu-toggle${isMobileOpen ? ' active' : ''}`}
                     onClick={() => setIsMobileOpen(prev => !prev)}
                     aria-label={isMobileOpen ? 'Close navigation menu' : 'Open navigation menu'}

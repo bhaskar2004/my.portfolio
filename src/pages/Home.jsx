@@ -15,14 +15,8 @@ import { useTheme } from '../context/ThemeContext'
 import HighlightSwipe from '../components/animations/HighlightSwipe'
 import { projects } from '../data/projects'
 import ContactForm from '../components/contact/ContactForm'
-import {
-    HeroIllustration,
-    AboutIllustration,
-    ProjectsIllustration,
-    ContactIllustration,
-    FooterIllustration
-} from '../components/illustrations/illustrations'
-import '../components/illustrations/illustrations.css'
+import HeroVideo from '../components/illustrations/svg/Animate_this_SVG_illustration.mp4'
+import MessageSent from '../components/illustrations/svg/undraw_message-sent_iyz6.svg'
 
 /* ── Helper: split text into individually animated chars ────── */
 const AnimatedName = ({ text, theme }) => {
@@ -225,7 +219,15 @@ const Home = () => {
 
                     {/* Illustration — visible on md+ */}
                     <div className="hero-illustration reveal reveal-delay-2">
-                        <HeroIllustration />
+                        <video
+                            src={HeroVideo}
+                            className="hero-illustration-img"
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            aria-hidden="true"
+                        />
                     </div>
                 </div>
 
@@ -268,10 +270,7 @@ const Home = () => {
                             </p>
                         </div>
 
-                        {/* Card 2: Illustration */}
-                        <div className="about-card bento-card--illustration reveal reveal-delay-3">
-                            <AboutIllustration />
-                        </div>
+
 
                         {/* Card 3: Education */}
                         <div className="about-card bento-card--edu reveal reveal-delay-4">
@@ -316,7 +315,6 @@ const Home = () => {
                             <h2>Things I've built</h2>
                         </div>
                         <div className="projects-header__right">
-                            <ProjectsIllustration />
                             <span className="projects-count reveal reveal-delay-1">
                                 {projects.length.toString().padStart(2, '0')}
                             </span>
@@ -353,8 +351,9 @@ const Home = () => {
                                     I'm open to work and collaborations.<br />Let's build something together.
                                 </p>
                                 <div className="contact-illustration-wrap">
-                                    <ContactIllustration />
+                                    <img src={MessageSent} alt="Message sent illustration" className="contact-illustration-img" />
                                 </div>
+
                             </div>
 
                             <div className="contact-info-list" role="list">

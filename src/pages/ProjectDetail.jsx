@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -68,13 +68,33 @@ const ProjectDetail = () => {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    /* keyboard navigation — ArrowRight to go to next project */
+    useEffect(() => {
+        const onKey = (e) => {
+            // Don't interfere if user is typing in an input/textarea
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key === 'ArrowRight' && nextProject) {
+                navigate(`/project/${nextProject.id}`);
+            }
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [nextProject, navigate]);
+
+    /* Detect prefers-reduced-motion */
+    const prefersReducedMotion = useMemo(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }, []);
+
     /* cursor glow */
     const handlePageMouseMove = useCallback((e) => {
         setCursorPos({ x: e.clientX, y: e.clientY });
     }, []);
 
-    /* card 3-D tilt */
+    /* card 3-D tilt — disabled for reduced motion users */
     const handleCardMouseMove = useCallback((e) => {
+        if (prefersReducedMotion) return;
         const card = cardRef.current;
         if (!card) return;
 
@@ -340,6 +360,7 @@ const ProjectDetail = () => {
                 <span className="next-label">Next</span>
                 <span className="next-sep" aria-hidden="true">→</span>
                 <span className="next-title">{nextProject.title}</span>
+                <kbd className="next-kbd" aria-hidden="true">→</kbd>
             </button>
         </div>
     );

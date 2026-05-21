@@ -936,6 +936,36 @@
     color: var(--color-primary);
 }
 
+/* Keyboard shortcut hint */
+.next-kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    background: rgba(var(--color-primary-rgb), 0.08);
+    border: 1px solid rgba(var(--color-primary-rgb), 0.15);
+    border-radius: 4px;
+    color: var(--color-text-muted);
+    margin-left: 4px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.next-project-pill:hover .next-kbd {
+    opacity: 1;
+    border-color: rgba(var(--color-primary-rgb), 0.3);
+}
+
+/* Hide kbd hint on mobile (no keyboard) */
+@media (max-width: 768px) {
+    .next-kbd {
+        display: none;
+    }
+}
+
 /* ── 15. Responsive ─────────────────────────────────────── */
 @media (max-width: 1024px) {
     .detail-content {

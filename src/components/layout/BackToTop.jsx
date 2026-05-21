@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {
     ArrowUpIcon
 } from '@radix-ui/react-icons'
@@ -9,12 +9,28 @@ const BackToTop = () => {
     const [isLaunching, setIsLaunching] = useState(false)
 
     useEffect(() => {
-        const onScroll = () => setIsVisible(window.scrollY > 400)
-        window.addEventListener('scroll', onScroll)
-        return () => window.removeEventListener('scroll', onScroll)
+        let rafId = null
+
+        const onScroll = () => {
+            if (rafId) return
+            rafId = requestAnimationFrame(() => {
+                const { scrollHeight, clientHeight } = document.documentElement
+                const totalScrollable = scrollHeight - clientHeight
+                // Show after 30% of page scrolled, with 400px minimum
+                const threshold = Math.max(400, totalScrollable * 0.3)
+                setIsVisible(window.scrollY > threshold)
+                rafId = null
+            })
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+            if (rafId) cancelAnimationFrame(rafId)
+        }
     }, [])
 
-    const scrollToTop = () => {
+    const scrollToTop = useCallback(() => {
         if (isLaunching) return
         setIsLaunching(true)
 
@@ -31,7 +47,7 @@ const BackToTop = () => {
                 }, 700)
             }, 280)
         }
-    }
+    }, [isLaunching])
 
     return (
         <button

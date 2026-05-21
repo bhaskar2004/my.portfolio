@@ -74,8 +74,15 @@ const ContactForm = () => {
 
         // auto-grow textarea
         if (name === 'message' && textareaRef.current) {
+            // Set height to auto first to shrink if needed, then expand
             textareaRef.current.style.height = 'auto';
-            textareaRef.current.style.height = Math.max(120, textareaRef.current.scrollHeight) + 'px';
+            const newHeight = Math.max(120, textareaRef.current.scrollHeight);
+            // Use rAF for smoother visual resize
+            requestAnimationFrame(() => {
+                if (textareaRef.current) {
+                    textareaRef.current.style.height = newHeight + 'px';
+                }
+            });
         }
 
         if (touched[name]) {
@@ -110,6 +117,14 @@ const ContactForm = () => {
             // Shake the form on validation error
             formRef.current?.classList.add('form-shake');
             setTimeout(() => formRef.current?.classList.remove('form-shake'), 600);
+
+            // Auto-focus the first field with an error
+            const firstErrorField = Object.keys(INITIAL).find(k => allErrors[k]);
+            if (firstErrorField) {
+                const el = document.getElementById(firstErrorField);
+                el?.focus({ preventScroll: false });
+                el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             return;
         }
 
@@ -280,18 +295,20 @@ const ContactForm = () => {
                                 <svg viewBox="0 0 24 24" width="20" height="20">
                                     <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="50" strokeLinecap="round" />
                                 </svg>
-                                Sending...
+                                Sending…
                             </span>
                         ) : (
                             <>
-                                Send Message
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" strokeWidth="2.5"
-                                    strokeLinecap="round" strokeLinejoin="round"
-                                    className="send-icon">
-                                    <line x1="22" y1="2" x2="11" y2="13" />
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                                </svg>
+                                {progress === 100 ? 'Send Message' : `Complete ${4 - completedFields.length} field${4 - completedFields.length !== 1 ? 's' : ''}`}
+                                {progress === 100 && (
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" strokeWidth="2.5"
+                                        strokeLinecap="round" strokeLinejoin="round"
+                                        className="send-icon">
+                                        <line x1="22" y1="2" x2="11" y2="13" />
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                    </svg>
+                                )}
                             </>
                         )}
                     </button>

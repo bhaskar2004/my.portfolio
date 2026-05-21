@@ -188,6 +188,16 @@
     align-items: center;
 }
 
+.hero-illustration-img {
+    width: 650px;
+    height: 600px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-xl);
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+    background: transparent;
+}
+
 /* Eyebrow */
 .hero-eyebrow {
     display: inline-flex;
@@ -950,6 +960,13 @@
     display: none; /* hidden on mobile, shown on desktop */
 }
 
+.contact-illustration-img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
+}
+
 .contact-description {
     font-size: 0.88rem;
     color: var(--color-text-muted);
@@ -1207,12 +1224,16 @@
 
     .hero-content {
         align-items: flex-start;
-        width: 55%;
+        width: 45%;
     }
 
     .hero-illustration {
-        width: 45%;
+        width: 55%;
         justify-content: flex-end;
+    }
+
+    .hero-illustration-img {
+        max-width: 100%;
     }
 
     .hero-name {

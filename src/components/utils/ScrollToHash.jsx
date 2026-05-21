@@ -1,26 +1,69 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 /**
- * ScrollToHash handles scrolling to an anchor element when the URL hash change.
- * This is useful for cross-page navigation to a specific section.
+ * ScrollToHash handles scrolling to an anchor element when the URL hash changes.
+ * Uses a MutationObserver + rAF approach instead of a fixed timeout so it works
+ * reliably even when lazy-loaded content is still mounting.
  */
 const ScrollToHash = () => {
-    const { hash } = useLocation()
+    const { hash, pathname } = useLocation()
+    const prevPathRef = useRef(pathname)
 
     useEffect(() => {
-        if (hash) {
-            const id = hash.replace('#', '')
+        if (!hash) {
+            prevPathRef.current = pathname
+            return
+        }
+
+        const id = hash.replace('#', '')
+
+        const scrollToElement = () => {
             const element = document.getElementById(id)
             if (element) {
-                // Delay to ensure the DOM is rendered, especially during lazy loading
-                const timer = setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' })
-                }, 100)
-                return () => clearTimeout(timer)
+                // Use rAF to ensure the browser has finished layout
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        element.scrollIntoView({ behavior: 'smooth' })
+                    })
+                })
+                return true
             }
+            return false
         }
-    }, [hash])
+
+        // If element already exists, scroll immediately
+        if (scrollToElement()) {
+            prevPathRef.current = pathname
+            return
+        }
+
+        // If we're navigating from another page, the lazy component may
+        // not have mounted yet. Watch for DOM changes until we find it.
+        let attempts = 0
+        const maxAttempts = 50 // ~2.5s max wait
+
+        const observer = new MutationObserver(() => {
+            attempts++
+            if (scrollToElement() || attempts >= maxAttempts) {
+                observer.disconnect()
+            }
+        })
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        })
+
+        // Safety cleanup
+        const cleanup = setTimeout(() => observer.disconnect(), 3000)
+
+        prevPathRef.current = pathname
+        return () => {
+            observer.disconnect()
+            clearTimeout(cleanup)
+        }
+    }, [hash, pathname])
 
     return null
 }

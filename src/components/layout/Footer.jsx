@@ -6,7 +6,7 @@ import {
     ExternalLinkIcon
 } from '@radix-ui/react-icons'
 import { useTheme } from '../../context/ThemeContext'
-import { FooterIllustration } from '../illustrations/illustrations'
+
 import './Footer.css'
 
 const Footer = () => {
@@ -21,9 +21,6 @@ const Footer = () => {
                     <div className="footer-brand">
                         <div className="footer-brand-header">
                             <h2 className="footer-logo-massive" key={theme}>Bhaskar T</h2>
-                            <div className="footer-illustration-wrap">
-                                <FooterIllustration />
-                            </div>
                         </div>
                         <div className="footer-tagline-expanded">
                             <span>Software Tester & QA Engineer</span>

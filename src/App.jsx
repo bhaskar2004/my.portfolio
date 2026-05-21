@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider, Helmet } from 'react-helmet-async'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import Navigation from './components/layout/Navigation'
 import Footer from './components/layout/Footer'
 import BackToTop from './components/layout/BackToTop'
@@ -32,9 +32,48 @@ const NotFound = () => (
     </>
 )
 
+/* ── Loading skeleton for Suspense ────────────────────────────────────
+   Gives perceived performance — pulsing bars that mimic page structure
+   instead of a jarring "Loading..." string.
+──────────────────────────────────────────────────────────────────────── */
+const LoadingSkeleton = () => (
+    <div className="loading-skeleton" role="status" aria-label="Loading page">
+        <div className="skeleton-hero">
+            <div className="skeleton-bar skeleton-eyebrow" />
+            <div className="skeleton-bar skeleton-title" />
+            <div className="skeleton-bar skeleton-subtitle" />
+            <div className="skeleton-bar skeleton-subtitle skeleton-subtitle--short" />
+            <div className="skeleton-buttons">
+                <div className="skeleton-bar skeleton-btn" />
+                <div className="skeleton-bar skeleton-btn" />
+            </div>
+        </div>
+        <span className="sr-only">Loading…</span>
+    </div>
+)
+
 function App() {
+    const location = useLocation()
+    const mainRef = useRef(null)
+
+    /* ── Focus management: move focus to main content on route change ── */
+    useEffect(() => {
+        // Small delay so the DOM is painted before moving focus
+        const timer = setTimeout(() => {
+            if (mainRef.current) {
+                mainRef.current.focus({ preventScroll: true })
+            }
+        }, 100)
+        return () => clearTimeout(timer)
+    }, [location.pathname])
+
     return (
         <HelmetProvider>
+            {/* Skip-to-content link for keyboard users */}
+            <a href="#main-content" className="skip-to-content">
+                Skip to content
+            </a>
+
             {/* Global UI Elements */}
             <ScrollProgress />
             <ScrollToHash />
@@ -44,26 +83,24 @@ function App() {
                 <Navigation />
 
                 {/* Routes with Suspense for code-splitting */}
-                <Suspense fallback={
-                    <div style={{ 
-                        height: '100vh', 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        color: 'var(--color-primary)',
-                        fontFamily: 'var(--font-mono)'
-                    }}>
-                        Loading Experience...
-                    </div>
-                }>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/workshops" element={<Workshops />} />
-                        <Route path="/resume" element={<Resume />} />
-                        <Route path="/project/:id" element={<ProjectDetail />} />
+                <Suspense fallback={<LoadingSkeleton />}>
+                    <div
+                        id="main-content"
+                        ref={mainRef}
+                        tabIndex={-1}
+                        style={{ outline: 'none' }}
+                        key={location.pathname}
+                        className="route-transition"
+                    >
+                        <Routes location={location}>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/workshops" element={<Workshops />} />
+                            <Route path="/resume" element={<Resume />} />
+                            <Route path="/project/:id" element={<ProjectDetail />} />
 
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </div>
                 </Suspense>
 
                 <Footer />

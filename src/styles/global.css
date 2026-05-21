@@ -2062,3 +2062,237 @@ h1, h2, h3, h4, .wipe-text {
     from { clip-path: inset(0 100% 0 0); }
     to   { clip-path: inset(0 0% 0 0); }
 }
+
+/* ============================================
+   UX IMPROVEMENTS
+   ============================================ */
+
+/* ── Skip-to-content link (keyboard users only) ─────────── */
+.skip-to-content {
+    position: fixed;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    padding: 12px 24px;
+    background: var(--color-accent);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    text-decoration: none;
+    transition: top 0.2s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: none;
+}
+
+/* ── Route transition fade ──────────────────────────────── */
+.route-transition {
+    animation: routeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes routeFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Loading skeleton ───────────────────────────────────── */
+.loading-skeleton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 120px var(--spacing-lg) 80px;
+}
+
+.skeleton-hero {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skeleton-bar {
+    border-radius: var(--radius-md);
+    background: linear-gradient(
+        90deg,
+        var(--color-surface-2) 25%,
+        var(--color-surface-3) 50%,
+        var(--color-surface-2) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-eyebrow {
+    width: 120px;
+    height: 28px;
+    border-radius: var(--radius-full);
+}
+
+.skeleton-title {
+    width: 80%;
+    height: 56px;
+}
+
+.skeleton-subtitle {
+    width: 95%;
+    height: 18px;
+}
+
+.skeleton-subtitle--short {
+    width: 60%;
+}
+
+.skeleton-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.skeleton-btn {
+    width: 140px;
+    height: 48px;
+    border-radius: var(--radius-full);
+}
+
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Screen-reader only utility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Focus-visible outlines ─────────────────────────────── */
+/* Apply consistent, visible focus ring to all interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Remove default outline for mouse users (only show for keyboard) */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ── Smooth textarea height transition ──────────────────── */
+.field-control textarea {
+    transition: height 0.15s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ── Consistent touch feedback (mobile) ─────────────────── */
+@media (hover: none) and (pointer: coarse) {
+    /* Nav links in mobile drawer */
+    .nav-links a:active {
+        transform: scale(0.96) !important;
+        transition-duration: 0.08s !important;
+    }
+
+    /* Footer social icons */
+    .footer-icon-btn:active {
+        transform: scale(0.92) !important;
+        transition-duration: 0.08s !important;
+    }
+
+    /* Footer nav links */
+    .footer-nav-link:active {
+        opacity: 0.6;
+    }
+
+    /* Footer external link */
+    .footer-external-link:active {
+        transform: scale(0.96) !important;
+        transition-duration: 0.08s !important;
+    }
+
+    /* Contact info items */
+    .contact-info-item:active {
+        transform: scale(0.98) !important;
+        transition-duration: 0.08s !important;
+        background: var(--color-surface-2);
+    }
+}
+
+/* ── Prefers-reduced-motion — complete coverage ─────────── */
+@media (prefers-reduced-motion: reduce) {
+    /* Disable route transition animation */
+    .route-transition {
+        animation: none;
+    }
+
+    /* Disable skeleton shimmer */
+    .skeleton-bar {
+        animation: none;
+    }
+
+    /* Disable 3D card tilt transitions */
+    .visual-card-wrap,
+    .contact-form-container {
+        transition: none !important;
+        transform: none !important;
+    }
+
+    /* Disable cursor glow tracking */
+    .pd-cursor-glow {
+        display: none !important;
+    }
+
+    /* Disable BackToTop launch animation */
+    .back-to-top.igniting,
+    .back-to-top.launching {
+        animation: none !important;
+    }
+
+    /* Disable form spotlight */
+    .form-spotlight,
+    .form-glow-border {
+        display: none !important;
+    }
+
+    /* Disable scan line and dashed ring spin */
+    .scan-line,
+    .mockup-ring-outer {
+        animation: none !important;
+    }
+
+    /* Disable hero blob float */
+    .hero-blob {
+        animation: none !important;
+    }
+
+    /* Disable curtain wipe */
+    .wipe-text {
+        animation: none !important;
+        clip-path: none !important;
+    }
+}
